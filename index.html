@@ -476,5 +476,18 @@ document.addEventListener('mousemove', (e) => {
     glow.style.top = e.clientY + 'px';
 });
 </script>
+    <script>
+const glow = document.querySelector('.mouse-glow');
+
+document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+    glow.style.opacity = '1';
+});
+
+document.addEventListener('mouseleave', () => {
+    glow.style.opacity = '0';
+});
+</script>
 </body>
 </html>
