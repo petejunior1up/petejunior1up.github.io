@@ -171,50 +171,68 @@ window.addEventListener("scroll", () => {
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 0;
+    z-index: 1;
 }
 
 .particles::before,
 .particles::after {
     content: "";
     position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #ff3b3b;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
+    background: #ff2020;
+
     box-shadow:
-        8vw 12vh #ff3b3b,
-        18vw 72vh #ffffff,
-        27vw 35vh #ff3b3b,
-        39vw 82vh #ffffff,
-        48vw 18vh #ff3b3b,
-        56vw 64vh #ffffff,
-        67vw 29vh #ff3b3b,
-        76vw 88vh #ffffff,
-        84vw 43vh #ff3b3b,
-        93vw 15vh #ffffff;
-    animation: floatParticles 12s linear infinite;
-    opacity: 0.55;
+        5vw 15vh #ff2020,
+        12vw 70vh #ffffff,
+        19vw 35vh #ff2020,
+        27vw 82vh #ffffff,
+        34vw 20vh #ff2020,
+        42vw 65vh #ffffff,
+        50vw 12vh #ff2020,
+        58vw 78vh #ffffff,
+        66vw 30vh #ff2020,
+        74vw 60vh #ffffff,
+        82vw 18vh #ff2020,
+        90vw 75vh #ffffff,
+        96vw 42vh #ff2020;
+
+    opacity: 0.45;
+    animation: floatParticles 10s ease-in-out infinite;
 }
 
 .particles::after {
     width: 2px;
     height: 2px;
+
+    box-shadow:
+        8vw 45vh #ffffff,
+        16vw 20vh #ff2020,
+        25vw 60vh #ffffff,
+        38vw 40vh #ff2020,
+        47vw 90vh #ffffff,
+        55vw 35vh #ff2020,
+        63vw 15vh #ffffff,
+        72vw 85vh #ff2020,
+        81vw 50vh #ffffff,
+        94vw 25vh #ff2020;
+
     opacity: 0.3;
-    animation-duration: 18s;
-    animation-delay: -6s;
+    animation-duration: 16s;
+    animation-delay: -5s;
 }
 
 @keyframes floatParticles {
     0% {
-        transform: translateY(30px);
+        transform: translateY(25px);
     }
 
     50% {
-        transform: translateY(-30px);
+        transform: translateY(-25px);
     }
 
     100% {
-        transform: translateY(30px);
+        transform: translateY(25px);
     }
 }
