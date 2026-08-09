@@ -236,3 +236,20 @@ window.addEventListener("scroll", () => {
         transform: translateY(25px);
     }
 }
+/* ===== MOUSE GLOW ===== */
+
+.mouse-glow {
+    position: fixed;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(
+        circle,
+        rgba(255, 30, 30, 0.12) 0%,
+        rgba(255, 30, 30, 0.05) 35%,
+        transparent 70%
+    );
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
