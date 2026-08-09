@@ -466,5 +466,15 @@
 
 <script src="script.js"></script>
 <div class="particles"></div>
+    <div class="mouse-glow"></div>
+
+<script>
+const glow = document.querySelector('.mouse-glow');
+
+document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+});
+</script>
 </body>
 </html>
