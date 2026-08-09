@@ -1284,3 +1284,236 @@ footer .copyright {
 
     box-shadow: 0 0 12px rgba(255, 30, 30, 0.6);
 }
+/* =========================================================
+   PETE JUNIOR — HERO UPGRADE
+   Cyber Glow / Premium Interface
+   ========================================================= */
+
+/* Stronger hero atmosphere */
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 650px;
+    height: 650px;
+    left: 38%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 30, 30, 0.10) 0%,
+        rgba(255, 30, 30, 0.04) 30%,
+        transparent 70%
+    );
+
+    filter: blur(25px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Subtle scanline effect */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(255, 255, 255, 0.012) 4px
+    );
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Bring hero content above effects */
+.hero-content,
+.hero-visual {
+    position: relative;
+    z-index: 2;
+}
+
+/* Give PETE more presence */
+.hero h1 {
+    text-shadow:
+        0 0 40px rgba(255, 255, 255, 0.025),
+        0 0 80px rgba(255, 30, 30, 0.04);
+}
+
+/* Make JUNIOR feel more futuristic */
+.hero h1 span {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    text-shadow: 0 0 25px rgba(255, 30, 30, 0.05);
+}
+
+/* Upgrade the PJ core */
+.core {
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 30, 30, 0.10),
+            rgba(5, 5, 5, 0.85) 60%,
+            transparent 70%
+        );
+
+    box-shadow:
+        0 0 30px rgba(255, 30, 30, 0.18),
+        0 0 90px rgba(255, 30, 30, 0.08),
+        inset 0 0 35px rgba(255, 30, 30, 0.10);
+
+    animation: corePulse 3s ease-in-out infinite;
+}
+
+/* Inner ring */
+.core::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+
+    border: 1px dashed rgba(255, 30, 30, 0.35);
+    border-radius: 50%;
+
+    animation: coreSpin 12s linear infinite;
+}
+
+/* Tiny center glow */
+.core::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+
+    background: #ff1e1e;
+    border-radius: 50%;
+
+    box-shadow: 0 0 20px #ff1e1e;
+}
+
+/* Make PJ stay above the effects */
+.core span {
+    position: relative;
+    z-index: 3;
+}
+
+/* More alive orbit system */
+.orbit-one {
+    animation: orbitSpin 18s linear infinite;
+}
+
+.orbit-two {
+    animation: orbitSpinReverse 24s linear infinite;
+}
+
+/* Better floating code */
+.floating-code {
+    text-shadow: 0 0 15px rgba(255, 30, 30, 0.7);
+}
+
+/* Animations */
+@keyframes corePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.035);
+    }
+}
+
+@keyframes coreSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes orbitSpin {
+    from {
+        transform: rotate(25deg);
+    }
+
+    to {
+        transform: rotate(385deg);
+    }
+}
+
+@keyframes orbitSpinReverse {
+    from {
+        transform: rotate(-35deg);
+    }
+
+    to {
+        transform: rotate(-395deg);
+    }
+}
+
+/* Hero entrance */
+.hero-content {
+    animation: heroReveal 1s ease-out both;
+}
+
+.hero-visual {
+    animation: visualReveal 1.2s ease-out 0.15s both;
+}
+
+@keyframes heroReveal {
+    from {
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes visualReveal {
+    from {
+        opacity: 0;
+        transform: translateX(25px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* Mobile protection */
+@media (max-width: 800px) {
+    .hero {
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        gap: 50px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-visual {
+        width: min(80vw, 360px);
+    }
+
+    .hero::before {
+        left: 50%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .core,
+    .orbit-one,
+    .orbit-two,
+    .core::before,
+    .hero-content,
+    .hero-visual {
+        animation: none;
+    }
+}
