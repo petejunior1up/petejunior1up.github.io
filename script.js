@@ -164,3 +164,57 @@ window.addEventListener("scroll", () => {
 
 });
 });
+/* ===== FLOATING PARTICLES ===== */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.particles::before,
+.particles::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ff3b3b;
+    border-radius: 50%;
+    box-shadow:
+        8vw 12vh #ff3b3b,
+        18vw 72vh #ffffff,
+        27vw 35vh #ff3b3b,
+        39vw 82vh #ffffff,
+        48vw 18vh #ff3b3b,
+        56vw 64vh #ffffff,
+        67vw 29vh #ff3b3b,
+        76vw 88vh #ffffff,
+        84vw 43vh #ff3b3b,
+        93vw 15vh #ffffff;
+    animation: floatParticles 12s linear infinite;
+    opacity: 0.55;
+}
+
+.particles::after {
+    width: 2px;
+    height: 2px;
+    opacity: 0.3;
+    animation-duration: 18s;
+    animation-delay: -6s;
+}
+
+@keyframes floatParticles {
+    0% {
+        transform: translateY(30px);
+    }
+
+    50% {
+        transform: translateY(-30px);
+    }
+
+    100% {
+        transform: translateY(30px);
+    }
+}
