@@ -1835,3 +1835,53 @@ footer .copyright {
             inset 0 0 25px rgba(255, 30, 30, 0.2);
     }
 }
+/* =========================================================
+   HERO VISUAL — COMPOSITION FIX
+   ========================================================= */
+
+.hero-visual {
+    transform: translateY(-25px);
+}
+
+/* Keep the full orbital system inside the hero */
+.orbit-one {
+    width: 82%;
+    height: 82%;
+}
+
+.orbit-two {
+    width: 100%;
+    height: 48%;
+}
+
+/* Move floating elements inward */
+.code-one {
+    top: 10%;
+    right: 8%;
+}
+
+.code-two {
+    bottom: 12%;
+    left: 8%;
+}
+
+.code-three {
+    top: 52%;
+    right: 4%;
+}
+
+/* Desktop: give the visual a little more breathing room */
+@media (min-width: 901px) {
+    .hero-visual {
+        width: 40%;
+        max-width: 560px;
+        transform: translateY(-35px);
+    }
+}
+
+/* Mobile: don't push the visual too far upward */
+@media (max-width: 900px) {
+    .hero-visual {
+        transform: translateY(0);
+    }
+}
