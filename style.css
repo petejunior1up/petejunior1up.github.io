@@ -1308,7 +1308,7 @@ footer .copyright {
 
     filter: blur(25px);
     pointer-events: none;
-    z-index: 0;
+    z-index: 9999;
 }
 
 /* Subtle scanline effect */
@@ -1325,7 +1325,7 @@ footer .copyright {
     );
 
     pointer-events: none;
-    z-index: 0;
+    z-index: 9999;
 }
 
 /* Bring hero content above effects */
@@ -1899,7 +1899,7 @@ footer .copyright {
         transparent 70%
     );
     transform: translate(-50%, -50%);
-    z-index: 0;
+    z-index: 9999;
     opacity: 0;
     transition: opacity 0.25s ease;
 }
