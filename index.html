@@ -464,25 +464,41 @@
 
     </footer>
 
-<script src="script.js"></script>
-<div class="particles"></div>
-    <div class="mouse-glow"></div>
+/* ================================
+   PREMIUM MOUSE GLOW
+   ================================ */
 
-<script>
-const glow = document.querySelector('.mouse-glow');
+.mouse-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
 
-document.addEventListener('mousemove', (e) => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-});
-</script>
-    <script>
-const glow = document.querySelector('.mouse-glow');
+    width: 420px;
+    height: 420px;
 
-document.addEventListener('mousemove', (e) => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-    glow.style.opacity = '1';
+    border-radius: 50%;
+    pointer-events: none;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 0, 70, 0.16) 0%,
+        rgba(255, 0, 70, 0.08) 25%,
+        rgba(255, 0, 70, 0.035) 45%,
+        transparent 72%
+    );
+
+    transform: translate3d(-50%, -50%, 0);
+
+    opacity: 0;
+
+    z-index: 9999;
+
+    filter: blur(2px);
+
+    will-change: transform, left, top, opacity;
+
+    transition: opacity 0.3s ease;
+}
 });
 
 document.addEventListener('mouseleave', () => {
