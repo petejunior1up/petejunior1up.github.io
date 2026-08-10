@@ -143,7 +143,7 @@ function typeEffect() {
 
 
 typeEffect();
-   /* ==========================
+/* ==========================
    SCROLL PROGRESS BAR
 ========================== */
 
@@ -157,10 +157,17 @@ window.addEventListener("scroll", () => {
         document.documentElement.scrollHeight -
         window.innerHeight;
 
-    const progress =
-        (scrollTop / pageHeight) * 100;
+    // Guard against division by zero on very short pages
+    const progress = pageHeight > 0 ? (scrollTop / pageHeight) * 100 : 0;
 
     progressBar.style.width = progress + "%";
 
 });
+
+// Optional: safe glow mouseleave handler (no error if element doesn't exist)
+const glow = document.getElementById('glow');
+document.addEventListener('mouseleave', () => {
+  if (glow) glow.style.opacity = '0';
+});
+
 });
