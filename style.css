@@ -1,14 +1,9 @@
-/* =========================================================
-   PETE JUNIOR — PERSONAL PORTFOLIO
-   Dark / Cyber / Developer
-   ========================================================= */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 
-/* =========================
+/* =========================================================
    RESET
-   ========================= */
+   ========================================================= */
 
 * {
     margin: 0;
@@ -24,8 +19,8 @@ body {
     background: #050505;
     color: #f2f2f2;
     font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 a {
@@ -39,25 +34,27 @@ a {
 }
 
 
-/* =========================
-   GLOBAL BACKGROUND
-   ========================= */
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
+
     pointer-events: none;
+
     z-index: -2;
 
     background:
         linear-gradient(
-            rgba(255, 255, 255, 0.025) 1px,
+            rgba(255,255,255,0.025) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.025) 1px,
+            rgba(255,255,255,0.025) 1px,
             transparent 1px
         );
 
@@ -66,12 +63,15 @@ body::before {
 
 body::after {
     content: "";
+
     position: fixed;
+
     width: 500px;
     height: 500px;
+
     border-radius: 50%;
 
-    background: rgba(255, 0, 0, 0.08);
+    background: rgba(255,0,0,0.08);
 
     filter: blur(120px);
 
@@ -79,16 +79,41 @@ body::after {
     right: -200px;
 
     pointer-events: none;
+
     z-index: -1;
 }
 
 
-/* =========================
+/* =========================================================
+   SCROLL PROGRESS
+   ========================================================= */
+
+#scroll-progress {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 3px;
+
+    background: #ff1e1e;
+
+    box-shadow:
+        0 0 10px rgba(255,30,30,0.8),
+        0 0 25px rgba(255,30,30,0.35);
+
+    z-index: 9999;
+}
+
+
+/* =========================================================
    NAVBAR
-   ========================= */
+   ========================================================= */
 
 .navbar {
     width: 100%;
+
     padding: 25px 7%;
 
     display: flex;
@@ -96,6 +121,7 @@ body::after {
     justify-content: space-between;
 
     position: absolute;
+
     top: 0;
     left: 0;
 
@@ -120,8 +146,11 @@ body::after {
 
 .navbar nav a {
     font-family: 'Space Mono', monospace;
+
     font-size: 0.75rem;
+
     color: #999;
+
     transition: 0.3s ease;
 }
 
@@ -131,9 +160,11 @@ body::after {
 
 .nav-button {
     border: 1px solid #333;
+
     padding: 10px 18px;
 
     font-family: 'Space Mono', monospace;
+
     font-size: 0.7rem;
 
     transition: 0.3s ease;
@@ -141,14 +172,16 @@ body::after {
 
 .nav-button:hover {
     background: #ff1e1e;
+
     border-color: #ff1e1e;
+
     color: #050505;
 }
 
 
-/* =========================
+/* =========================================================
    HERO
-   ========================= */
+   ========================================================= */
 
 .hero {
     min-height: 100vh;
@@ -156,31 +189,126 @@ body::after {
     padding: 150px 7% 80px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     position: relative;
+
+    overflow: hidden;
+
+    isolation: isolate;
 }
+
+
+/* HERO RED ATMOSPHERE */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 800px;
+    height: 800px;
+
+    left: 65%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,20,20,0.22),
+            rgba(255,20,20,0.08) 30%,
+            transparent 70%
+        );
+
+    filter: blur(35px);
+
+    pointer-events: none;
+
+    z-index: -2;
+
+    animation: heroGlow 5s ease-in-out infinite;
+}
+
+
+/* HERO GRID */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,30,30,0.055) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,30,30,0.055) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image:
+        radial-gradient(
+            circle at 70% 50%,
+            black,
+            transparent 70%
+        );
+
+    -webkit-mask-image:
+        radial-gradient(
+            circle at 70% 50%,
+            black,
+            transparent 70%
+        );
+
+    opacity: 0.45;
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
 
 .hero-content {
     width: 55%;
-    z-index: 2;
+
+    position: relative;
+
+    z-index: 3;
+
+    animation:
+        heroReveal 1s ease-out both;
 }
 
 .eyebrow,
 .section-label {
     font-family: 'Space Mono', monospace;
+
     font-size: 0.7rem;
+
     letter-spacing: 2px;
+
     color: #777;
 }
 
 .eyebrow span {
     display: inline-block;
+
     width: 7px;
     height: 7px;
 
     background: #ff1e1e;
+
     border-radius: 50%;
 
     margin-right: 8px;
@@ -188,41 +316,119 @@ body::after {
     box-shadow: 0 0 15px #ff1e1e;
 }
 
+
+/* HERO TITLE */
+
 .hero h1 {
     margin-top: 25px;
 
     font-size: clamp(5rem, 12vw, 11rem);
+
     line-height: 0.82;
 
     letter-spacing: -9px;
+
     font-weight: 800;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,0.08),
+        0 0 60px rgba(255,30,30,0.15);
 }
 
 .hero h1 span {
-    color: transparent;
+    color: #ff1e1e;
 
-    -webkit-text-stroke: 1px #555;
+    -webkit-text-stroke: 0;
+
+    text-shadow:
+        0 0 10px rgba(255,30,30,0.6),
+        0 0 30px rgba(255,30,30,0.35),
+        0 0 70px rgba(255,30,30,0.15);
 
     transition: 0.4s ease;
 }
 
 .hero h1 span:hover {
-    color: #ff1e1e;
-    -webkit-text-stroke: 1px #ff1e1e;
+    text-shadow:
+        0 0 15px rgba(255,30,30,0.9),
+        0 0 50px rgba(255,30,30,0.5),
+        0 0 100px rgba(255,30,30,0.25);
 }
+
+
+/* =========================================================
+   TYPING EFFECT
+   ========================================================= */
+
+.typing-container {
+    margin-top: 35px;
+
+    min-height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-family: 'Space Mono', monospace;
+
+    font-size: 0.9rem;
+
+    color: #aaa;
+}
+
+.typing-prefix {
+    color: #555;
+}
+
+#typing-text {
+    color: #ff1e1e;
+
+    text-shadow:
+        0 0 10px rgba(255,30,30,0.45);
+}
+
+.cursor {
+    color: #ff1e1e;
+
+    animation: cursorBlink 0.8s infinite;
+}
+
+@keyframes cursorBlink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION / BUTTONS
+   ========================================================= */
 
 .hero-description {
     max-width: 550px;
 
-    margin-top: 35px;
+    margin-top: 25px;
 
     color: #999;
+
     font-size: 1rem;
 }
 
 .hero-buttons {
     display: flex;
+
     gap: 15px;
+
     margin-top: 35px;
 }
 
@@ -231,6 +437,7 @@ body::after {
     padding: 14px 22px;
 
     font-family: 'Space Mono', monospace;
+
     font-size: 0.75rem;
 
     transition: 0.3s ease;
@@ -238,87 +445,180 @@ body::after {
 
 .primary-button {
     background: #ff1e1e;
+
     color: #050505;
 }
 
 .primary-button:hover {
-    box-shadow: 0 0 30px rgba(255, 30, 30, 0.35);
+    box-shadow:
+        0 0 30px rgba(255,30,30,0.35);
+
     transform: translateY(-3px);
 }
 
 .secondary-button {
     border: 1px solid #333;
+
     color: #aaa;
 }
 
 .secondary-button:hover {
     border-color: #ff1e1e;
+
     color: #ff1e1e;
 }
 
 
-/* =========================
+/* =========================================================
    HERO VISUAL
-   ========================= */
+   ========================================================= */
 
 .hero-visual {
-    width: 38%;
+    width: 40%;
+
+    max-width: 560px;
+
     aspect-ratio: 1;
 
     position: relative;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+    z-index: 3;
+
+    animation:
+        visualReveal 1.2s ease-out 0.15s both;
 }
 
 .core {
     width: 180px;
     height: 180px;
 
-    border: 1px solid #ff1e1e;
+    border: 1px solid rgba(255,30,30,0.75);
 
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     position: relative;
 
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,30,30,0.22),
+            rgba(10,10,10,0.92) 48%,
+            #050505 72%
+        );
+
     box-shadow:
-        0 0 40px rgba(255, 0, 0, 0.15),
-        inset 0 0 40px rgba(255, 0, 0, 0.08);
+        0 0 15px rgba(255,30,30,0.65),
+        0 0 45px rgba(255,30,30,0.35),
+        0 0 100px rgba(255,30,30,0.18),
+        inset 0 0 35px rgba(255,30,30,0.22);
+
+    animation: corePulse 2.8s ease-in-out infinite;
+}
+
+.core::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -14px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,30,30,0.7);
+
+    box-shadow:
+        0 0 15px rgba(255,30,30,0.5),
+        inset 0 0 15px rgba(255,30,30,0.2);
+
+    animation:
+        energyRing 5s linear infinite;
+}
+
+.core::after {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: #ff1e1e;
+
+    box-shadow:
+        0 0 8px #ff1e1e,
+        0 0 20px #ff1e1e,
+        0 0 45px rgba(255,30,30,0.9);
+
+    animation: coreDot 1.5s ease-in-out infinite;
 }
 
 .core span {
+    position: relative;
+
+    z-index: 5;
+
     font-size: 3rem;
+
     font-weight: 800;
 
     color: #ff1e1e;
 
-    text-shadow: 0 0 25px rgba(255, 30, 30, 0.7);
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.4),
+        0 0 25px rgba(255,30,30,0.6);
 }
+
+
+/* ORBITS */
 
 .orbit {
     position: absolute;
 
-    border: 1px solid rgba(255, 30, 30, 0.25);
+    border: 1px solid rgba(255,30,30,0.55);
 
     border-radius: 50%;
+
+    box-shadow:
+        0 0 10px rgba(255,30,30,0.25),
+        inset 0 0 10px rgba(255,30,30,0.08);
 }
 
 .orbit-one {
-    width: 75%;
-    height: 75%;
-    transform: rotate(25deg);
+    width: 82%;
+    height: 82%;
+
+    animation:
+        orbitOne 14s linear infinite;
 }
 
 .orbit-two {
-    width: 95%;
-    height: 45%;
-    transform: rotate(-35deg);
+    width: 100%;
+    height: 48%;
+
+    animation:
+        orbitTwo 19s linear infinite;
 }
+
+
+/* FLOATING CODE */
 
 .floating-code {
     position: absolute;
@@ -327,47 +627,39 @@ body::after {
 
     color: #ff1e1e;
 
-    opacity: 0.6;
+    opacity: 0.7;
 
-    animation: float 4s ease-in-out infinite;
+    text-shadow:
+        0 0 8px rgba(255,30,30,0.8),
+        0 0 25px rgba(255,30,30,0.45);
+
+    animation:
+        floatingCode 3s ease-in-out infinite;
 }
 
 .code-one {
-    top: 15%;
-    right: 5%;
+    top: 10%;
+    right: 8%;
 }
 
 .code-two {
-    bottom: 20%;
-    left: 5%;
+    bottom: 12%;
+    left: 8%;
 
     animation-delay: 1s;
 }
 
 .code-three {
-    top: 55%;
-    right: 0;
+    top: 52%;
+    right: 4%;
 
     animation-delay: 2s;
 }
 
-@keyframes float {
 
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-15px);
-    }
-
-}
-
-
-/* =========================
-   SECTIONS
-   ========================= */
+/* =========================================================
+   GENERAL SECTIONS
+   ========================================================= */
 
 .section {
     padding: 130px 7%;
@@ -386,6 +678,7 @@ body::after {
     font-size: clamp(2.8rem, 6vw, 6rem);
 
     line-height: 0.95;
+
     letter-spacing: -3px;
 }
 
@@ -397,14 +690,15 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
    MISSION
-   ========================= */
+   ========================================================= */
 
 .mission {
     padding: 160px 7%;
 
     border-top: 1px solid #1a1a1a;
+
     border-bottom: 1px solid #1a1a1a;
 }
 
@@ -421,9 +715,162 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+.terminal-section {
+    padding: 130px 7%;
+
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.terminal-heading {
+    margin-bottom: 60px;
+}
+
+.terminal-heading h2 {
+    margin-top: 20px;
+
+    font-size: clamp(2.8rem, 6vw, 6rem);
+
+    line-height: 0.95;
+
+    letter-spacing: -3px;
+}
+
+.terminal-heading h2 span {
+    color: #ff1e1e;
+}
+
+.terminal-window {
+    max-width: 1000px;
+
+    margin: auto;
+
+    border: 1px solid #222;
+
+    background: #080808;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
+
+    font-family: 'Space Mono', monospace;
+}
+
+.terminal-bar {
+    height: 48px;
+
+    padding: 0 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    border-bottom: 1px solid #222;
+
+    background: #0d0d0d;
+}
+
+.terminal-dots {
+    display: flex;
+
+    gap: 6px;
+}
+
+.terminal-dots span {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #333;
+}
+
+.terminal-bar p {
+    flex: 1;
+
+    color: #666;
+
+    font-size: 0.65rem;
+}
+
+.terminal-status {
+    color: #ff1e1e;
+
+    font-size: 0.6rem;
+
+    letter-spacing: 1px;
+}
+
+.terminal-output {
+    min-height: 230px;
+
+    max-height: 300px;
+
+    padding: 25px;
+
+    overflow-y: auto;
+
+    color: #888;
+
+    font-size: 0.75rem;
+}
+
+.terminal-output p {
+    margin-bottom: 12px;
+}
+
+.terminal-green {
+    color: #5cff8d;
+}
+
+.terminal-command {
+    color: #ff1e1e;
+}
+
+.terminal-input-area {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 15px 25px;
+
+    border-top: 1px solid #222;
+}
+
+.terminal-prompt {
+    color: #ff1e1e;
+
+    font-size: 0.7rem;
+
+    white-space: nowrap;
+}
+
+.terminal-input-area input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #f2f2f2;
+
+    font-family: 'Space Mono', monospace;
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
    ABOUT
-   ========================= */
+   ========================================================= */
 
 .about-grid {
     display: grid;
@@ -457,6 +904,7 @@ body::after {
     display: block;
 
     font-family: 'Space Mono', monospace;
+
     font-size: 0.65rem;
 
     color: #666;
@@ -476,21 +924,23 @@ body::after {
 
     padding: 30px;
 
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255,255,255,0.02);
 
     transition: 0.4s ease;
 }
 
 .about-card:hover {
-    border-color: rgba(255, 30, 30, 0.4);
+    border-color: rgba(255,30,30,0.4);
 
     transform: translateY(-5px);
 
-    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 20px 70px rgba(0,0,0,0.4);
 }
 
 .card-top {
     display: flex;
+
     justify-content: space-between;
 
     font-family: 'Space Mono', monospace;
@@ -515,24 +965,29 @@ body::after {
     border: 1px solid #ff1e1e;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     color: #ff1e1e;
 
     font-size: 1.7rem;
+
     font-weight: 800;
 
-    box-shadow: 0 0 40px rgba(255, 0, 0, 0.12);
+    box-shadow:
+        0 0 40px rgba(255,0,0,0.12);
 }
 
 .about-card h3 {
     text-align: center;
+
     font-size: 1.5rem;
 }
 
 .about-card > p {
     text-align: center;
+
     color: #666;
 
     font-family: 'Space Mono', monospace;
@@ -544,6 +999,7 @@ body::after {
 
 .card-line {
     height: 1px;
+
     background: #222;
 
     margin: 30px 0;
@@ -574,9 +1030,9 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
    SKILLS
-   ========================= */
+   ========================================================= */
 
 .skills {
     border-top: 1px solid #1a1a1a;
@@ -585,7 +1041,8 @@ body::after {
 .skills-grid {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 15px;
 
@@ -609,7 +1066,7 @@ body::after {
 
     transform: translateY(-8px);
 
-    background: rgba(255, 30, 30, 0.025);
+    background: rgba(255,30,30,0.025);
 }
 
 .skill-card > span {
@@ -635,20 +1092,22 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
    PROJECTS
-   ========================= */
+   ========================================================= */
 
 .project-card {
     display: grid;
 
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns:
+        100px 1fr 100px;
 
     gap: 30px;
 
     padding: 45px 0;
 
     border-top: 1px solid #222;
+
     border-bottom: 1px solid #222;
 
     transition: 0.4s ease;
@@ -656,6 +1115,7 @@ body::after {
 
 .project-card:hover {
     padding-left: 20px;
+
     padding-right: 20px;
 
     border-color: #ff1e1e;
@@ -726,7 +1186,8 @@ body::after {
 .future-projects {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 15px;
 
@@ -764,9 +1225,9 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
    FUTURE
-   ========================= */
+   ========================================================= */
 
 .future {
     border-top: 1px solid #1a1a1a;
@@ -781,9 +1242,9 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
    CONTACT
-   ========================= */
+   ========================================================= */
 
 .contact {
     border-top: 1px solid #1a1a1a;
@@ -826,9 +1287,9 @@ body::after {
 }
 
 
-/* =========================
+/* =========================================================
    FOOTER
-   ========================= */
+   ========================================================= */
 
 footer {
     padding: 60px 7% 30px;
@@ -840,6 +1301,8 @@ footer {
     align-items: center;
 
     justify-content: space-between;
+
+    gap: 20px;
 }
 
 .footer-logo {
@@ -861,9 +1324,143 @@ footer .copyright {
 }
 
 
-/* =========================
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes heroGlow {
+
+    0%,
+    100% {
+        opacity: 0.7;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.95);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.08);
+    }
+}
+
+@keyframes corePulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+@keyframes energyRing {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes coreDot {
+
+    0%,
+    100% {
+        transform:
+            translate(-50%, -50%)
+            scale(0.7);
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.3);
+    }
+}
+
+@keyframes orbitOne {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes orbitTwo {
+
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes floatingCode {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes heroReveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateX(-25px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateX(0);
+    }
+}
+
+@keyframes visualReveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateX(25px)
+            scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
    RESPONSIVE
-   ========================= */
+   ========================================================= */
 
 @media (max-width: 900px) {
 
@@ -897,26 +1494,32 @@ footer .copyright {
 
     .about-grid {
         grid-template-columns: 1fr;
-
-        gap: 50px;
     }
 
     .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
+    .project-card {
+        grid-template-columns:
+            60px 1fr 50px;
+    }
+
+    .section,
+    .terminal-section {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .mission {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
 }
 
 
 @media (max-width: 600px) {
-
-    .navbar {
-        padding: 20px 5%;
-    }
-
-    .nav-button {
-        display: none;
-    }
 
     .hero {
         padding-top: 130px;
@@ -935,61 +1538,36 @@ footer .copyright {
     .hero-buttons {
         flex-direction: column;
 
-        width: 100%;
-    }
-
-    .primary-button,
-    .secondary-button {
-        text-align: center;
+        align-items: flex-start;
     }
 
     .hero-visual {
-        width: 100%;
+        width: 90%;
     }
 
     .core {
-        width: 130px;
-        height: 130px;
+        width: 150px;
+        height: 150px;
     }
 
     .core span {
-        font-size: 2rem;
+        font-size: 2.4rem;
     }
 
-    .section,
-    .mission {
-        padding: 100px 5%;
-    }
-
-    .section h2,
-    .mission h2,
-    .future h2,
-    .contact h2 {
-        font-size: clamp(2.5rem, 13vw, 4rem);
-
-        letter-spacing: -2px;
+    .typing-container {
+        flex-wrap: wrap;
     }
 
     .skills-grid {
         grid-template-columns: 1fr;
     }
 
-    .skill-card {
-        min-height: 200px;
-    }
-
-    .skill-card h3 {
-        margin-top: 45px;
-    }
-
     .project-card {
-        grid-template-columns: 1fr;
-
-        gap: 15px;
+        grid-template-columns: 45px 1fr;
     }
 
     .project-arrow {
-        text-align: left;
+        display: none;
     }
 
     .future-projects {
@@ -1000,945 +1578,29 @@ footer .copyright {
         flex-direction: column;
 
         align-items: flex-start;
-
-        gap: 20px;
-    }
-
-}/* =========================================================
-   TERMINAL
-   ========================================================= */
-
-.terminal-section {
-    padding: 130px 7%;
-    border-bottom: 1px solid #1a1a1a;
-}
-
-.terminal-heading {
-    margin-bottom: 50px;
-}
-
-.terminal-heading h2 {
-    margin-top: 20px;
-
-    font-size: clamp(2.8rem, 6vw, 6rem);
-
-    line-height: 0.95;
-
-    letter-spacing: -3px;
-}
-
-.terminal-heading h2 span {
-    color: #ff1e1e;
-}
-
-
-/* TERMINAL WINDOW */
-
-.terminal-window {
-    width: 100%;
-    max-width: 1000px;
-
-    margin: 0 auto;
-
-    background: #080808;
-
-    border: 1px solid #242424;
-
-    box-shadow:
-        0 30px 100px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(255, 0, 0, 0.04);
-
-    font-family: 'Space Mono', monospace;
-
-    transition: 0.4s ease;
-}
-
-.terminal-window:hover {
-    border-color: rgba(255, 30, 30, 0.4);
-}
-
-
-/* TERMINAL TOP BAR */
-
-.terminal-bar {
-    height: 45px;
-
-    padding: 0 18px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    border-bottom: 1px solid #202020;
-
-    background: #0c0c0c;
-}
-
-.terminal-bar p {
-    font-size: 0.65rem;
-
-    color: #666;
-
-    letter-spacing: 1px;
-}
-
-.terminal-dots {
-    display: flex;
-
-    gap: 6px;
-}
-
-.terminal-dots span {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #333;
-}
-
-.terminal-dots span:first-child {
-    background: #ff1e1e;
-
-    box-shadow: 0 0 10px rgba(255, 30, 30, 0.4);
-}
-
-.terminal-status {
-    color: #555;
-
-    font-size: 0.55rem;
-}
-
-
-/* TERMINAL OUTPUT */
-
-.terminal-output {
-    min-height: 260px;
-
-    padding: 25px;
-
-    overflow-y: auto;
-
-    color: #777;
-
-    font-size: 0.75rem;
-}
-
-.terminal-output p {
-    margin-bottom: 12px;
-}
-
-.terminal-green {
-    color: #ff1e1e;
-}
-
-.terminal-command {
-    color: #ddd;
-}
-
-
-/* TERMINAL INPUT */
-
-.terminal-input-area {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 18px 25px;
-
-    border-top: 1px solid #1b1b1b;
-}
-
-.terminal-prompt {
-    color: #ff1e1e;
-
-    font-size: 0.7rem;
-
-    white-space: nowrap;
-}
-
-#terminalInput {
-    flex: 1;
-
-    border: none;
-
-    outline: none;
-
-    background: transparent;
-
-    color: #eee;
-
-    font-family: 'Space Mono', monospace;
-
-    font-size: 0.75rem;
-}
-
-#terminalInput::selection {
-    background: #ff1e1e;
-
-    color: #050505;
-}
-
-
-/* TERMINAL MOBILE */
-
-@media (max-width: 600px) {
-
-    .terminal-section {
-        padding: 100px 5%;
-    }
-
-    .terminal-heading h2 {
-        font-size: clamp(2.5rem, 13vw, 4rem);
-    }
-
-    .terminal-output {
-        min-height: 220px;
-
-        padding: 20px;
-
-        font-size: 0.65rem;
     }
 
     .terminal-input-area {
-        padding: 16px;
-
         align-items: flex-start;
 
         flex-direction: column;
-
-        gap: 8px;
     }
 
-    #terminalInput {
-        width: 100%;
-    }
-
-}
-/* =========================
-   TYPEWRITER EFFECT
-========================= */
-
-.typing-container {
-    margin-top: 25px;
-
-    font-family: 'Space Mono', monospace;
-
-    font-size: 1rem;
-
-    color: #888;
-
-    letter-spacing: 1px;
-}
-
-.typing-prefix {
-    color: #ff1e1e;
-
-    margin-right: 8px;
-}
-
-#typing-text {
-    color: #eee;
-}
-
-
-.cursor {
-    color: #ff1e1e;
-
-    animation: blink 0.8s infinite;
-}
-
-
-@keyframes blink {
-
-    0%, 50% {
-        opacity: 1;
-    }
-
-    51%, 100% {
-        opacity: 0;
-    }
-
-}
-/* ==========================
-   SCROLL PROGRESS BAR
-========================== */
-
-#scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 0%;
-    height: 4px;
-
-    background: linear-gradient(90deg, #ff1e1e, #ff5e5e);
-
-    z-index: 9999;
-
-    transition: width 0.1s linear;
-
-    box-shadow: 0 0 12px rgba(255, 30, 30, 0.6);
-}
-/* =========================================================
-   PETE JUNIOR — HERO UPGRADE
-   Cyber Glow / Premium Interface
-   ========================================================= */
-
-/* Stronger hero atmosphere */
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 650px;
-    height: 650px;
-    left: 38%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    background: radial-gradient(
-        circle,
-        rgba(255, 30, 30, 0.10) 0%,
-        rgba(255, 30, 30, 0.04) 30%,
-        transparent 70%
-    );
-
-    filter: blur(25px);
-    pointer-events: none;
-    z-index: 9999;
-}
-
-/* Subtle scanline effect */
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background: repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 3px,
-        rgba(255, 255, 255, 0.012) 4px
-    );
-
-    pointer-events: none;
-    z-index: 9999;
-}
-
-/* Bring hero content above effects */
-.hero-content,
-.hero-visual {
-    position: relative;
-    z-index: 2;
-}
-
-/* Give PETE more presence */
-.hero h1 {
-    text-shadow:
-        0 0 40px rgba(255, 255, 255, 0.025),
-        0 0 80px rgba(255, 30, 30, 0.04);
-}
-
-/* Make JUNIOR feel more futuristic */
-.hero h1 span {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
-    text-shadow: 0 0 25px rgba(255, 30, 30, 0.05);
-}
-
-/* Upgrade the PJ core */
-.core {
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 30, 30, 0.10),
-            rgba(5, 5, 5, 0.85) 60%,
-            transparent 70%
-        );
-
-    box-shadow:
-        0 0 30px rgba(255, 30, 30, 0.18),
-        0 0 90px rgba(255, 30, 30, 0.08),
-        inset 0 0 35px rgba(255, 30, 30, 0.10);
-
-    animation: corePulse 3s ease-in-out infinite;
-}
-
-/* Inner ring */
-.core::before {
-    content: "";
-    position: absolute;
-    inset: 12px;
-
-    border: 1px dashed rgba(255, 30, 30, 0.35);
-    border-radius: 50%;
-
-    animation: coreSpin 12s linear infinite;
-}
-
-/* Tiny center glow */
-.core::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-
-    background: #ff1e1e;
-    border-radius: 50%;
-
-    box-shadow: 0 0 20px #ff1e1e;
-}
-
-/* Make PJ stay above the effects */
-.core span {
-    position: relative;
-    z-index: 3;
-}
-
-/* More alive orbit system */
-.orbit-one {
-    animation: orbitSpin 18s linear infinite;
-}
-
-.orbit-two {
-    animation: orbitSpinReverse 24s linear infinite;
-}
-
-/* Better floating code */
-.floating-code {
-    text-shadow: 0 0 15px rgba(255, 30, 30, 0.7);
-}
-
-/* Animations */
-@keyframes corePulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.035);
+    .terminal-input-area input {
+        padding-left: 0;
     }
 }
 
-@keyframes coreSpin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes orbitSpin {
-    from {
-        transform: rotate(25deg);
-    }
-
-    to {
-        transform: rotate(385deg);
-    }
-}
-
-@keyframes orbitSpinReverse {
-    from {
-        transform: rotate(-35deg);
-    }
-
-    to {
-        transform: rotate(-395deg);
-    }
-}
-
-/* Hero entrance */
-.hero-content {
-    animation: heroReveal 1s ease-out both;
-}
-
-.hero-visual {
-    animation: visualReveal 1.2s ease-out 0.15s both;
-}
-
-@keyframes heroReveal {
-    from {
-        opacity: 0;
-        transform: translateX(-25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes visualReveal {
-    from {
-        opacity: 0;
-        transform: translateX(25px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-}
-
-/* Mobile protection */
-@media (max-width: 800px) {
-    .hero {
-        flex-direction: column;
-        justify-content: center;
-        text-align: left;
-        gap: 50px;
-    }
-
-    .hero-content {
-        width: 100%;
-    }
-
-    .hero-visual {
-        width: min(80vw, 360px);
-    }
-
-    .hero::before {
-        left: 50%;
-    }
-}
 
 @media (prefers-reduced-motion: reduce) {
-    .core,
-    .orbit-one,
-    .orbit-two,
-    .core::before,
-    .hero-content,
-    .hero-visual {
-        animation: none;
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
     }
 }
-/* =========================================================
-   PETE JUNIOR — HERO V2
-   HIGH VISIBILITY CYBER EFFECTS
-   ========================================================= */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-}
-
-/* RED ATMOSPHERE */
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 800px;
-    height: 800px;
-    left: 55%;
-    top: 45%;
-    transform: translate(-50%, -50%);
-
-    background: radial-gradient(
-        circle,
-        rgba(255, 20, 20, 0.22) 0%,
-        rgba(255, 20, 20, 0.10) 25%,
-        rgba(255, 20, 20, 0.035) 50%,
-        transparent 72%
-    );
-
-    filter: blur(35px);
-    pointer-events: none;
-    z-index: -2;
-
-    animation: heroGlow 5s ease-in-out infinite;
-}
-
-/* CYBER GRID */
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background-image:
-        linear-gradient(rgba(255, 30, 30, 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 30, 30, 0.055) 1px, transparent 1px);
-
-    background-size: 45px 45px;
-
-    mask-image: radial-gradient(
-        circle at 65% 50%,
-        black,
-        transparent 70%
-    );
-
-    -webkit-mask-image: radial-gradient(
-        circle at 65% 50%,
-        black,
-        transparent 70%
-    );
-
-    opacity: 0.45;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* KEEP CONTENT ABOVE EFFECTS */
-.hero-content,
-.hero-visual {
-    position: relative;
-    z-index: 3;
-}
-
-
-/* =========================================================
-   HERO TITLE
-   ========================================================= */
-
-.hero h1 {
-    text-shadow:
-        0 0 20px rgba(255, 255, 255, 0.08),
-        0 0 60px rgba(255, 30, 30, 0.15);
-}
-
-.hero h1 span {
-    color: #ff1e1e;
-
-    -webkit-text-stroke: 0;
-
-    text-shadow:
-        0 0 10px rgba(255, 30, 30, 0.6),
-        0 0 30px rgba(255, 30, 30, 0.35),
-        0 0 70px rgba(255, 30, 30, 0.15);
-}
-
-
-/* =========================================================
-   PJ CORE
-   ========================================================= */
-
-.core {
-    position: relative;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 30, 30, 0.22) 0%,
-            rgba(10, 10, 10, 0.92) 48%,
-            #050505 72%
-        );
-
-    border: 1px solid rgba(255, 30, 30, 0.65);
-
-    box-shadow:
-        0 0 15px rgba(255, 30, 30, 0.65),
-        0 0 45px rgba(255, 30, 30, 0.35),
-        0 0 100px rgba(255, 30, 30, 0.18),
-        inset 0 0 35px rgba(255, 30, 30, 0.22);
-
-    animation: corePulseV2 2.8s ease-in-out infinite;
-}
-
-/* ENERGY RING */
-.core::before {
-    content: "";
-
-    position: absolute;
-    inset: -14px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(255, 30, 30, 0.75);
-
-    box-shadow:
-        0 0 15px rgba(255, 30, 30, 0.5),
-        inset 0 0 15px rgba(255, 30, 30, 0.2);
-
-    animation: energyRing 5s linear infinite;
-}
-
-/* CORE CENTER */
-.core::after {
-    content: "";
-
-    position: absolute;
-
-    width: 10px;
-    height: 10px;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    background: #ff1e1e;
-
-    box-shadow:
-        0 0 8px #ff1e1e,
-        0 0 20px #ff1e1e,
-        0 0 45px rgba(255, 30, 30, 0.9);
-
-    animation: coreDot 1.5s ease-in-out infinite;
-}
-
-.core span {
-    position: relative;
-    z-index: 5;
-
-    text-shadow:
-        0 0 10px rgba(255, 255, 255, 0.4),
-        0 0 25px rgba(255, 30, 30, 0.6);
-}
-
-
-/* =========================================================
-   ORBITS
-   ========================================================= */
-
-.orbit {
-    border-color: rgba(255, 30, 30, 0.55) !important;
-
-    box-shadow:
-        0 0 10px rgba(255, 30, 30, 0.25),
-        inset 0 0 10px rgba(255, 30, 30, 0.08);
-}
-
-.orbit-one {
-    animation: orbitOneV2 14s linear infinite;
-}
-
-.orbit-two {
-    animation: orbitTwoV2 19s linear infinite;
-}
-
-
-/* =========================================================
-   FLOATING CODE
-   ========================================================= */
-
-.floating-code {
-    color: #ff1e1e !important;
-
-    text-shadow:
-        0 0 8px rgba(255, 30, 30, 0.8),
-        0 0 25px rgba(255, 30, 30, 0.45);
-
-    animation: floatingCode 3s ease-in-out infinite;
-}
-
-.code-two {
-    animation-delay: 1s;
-}
-
-.code-three {
-    animation-delay: 2s;
-}
-
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-@keyframes heroGlow {
-    0%, 100% {
-        opacity: 0.7;
-        transform: translate(-50%, -50%) scale(0.95);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.08);
-    }
-}
-
-@keyframes corePulseV2 {
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.06);
-    }
-}
-
-@keyframes energyRing {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes coreDot {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(0.7);
-    }
-
-    50% {
-        transform: translate(-50%, -50%) scale(1.3);
-    }
-}
-
-@keyframes orbitOneV2 {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes orbitTwoV2 {
-    from {
-        transform: rotate(360deg);
-    }
-
-    to {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes floatingCode {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .hero::after {
-        background-size: 30px 30px;
-    }
-
-    .hero::before {
-        width: 550px;
-        height: 550px;
-    }
-
-    .core {
-        box-shadow:
-            0 0 15px rgba(255, 30, 30, 0.6),
-            0 0 45px rgba(255, 30, 30, 0.25),
-            inset 0 0 25px rgba(255, 30, 30, 0.2);
-    }
-}
-/* =========================================================
-   HERO VISUAL — COMPOSITION FIX
-   ========================================================= */
-
-.hero-visual {
-    transform: translateY(-25px);
-}
-
-/* Keep the full orbital system inside the hero */
-.orbit-one {
-    width: 82%;
-    height: 82%;
-}
-
-.orbit-two {
-    width: 100%;
-    height: 48%;
-}
-
-/* Move floating elements inward */
-.code-one {
-    top: 10%;
-    right: 8%;
-}
-
-.code-two {
-    bottom: 12%;
-    left: 8%;
-}
-
-.code-three {
-    top: 52%;
-    right: 4%;
-}
-
-/* Desktop: give the visual a little more breathing room */
-@media (min-width: 901px) {
-    .hero-visual {
-        width: 40%;
-        max-width: 560px;
-        transform: translateY(-35px);
-    }
-}
-
-/* Mobile: don't push the visual too far upward */
-@media (max-width: 900px) {
-    .hero-visual {
-        transform: translateY(0);
-    }
-}
-/* Mouse Glow */
-.mouse-glow {
-    position: fixed;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    pointer-events: none;
-    background: radial-gradient(
-        circle,
-        rgba(255, 0, 60, 0.12) 0%,
-        rgba(255, 0, 60, 0.05) 30%,
-        transparent 70%
-    );
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-}
-/* ================================
-   PREMIUM MOUSE GLOW
-   ================================ */
-
-.mouse-glow {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 420px;
-    height: 420px;
-
-    border-radius: 50%;
-    pointer-events: none;
-
-    background: radial-gradient(
-        circle,
-        rgba(255, 0, 70, 0.16) 0%,
-        rgba(255, 0, 70, 0.08) 25%,
-        rgba(255, 0, 70, 0.035) 45%,
-        transparent 72%
-    );
-
-    transform: translate3d(-50%, -50%, 0);
-
-    opacity: 0;
-
-    z-index: 9999;
-
-    filter: blur(2px);
-
-    will-change: transform, left, top, opacity;
-
-    transition: opacity 0.3s ease;
-}
-});
-<script src="script.js"></script>
-</body>
-</html>
