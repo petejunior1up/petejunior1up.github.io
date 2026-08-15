@@ -1604,7 +1604,9 @@ footer .copyright {
         scroll-behavior: auto !important;
     }
 }
-/* ========== PROJECTS UPGRADE ========== */
+/* =========================================================
+   PROJECTS SECTION (CLEAN VERSION)
+   ========================================================= */
 
 .projects-grid {
   display: grid;
@@ -1613,44 +1615,45 @@ footer .copyright {
   margin-top: 50px;
 }
 
-.project-card {
+.projects-grid .project-card {
   background: #111;
   border: 1px solid #222;
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.35s ease;
-  position: relative;
+  display: block !important;
 }
 
-.project-card:hover {
+.projects-grid .project-card:hover {
   transform: translateY(-10px);
   border-color: #ff1e1e;
   box-shadow: 0 20px 40px rgba(255, 30, 30, 0.15);
 }
 
-.project-image {
+.projects-grid .project-image {
   width: 100%;
   height: 200px;
   overflow: hidden;
   background: #0a0a0a;
 }
 
-.project-image img {
+.projects-grid .project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  display: block;
 }
 
-.project-card:hover .project-image img {
+.projects-grid .project-card:hover .project-image img {
   transform: scale(1.08);
 }
 
-.project-content {
+.projects-grid .project-content {
   padding: 25px;
 }
 
-.project-type {
+.projects-grid .project-type {
   font-size: 12px;
   color: #ff1e1e;
   letter-spacing: 1px;
@@ -1658,26 +1661,26 @@ footer .copyright {
   font-weight: 600;
 }
 
-.project-content h3 {
+.projects-grid .project-content h3 {
   font-size: 22px;
-  margin-bottom: 12px;
+  margin: 0 0 12px 0;
 }
 
-.project-content p {
+.projects-grid .project-content p {
   color: #aaa;
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 18px;
 }
 
-.project-tags {
+.projects-grid .project-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 20px;
 }
 
-.project-tags span {
+.projects-grid .project-tags span {
   background: #1a1a1a;
   color: #ccc;
   padding: 5px 12px;
@@ -1686,7 +1689,7 @@ footer .copyright {
   border: 1px solid #333;
 }
 
-.project-link {
+.projects-grid .project-link {
   display: inline-block;
   color: #ff1e1e;
   font-weight: 600;
@@ -1694,20 +1697,19 @@ footer .copyright {
   transition: 0.3s;
 }
 
-.project-link:hover {
+.projects-grid .project-link:hover {
   letter-spacing: 1px;
 }
 
-.coming-soon {
-  opacity: 0.7;
+.projects-grid .coming-soon {
+  opacity: 0.75;
 }
 
-.coming-soon .project-image img {
-  filter: grayscale(0.6);
+.projects-grid .coming-soon .project-image img {
+  filter: grayscale(0.7);
 }
 
-/* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .projects-grid {
     grid-template-columns: 1fr;
   }
