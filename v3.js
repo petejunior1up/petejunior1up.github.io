@@ -5,13 +5,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Lazy-load visual assets where possible.
     document.querySelectorAll("img").forEach(img => {
         if (!img.hasAttribute("loading")) img.loading = "lazy";
         img.decoding = "async";
     });
 
-    // Reveal sections as they enter the viewport.
     const revealItems = document.querySelectorAll(".reveal-v3");
     if (prefersReduced || !("IntersectionObserver" in window)) {
         revealItems.forEach(el => el.classList.add("v3-visible"));
@@ -27,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         revealItems.forEach(el => revealObserver.observe(el));
     }
 
-    // Animate skill bars once the skills are visible.
     const skillItems = document.querySelectorAll(".skill");
     if (prefersReduced || !("IntersectionObserver" in window)) {
         skillItems.forEach(el => el.classList.add("v3-visible"));
@@ -43,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         skillItems.forEach(el => skillObserver.observe(el));
     }
 
-    // Keep navigation state synchronized with the section on screen.
     const navLinks = [...document.querySelectorAll('.navbar nav a[href^="#"]')];
     const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
     if ("IntersectionObserver" in window) {
@@ -55,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
         sections.forEach(section => navObserver.observe(section));
     }
 
-    // Navbar state + back-to-top control.
     const topButton = document.createElement("button");
     topButton.className = "v3-top";
     topButton.type = "button";
@@ -75,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
     });
 
-    // Lightweight pointer tilt on desktop project cards.
     if (!prefersReduced && window.matchMedia("(pointer:fine)").matches) {
         document.querySelectorAll(".project-card").forEach(card => {
             card.addEventListener("pointermove", event => {
@@ -84,13 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const y = (event.clientY - rect.top) / rect.height - .5;
                 card.style.transform = `perspective(900px) rotateX(${(-y * 2.2).toFixed(2)}deg) rotateY(${(x * 2.2).toFixed(2)}deg) translateY(-5px)`;
             });
-            card.addEventListener("pointerleave", () => {
-                card.style.transform = "";
-            });
+            card.addEventListener("pointerleave", () => { card.style.transform = ""; });
         });
     }
 
-    // Make the project heading's VIEW ALL control useful without inventing projects.
     const viewAll = document.querySelector('.view-all[href="#projects"]');
     if (viewAll) {
         viewAll.addEventListener("click", event => {
@@ -100,15 +91,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Small keyboard shortcut: / focuses the main terminal when not typing elsewhere.
     document.addEventListener("keydown", event => {
         const tag = document.activeElement?.tagName;
         if (event.key === "/" && !["INPUT", "TEXTAREA"].includes(tag)) {
             const terminal = document.getElementById("terminalInput");
-            if (terminal) {
-                event.preventDefault();
-                terminal.focus();
-            }
+            if (terminal) { event.preventDefault(); terminal.focus(); }
         }
     });
+
+    // Archive V3 is loaded separately so the existing Developer Mode stays intact.
+    const archiveCss = document.createElement("link");
+    archiveCss.rel = "stylesheet";
+    archiveCss.href = "archive-v3.css";
+    document.head.appendChild(archiveCss);
+
+    const archiveScript = document.createElement("script");
+    archiveScript.src = "archive-v3.js";
+    document.body.appendChild(archiveScript);
 });
