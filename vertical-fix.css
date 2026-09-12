@@ -1,0 +1,24 @@
+/* Hero side-label repositioning: keep the reference text horizontal and out of the main copy. */
+.hero-side-label{
+    left:auto;
+    right:18px;
+    top:auto;
+    bottom:22px;
+    transform:none;
+    writing-mode:horizontal-tb;
+    white-space:nowrap;
+    font-size:.52rem;
+    letter-spacing:1.5px;
+    color:#69747e;
+    opacity:.75;
+    border-left:1px solid rgba(255,30,45,.45);
+    padding-left:10px;
+}
+@media(max-width:700px){
+    .hero-side-label{
+        right:14px;
+        bottom:14px;
+        font-size:.46rem;
+        padding-left:7px;
+    }
+}
