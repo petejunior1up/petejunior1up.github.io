@@ -1,0 +1,94 @@
+/* =========================================================
+   PETE JUNIOR — PORTFOLIO V3 EXPERIENCE LAYER
+   Visual polish, accessibility, responsiveness & micro-interactions.
+   ========================================================= */
+
+:root{--v3-red:var(--red,#ff1e2d);--v3-panel:rgba(8,10,12,.78)}
+
+/* Scroll + section reveal */
+html{scroll-padding-top:86px}
+.reveal-v3{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal-v3.v3-visible{opacity:1;transform:none}
+
+/* Navigation polish */
+.navbar{transition:background .3s ease,border-color .3s ease,box-shadow .3s ease}
+body.v3-scrolled .navbar{background:rgba(3,4,5,.82);border-bottom-color:rgba(255,30,45,.18);box-shadow:0 10px 35px rgba(0,0,0,.18)}
+.navbar nav a.v3-current{color:#fff}
+.navbar nav a.v3-current:after{width:100%}
+
+/* Better focus visibility */
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--v3-red);outline-offset:4px}
+
+/* Hero micro-grid */
+.hero-visual:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,transparent 49.8%,rgba(255,30,45,.08) 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.8%,rgba(255,30,45,.05) 50%,transparent 50.2%);background-size:120px 120px;mix-blend-mode:screen;opacity:.35}
+.hero-chip{animation:v3Pulse 3s ease-in-out infinite}
+@keyframes v3Pulse{50%{box-shadow:0 0 20px rgba(255,30,45,.12)}}
+
+/* Project cards */
+.project-card{will-change:transform}
+.project-image img{transition:transform .6s ease,filter .4s ease}
+.project-card:hover .project-image img{transform:scale(1.045);filter:brightness(.86) saturate(1.2)}
+.project-tags span{transition:border-color .2s ease,color .2s ease}
+.project-card:hover .project-tags span{border-color:rgba(255,30,45,.35);color:#d9dfe4}
+
+/* Skill bars animate when visible */
+.skill-track i{transform-origin:left;transform:scaleX(0);transition:transform 1s cubic-bezier(.2,.75,.2,1)}
+.skill.v3-visible .skill-track i{transform:scaleX(1)}
+
+/* Contact enhancement */
+.contact-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+.contact-links a{display:inline-flex;align-items:center;gap:10px;border:1px solid #252b31;padding:9px 11px;font:700 .57rem var(--mono);color:#bfc6cc;transition:.2s ease}
+.contact-links a:hover{border-color:var(--v3-red);color:#fff;transform:translateY(-2px)}
+.contact-links a span{color:var(--v3-red)}
+
+/* Back to top */
+.v3-top{position:fixed;right:22px;bottom:22px;z-index:9996;width:40px;height:40px;border:1px solid #343a40;background:rgba(5,5,5,.82);color:var(--v3-red);font:700 .8rem var(--mono);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s ease;backdrop-filter:blur(8px)}
+.v3-top.v3-show{opacity:1;pointer-events:auto;transform:none}
+.v3-top:hover{background:var(--v3-red);color:#050505;border-color:var(--v3-red)}
+
+/* Tiny system footer line */
+footer{position:relative}
+footer:before{content:"SYSTEM // PORTFOLIO V3 // ONLINE";position:absolute;left:50%;top:-8px;transform:translateX(-50%);padding:0 9px;background:#060708;color:#444;font:700 7px var(--mono);letter-spacing:1.5px;white-space:nowrap}
+
+/* Mobile */
+@media(max-width:1000px){
+  .skills-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:720px){
+  .navbar{height:64px;padding:0 5%}
+  .navbar nav{gap:13px}
+  .navbar nav a{font-size:.58rem}
+  .nav-button{display:none}
+  .hero{min-height:760px;height:auto;grid-template-columns:1fr;padding-top:78px}
+  .hero-content{padding:55px 0 35px}
+  .hero-visual{min-height:430px;border-left:0;border-top:1px solid rgba(255,30,45,.35)}
+  .hero-side-label{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .about-visual{height:330px}
+  .quote-card{max-width:100%}
+  .terminal-section{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .skill:nth-child(2n){border-right:0}
+  .contact-box{padding:30px 24px;display:block}
+  .contact-box>.primary-button{margin-top:25px}
+  .contact-links{display:grid;grid-template-columns:1fr}
+  footer{padding:25px 5%;flex-direction:column;text-align:center}
+  .footer-left,.footer-right{justify-content:center;flex-wrap:wrap}
+  footer:before{display:none}
+  .v3-top{right:12px;bottom:70px}
+}
+@media(max-width:440px){
+  .navbar nav{gap:9px}
+  .navbar nav a{font-size:.5rem}
+  .hero h1{letter-spacing:-4px}
+  .hero-buttons{flex-direction:column;align-items:stretch}
+  .primary-button,.secondary-button{justify-content:center}
+  .skills-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal-v3{opacity:1;transform:none}
+  .skill-track i{transform:scaleX(1)}
+}
