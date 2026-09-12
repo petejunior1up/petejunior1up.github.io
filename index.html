@@ -16,518 +16,161 @@
 
 <body>
 
-    <!-- SCROLL PROGRESS -->
     <div id="scroll-progress"></div>
 
-
-    <!-- ================= NAVIGATION ================= -->
-
     <header class="navbar">
-
-        <a href="#" class="logo">
-            PJ<span>.</span>
-        </a>
-
+        <a href="#" class="logo">PJ<span>.</span></a>
         <nav>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Connect</a>
         </nav>
-
-        <a href="#contact" class="nav-button">
-            Let's Talk
-        </a>
-
+        <a href="#contact" class="nav-button">Let's Talk</a>
     </header>
 
-
-    <!-- ================= HERO ================= -->
-
     <main>
-
         <section class="hero">
-
             <div class="hero-content">
-
-                <p class="eyebrow">
-                    <span></span>
-                    DIGITAL SPACE // 2026
-                </p>
-
-                <h1>
-                    PETE<br>
-                    <span>JUNIOR</span>
-                </h1>
-
-
-                <!-- TYPING EFFECT -->
-
+                <p class="eyebrow"><span></span>DIGITAL SPACE // 2026</p>
+                <h1>PETE<br><span>JUNIOR</span></h1>
                 <div class="typing-container">
-
-                    <span class="typing-prefix">
-                        I AM A
-                    </span>
-
+                    <span class="typing-prefix">I AM A</span>
                     <span id="typing-text"></span>
-
                     <span class="cursor">|</span>
-
                 </div>
-
-
                 <p class="hero-description">
                     Tech enthusiast. Creator. Future engineer.
                     Exploring technology, building ideas, and dreaming
                     beyond the ordinary.
                 </p>
-
-
                 <div class="hero-buttons">
-
-                    <a href="#projects" class="primary-button">
-                        Explore My Work →
-                    </a>
-
-                    <a href="#about" class="secondary-button">
-                        Discover More
-                    </a>
-
+                    <a href="#projects" class="primary-button">Explore My Work →</a>
+                    <a href="#about" class="secondary-button">Discover More</a>
                 </div>
-
             </div>
 
-
-            <!-- FUTURISTIC PJ VISUAL -->
-
-            <div class="hero-visual">
-
+            <div class="hero-visual" style="background: linear-gradient(90deg, rgba(5,5,5,0.28), rgba(5,5,5,0.05)), url('images/hero-visual.jpg') center center / cover no-repeat; border: 1px solid rgba(255,30,30,0.55); box-shadow: 0 0 35px rgba(255,30,30,0.18);">
                 <div class="orbit orbit-one"></div>
                 <div class="orbit orbit-two"></div>
-
-                <div class="core">
-                    <span>PJ</span>
-                </div>
-
-                <div class="floating-code code-one">
-                    &lt;/&gt;
-                </div>
-
-                <div class="floating-code code-two">
-                    { }
-                </div>
-
-                <div class="floating-code code-three">
-                    01
-                </div>
-
+                <div class="core"><span>PJ</span></div>
+                <div class="floating-code code-one">&lt;/&gt;</div>
+                <div class="floating-code code-two">{ }</div>
+                <div class="floating-code code-three">01</div>
             </div>
-
         </section>
-
-
-        <!-- ================= MISSION ================= -->
 
         <section class="mission">
-
-            <p class="section-label">
-                01 // MISSION
-            </p>
-
-            <h2>
-                I DON'T JUST WANT TO USE
-                <span>TECHNOLOGY.</span>
-            </h2>
-
-            <p>
-                I want to understand it, build with it, and eventually
-                create something that changes millions of lives.
-            </p>
-
+            <p class="section-label">01 // MISSION</p>
+            <h2>I DON'T JUST WANT TO USE <span>TECHNOLOGY.</span></h2>
+            <p>I want to understand it, build with it, and eventually create something that changes millions of lives.</p>
         </section>
-
-
-        <!-- ================= TERMINAL ================= -->
 
         <section class="terminal-section">
-
             <div class="terminal-heading">
-
-                <p class="section-label">
-                    01.5 // SYSTEM ACCESS
-                </p>
-
-                <h2>
-                    INTERACT WITH<br>
-                    <span>THE MACHINE.</span>
-                </h2>
-
+                <p class="section-label">01.5 // SYSTEM ACCESS</p>
+                <h2>INTERACT WITH<br><span>THE MACHINE.</span></h2>
             </div>
-
-
             <div class="terminal-window">
-
                 <div class="terminal-bar">
-
-                    <div class="terminal-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                    <p>
-                        PETE@PORTFOLIO:~
-                    </p>
-
-                    <span class="terminal-status">
-                        ONLINE
-                    </span>
-
+                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                    <p>PETE@PORTFOLIO:~</p>
+                    <span class="terminal-status">ONLINE</span>
                 </div>
-
-
-                <div
-                    class="terminal-output"
-                    id="terminalOutput"
-                >
-
-                    <p>
-                        <span class="terminal-green">
-                            system
-                        </span>
-
-                        :: Pete Junior interface initialized.
-                    </p>
-
-                    <p>
-                        Type
-                        <span class="terminal-command">
-                            help
-                        </span>
-                        to see available commands.
-                    </p>
-
+                <div class="terminal-output" id="terminalOutput">
+                    <p><span class="terminal-green">system</span> :: Pete Junior interface initialized.</p>
+                    <p>Type <span class="terminal-command">help</span> to see available commands.</p>
                 </div>
-
-
-                <form
-                    class="terminal-input-area"
-                    id="terminalForm"
-                >
-
-                    <span class="terminal-prompt">
-                        pete@portfolio:~$
-                    </span>
-
-                    <input
-                        type="text"
-                        id="terminalInput"
-                        autocomplete="off"
-                        spellcheck="false"
-                        aria-label="Terminal command"
-                    >
-
+                <form class="terminal-input-area" id="terminalForm">
+                    <span class="terminal-prompt">pete@portfolio:~$</span>
+                    <input type="text" id="terminalInput" autocomplete="off" spellcheck="false" aria-label="Terminal command">
                 </form>
-
             </div>
-
         </section>
 
-
-        <!-- ================= ABOUT ================= -->
-
-        <section
-            class="about section"
-            id="about"
-        >
-
+        <section class="about section" id="about">
             <div class="section-heading">
-
-                <p class="section-label">
-                    02 // BEYOND THE CODE
-                </p>
-
-                <h2>
-                    Curious by nature.<br>
-                    <span>Driven by possibility.</span>
-                </h2>
-
+                <p class="section-label">02 // BEYOND THE CODE</p>
+                <h2>Curious by nature.<br><span>Driven by possibility.</span></h2>
             </div>
-
-
             <div class="about-grid">
-
                 <div class="about-text">
-
-                    <p>
-                        My curiosity started with a phone. I wanted to know
-                        what was behind every feature, every setting, and
-                        every possibility.
-                    </p>
-
-                    <p>
-                        Then came the PC—and technology became more than
-                        something I used. It became something I wanted
-                        to understand and create with.
-                    </p>
-
-                    <p>
-                        Today I'm exploring web development, design,
-                        networking, hardware, and the endless possibilities
-                        of technology.
-                    </p>
-
-
+                    <p>My curiosity started with a phone. I wanted to know what was behind every feature, every setting, and every possibility.</p>
+                    <p>Then came the PC—and technology became more than something I used. It became something I wanted to understand and create with.</p>
+                    <p>Today I'm exploring web development, design, networking, hardware, and the endless possibilities of technology.</p>
                     <div class="motto">
-
-                        <span>
-                            MY PHILOSOPHY
-                        </span>
-
-                        <strong>
-                            Explore. Dream. Discover.
-                        </strong>
-
+                        <span>MY PHILOSOPHY</span>
+                        <strong>Explore. Dream. Discover.</strong>
                     </div>
-
                 </div>
-
-
                 <div class="about-card">
-
-                    <div class="card-top">
-
-                        <span>
-                            PROFILE
-                        </span>
-
-                        <span>
-                            ● ONLINE
-                        </span>
-
-                    </div>
-
-
-                    <div class="profile-symbol">
-                        PJ
-                    </div>
-
-
-                    <h3>
-                        Pete Junior
-                    </h3>
-
-                    <p>
-                        Tech · Creativity · Curiosity
-                    </p>
-
-
+                    <div class="card-top"><span>PROFILE</span><span>● ONLINE</span></div>
+                    <div class="profile-symbol">PJ</div>
+                    <h3>Pete Junior</h3>
+                    <p>Tech · Creativity · Curiosity</p>
                     <div class="card-line"></div>
-
-
-                    <div class="profile-details">
-
-                        <span>
-                            INTERESTS
-                        </span>
-
-                        <strong>
-                            Tech / Coding / Gaming / Music
-                        </strong>
-
-                    </div>
-
-
-                    <div class="profile-details">
-
-                        <span>
-                            VISION
-                        </span>
-
-                        <strong>
-                            Build something that matters.
-                        </strong>
-
-                    </div>
-
+                    <div class="profile-details"><span>INTERESTS</span><strong>Tech / Coding / Gaming / Music</strong></div>
+                    <div class="profile-details"><span>VISION</span><strong>Build something that matters.</strong></div>
                 </div>
-
             </div>
-
         </section>
 
-
-        <!-- ================= SKILLS ================= -->
-
-        <section
-            class="skills section"
-            id="skills"
-        >
-
-            <p class="section-label">
-                03 // SKILLSET
-            </p>
-
-            <h2>
-                WHAT I CAN <span>BUILD.</span>
-            </h2>
-
-
+        <section class="skills section" id="skills">
+            <p class="section-label">03 // SKILLSET</p>
+            <h2>WHAT I CAN <span>BUILD.</span></h2>
             <div class="skills-grid">
-
-                <div class="skill-card">
-
-                    <span>01</span>
-
-                    <h3>
-                        Web Development
-                    </h3>
-
-                    <p>
-                        HTML · CSS · Basic Website Development
-                    </p>
-
-                </div>
-
-
-                <div class="skill-card">
-
-                    <span>02</span>
-
-                    <h3>
-                        Creative Media
-                    </h3>
-
-                    <p>
-                        Photo Editing · Video Editing
-                    </p>
-
-                </div>
-
-
-                <div class="skill-card">
-
-                    <span>03</span>
-
-                    <h3>
-                        Networking
-                    </h3>
-
-                    <p>
-                        Network Setup · Troubleshooting
-                    </p>
-
-                </div>
-
-
-                <div class="skill-card">
-
-                    <span>04</span>
-
-                    <h3>
-                        Hardware & Systems
-                    </h3>
-
-                    <p>
-                        Computer Troubleshooting · Gadgets · Hardware
-                    </p>
-
-                </div>
-
+                <div class="skill-card"><span>01</span><h3>Web Development</h3><p>HTML · CSS · Basic Website Development</p></div>
+                <div class="skill-card"><span>02</span><h3>Creative Media</h3><p>Photo Editing · Video Editing</p></div>
+                <div class="skill-card"><span>03</span><h3>Networking</h3><p>Network Setup · Troubleshooting</p></div>
+                <div class="skill-card"><span>04</span><h3>Hardware &amp; Systems</h3><p>Computer Troubleshooting · Gadgets · Hardware</p></div>
             </div>
-
         </section>
 
-
-    <!-- ================= PROJECTS ================= -->
-<section class="projects section" id="projects">
-
-  <div class="section-heading">
-    <p class="section-label">04 // PROJECT LAB</p>
-    <h2>THINGS I'VE <span>BUILT.</span></h2>
-  </div>
-
-  <div class="projects-grid">
-
-    <!-- Project 1 - Portfolio -->
-    <div class="project-card">
-      <div class="project-image">
-        <img src="images/portfolio.png" alt="Portfolio preview">
-      </div>
-      <div class="project-content">
-        <p class="project-type">WEB DEVELOPMENT // LIVE</p>
-        <h3>Personal Portfolio</h3>
-        <p>My digital space built from scratch while learning HTML, CSS, JavaScript and GitHub Pages.</p>
-        <div class="project-tags">
-          <span>HTML</span>
-          <span>CSS</span>
-          <span>JavaScript</span>
-          <span>GitHub</span>
-        </div>
-        <a href="https://petejunior1up.github.io/" target="_blank" class="project-link">View Live →</a>
-      </div>
-    </div>
-
-    <!-- Project 2 - Scientific Calculator -->
-    <div class="project-card">
-      <div class="project-image">
-        <img src="images/calculator.png" alt="Calculator preview">
-      </div>
-      <div class="project-content">
-        <p class="project-type">WEB APP // LIVE</p>
-        <h3>Scientific Calculator</h3>
-        <p>A fully working scientific calculator with many functions, built with pure HTML, CSS and JavaScript.</p>
-        <div class="project-tags">
-          <span>HTML</span>
-          <span>CSS</span>
-          <span>JavaScript</span>
-        </div>
-        <a href="https://petejunior1up.github.io/Scientific-Calculator/" target="_blank" class="project-link">View Live →</a>
-      </div>
-    </div>
-
-    <!-- Project 3 - Coming Soon -->
-    <div class="project-card coming-soon">
-      <div class="project-image">
-        <img src="images/coming-soon.png" alt="Coming soon">
-      </div>
-      <div class="project-content">
-        <p class="project-type">COMING SOON</p>
-        <h3>Next Project</h3>
-        <p>Something useful is being built here. Stay tuned.</p>
-        <div class="project-tags">
-          <span>In Progress</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
+        <section class="projects section" id="projects">
+            <div class="section-heading">
+                <p class="section-label">04 // PROJECT LAB</p>
+                <h2>THINGS I'VE <span>BUILT.</span></h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image"><img src="images/portfolio.png" alt="Portfolio preview"></div>
+                    <div class="project-content">
+                        <p class="project-type">WEB DEVELOPMENT // LIVE</p>
+                        <h3>Personal Portfolio</h3>
+                        <p>My digital space built from scratch while learning HTML, CSS, JavaScript and GitHub Pages.</p>
+                        <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>GitHub</span></div>
+                        <a href="https://petejunior1up.github.io/" target="_blank" class="project-link">View Live →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"><img src="images/calculator.png" alt="Calculator preview"></div>
+                    <div class="project-content">
+                        <p class="project-type">WEB APP // LIVE</p>
+                        <h3>Scientific Calculator</h3>
+                        <p>A fully working scientific calculator with many functions, built with pure HTML, CSS and JavaScript.</p>
+                        <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+                        <a href="https://petejunior1up.github.io/Scientific-Calculator/" target="_blank" class="project-link">View Live →</a>
+                    </div>
+                </div>
+                <div class="project-card coming-soon">
+                    <div class="project-image"><img src="images/coming-soon.png" alt="Coming soon"></div>
+                    <div class="project-content">
+                        <p class="project-type">COMING SOON</p>
+                        <h3>Next Project</h3>
+                        <p>Something useful is being built here. Stay tuned.</p>
+                        <div class="project-tags"><span>In Progress</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-
-    <!-- ================= FOOTER ================= -->
-
     <footer>
-
-        <div class="footer-logo">
-            PJ<span>.</span>
-        </div>
-
-        <p>
-            Explore. Dream. Discover.
-        </p>
-
-        <p class="copyright">
-            © 2026 Pete Junior. Built with curiosity.
-        </p>
-
+        <div class="footer-logo">PJ<span>.</span></div>
+        <p>Explore. Dream. Discover.</p>
+        <p class="copyright">© 2026 Pete Junior. Built with curiosity.</p>
     </footer>
 
-
-    <!-- JAVASCRIPT -->
-
     <script src="script.js"></script>
-
 </body>
 </html>
