@@ -1,8 +1,81 @@
-(()=>{const categories=[['01','POEMS','Writing, fragments & verses','WRITING'],['02','THOUGHTS'{
-  title: "When Letting Go Becomes Revenge",
-  date: "2026-09-13",
-  type: "THOUGHT",
-  content: `There’s having a girlfriend, and then all of a sudden her ex comes back claiming that she’s still his.
+(function () {
+  "use strict";
+
+  /*
+   * XYPHER ARCHIVE v3
+   * Personal archive for writing, thoughts, dreams, ideas,
+   * projects and unfinished work.
+   *
+   * NOTE:
+   * This is a frontend-only archive. Anything stored here is
+   * publicly accessible through the site's source code.
+   */
+
+  const categories = [
+    {
+      id: "poems",
+      number: "01",
+      name: "POEMS",
+      description: "Writing, fragments & verses",
+      type: "WRITING"
+    },
+    {
+      id: "thoughts",
+      number: "02",
+      name: "THOUGHTS",
+      description: "Notes, questions & observations",
+      type: "JOURNAL"
+    },
+    {
+      id: "dreams",
+      number: "03",
+      name: "DREAMS",
+      description: "Goals, visions & future plans",
+      type: "VISION"
+    },
+    {
+      id: "ideas",
+      number: "04",
+      name: "IDEAS",
+      description: "Tech concepts & experiments",
+      type: "TECH"
+    },
+    {
+      id: "projects",
+      number: "05",
+      name: "PROJECTS",
+      description: "Build logs & project concepts",
+      type: "BUILD"
+    },
+    {
+      id: "unfinished",
+      number: "06",
+      name: "UNFINISHED",
+      description: "Things still becoming",
+      type: "WIP"
+    }
+  ];
+
+  /*
+   * ARCHIVE CONTENT
+   */
+  const entries = {
+    poems: [
+      {
+        title: "Empty Page",
+        date: "—",
+        type: "POEM",
+        content:
+          "No poems have been archived here yet.\n\nSome things need to be written before they can be preserved."
+      }
+    ],
+
+    thoughts: [
+      {
+        title: "When Letting Go Becomes Revenge",
+        date: "2026-09-13",
+        type: "THOUGHT",
+        content: `There's having a girlfriend, and then all of a sudden her ex comes back claiming that she's still his.
 
 You try to tell the guy to forget about her. She moved on. She made her choice. But instead of accepting that, he starts causing trouble for her—almost like hurting her is supposed to be revenge for losing her.
 
@@ -21,4 +94,432 @@ Sometimes people confuse love with possession. They think, "If I can't have you,
 And maybe the hardest part about letting go isn't losing the person.
 
 It's accepting that you no longer have a say in where they go next.`
-},,'Notes, questions & observations','JOURNAL'],['03','DREAMS','Goals, visions & future plans','VISION'],['04','IDEAS','Tech concepts & experiments','TECH'],['05','PROJECTS','Build logs & project concepts','BUILD'],['06','UNFINISHED','Things still becoming','WIP']];const samples={POEMS:[['01','Untitled / 001','A place reserved for writing that will eventually live here.','DRAFT'],['02','Fragments','Short pieces, lines and ideas collected over time.','DRAFT']],THOUGHTS:[['01','System Log / 001','A space for observations, questions and lessons worth keeping.','NOTE'],['02','Signal / 002','Thoughts that are still being processed.','NOTE']],DREAMS:[['01','Long Range','Big things worth working toward, one step at a time.','VISION'],['02','Next Level','Goals, experiments and places the future could lead.','VISION']],IDEAS:[['01','Project Seed','A technical concept waiting for the right moment to become real.','CONCEPT'],['02','Build Protocol','Ideas for tools, apps and systems that could solve useful problems.','CONCEPT']],PROJECTS:[['01','Archive System','The interface currently being built behind Developer Mode.','ACTIVE'],['02','Future Build','A placeholder for the next serious experiment.','PLANNED']],UNFINISHED:[['01','Work In Progress','Half-built ideas are still evidence of learning.','WIP'],['02','Version 0.1','Not finished. Not abandoned.','WIP']]};let currentFilter='ALL';let observerStarted=false;function addAuthCategories(){const auth=document.querySelector('.dev-v2-auth');if(!auth||auth.querySelector('.archive-v3-auth-categories'))return;const wrap=document.createElement('div');wrap.className='archive-v3-auth-categories';wrap.innerHTML=categories.map(c=>`<div class="archive-v3-auth-cat"><span>${c[0]}</span>${c[1]}</div>`).join('');auth.appendChild(wrap)}function renderArchive(){const body=document.getElementById('devV2Body');if(!body)return;body.innerHTML=`<div class="archive-v3"><div id="archiveHome" class="archive-v3-view active"><div class="archive-v3-top"><div><div class="archive-v3-kicker">ARCHIVE // ACCESS GRANTED</div><h2 class="archive-v3-title">THE <span>ARCHIVE.</span></h2><p class="archive-v3-sub">A private collection of writing, thoughts, dreams, technical ideas and unfinished work.</p></div><div class="archive-v3-count"><b>06</b> CATEGORIES // INDEXED</div></div><div class="archive-v3-toolbar"><input id="archiveSearch" class="archive-v3-search" type="search" placeholder="search archive..." aria-label="Search archive"><button class="archive-v3-filter active" data-filter="ALL">ALL</button>${categories.map(c=>`<button class="archive-v3-filter" data-filter="${c[1]}">${c[1]}</button>`).join('')}</div><div class="archive-v3-grid">${categories.map(c=>`<button class="archive-v3-category" data-category="${c[1]}"><span class="archive-v3-index">${c[0]} // ${c[3]}</span><span class="archive-v3-meta">OPEN ↗</span><h3>${c[1]}</h3><p>${c[2]}</p></button>`).join('')}</div><p class="archive-v3-note">// CONTENT PLACEHOLDERS ONLY — REAL ARCHIVE ENTRIES CAN BE ADDED LATER.</p></div><div id="archiveDetail" class="archive-v3-view"></div></div>`;const search=document.getElementById('archiveSearch');document.querySelectorAll('.archive-v3-filter').forEach(btn=>btn.addEventListener('click',()=>{currentFilter=btn.dataset.filter;document.querySelectorAll('.archive-v3-filter').forEach(b=>b.classList.toggle('active',b===btn));filterCards()}));search.addEventListener('input',filterCards);document.querySelectorAll('.archive-v3-category').forEach(card=>card.addEventListener('click',()=>openCategory(card.dataset.category)));function filterCards(){const q=search.value.trim().toLowerCase();document.querySelectorAll('.archive-v3-category').forEach(card=>{const name=card.dataset.category;const text=card.textContent.toLowerCase();card.style.display=(currentFilter==='ALL'||name===currentFilter)&&(!q||text.includes(q))?'block':'none'})}document.querySelectorAll('.archive-v3-category').forEach(card=>card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCategory(card.dataset.category)}}))}function openCategory(name){const home=document.getElementById('archiveHome'),detail=document.getElementById('archiveDetail');if(!home||!detail)return;home.classList.remove('active');detail.classList.add('active');const meta=categories.find(c=>c[1]===name);const entries=samples[name]||[];detail.innerHTML=`<button class="archive-v3-back" id="archiveBack">← BACK TO ARCHIVE</button><div class="archive-v3-viewhead"><div class="archive-v3-kicker">${meta[0]} // ${meta[3]}</div><h3>${meta[1]}</h3><p>${meta[2]}</p></div><div class="archive-v3-entries">${entries.map(e=>`<article class="archive-v3-entry"><small>${e[0]} // ${e[3]}</small><h4>${e[1]}</h4><p>${e[2]}</p><span class="archive-v3-tag">PLACEHOLDER</span></article>`).join('')}</div><p class="archive-v3-note">// ARCHIVE CONTENT MODULE READY. REPLACE PLACEHOLDERS WITH YOUR OWN ENTRIES.</p>`;document.getElementById('archiveBack').addEventListener('click',()=>{detail.classList.remove('active');home.classList.add('active')})}function watch(){if(observerStarted)return;const body=document.getElementById('devV2Body');if(!body)return;observerStarted=true;const obs=new MutationObserver(()=>{if(body.querySelector('.dev-v2-auth'))addAuthCategories();if(body.querySelector('.dev-v2-archive-view')){setTimeout(()=>renderArchive(),0)}});obs.observe(body,{childList:true,subtree:true});if(body.querySelector('.dev-v2-auth'))addAuthCategories()}watch()})();
+      }
+    ],
+
+    dreams: [
+      {
+        title: "The Road Ahead",
+        date: "—",
+        type: "VISION",
+        content:
+          "Goals, dreams and future plans will be archived here."
+      }
+    ],
+
+    ideas: [
+      {
+        title: "Ideas Loading...",
+        date: "—",
+        type: "IDEA",
+        content:
+          "Tech concepts, experiments and things worth building will appear here."
+      }
+    ],
+
+    projects: [
+      {
+        title: "Future Builds",
+        date: "—",
+        type: "PROJECT",
+        content:
+          "Project concepts and build logs will be archived here."
+      }
+    ],
+
+    unfinished: [
+      {
+        title: "Still Becoming",
+        date: "—",
+        type: "WIP",
+        content:
+          "Not everything needs to be finished before it deserves a place here."
+      }
+    ]
+  };
+
+  /*
+   * Helpers
+   */
+  function escapeHTML(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function getCategory(id) {
+    return categories.find(function (category) {
+      return category.id === id;
+    });
+  }
+
+  function getEntries(categoryId) {
+    return entries[categoryId] || [];
+  }
+
+  function formatContent(content) {
+    return escapeHTML(content).replace(/\n/g, "<br>");
+  }
+
+  /*
+   * BEFORE UNLOCK
+   * Show category names only.
+   */
+  function renderLockedCategories() {
+    const auth = document.querySelector(".dev-v2-auth");
+
+    if (!auth) return;
+
+    if (auth.querySelector(".archive-v3-auth-categories")) {
+      return;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "archive-v3-auth-categories";
+
+    categories.forEach(function (category) {
+      const item = document.createElement("div");
+      item.className = "archive-v3-auth-category";
+
+      item.innerHTML = `
+        <span>${escapeHTML(category.number)}</span>
+        <strong>${escapeHTML(category.name)}</strong>
+      `;
+
+      wrapper.appendChild(item);
+    });
+
+    auth.appendChild(wrapper);
+  }
+
+  /*
+   * ARCHIVE DASHBOARD
+   */
+  function renderArchive() {
+    const body = document.querySelector("#devV2Body");
+
+    if (!body) return;
+
+    body.innerHTML = `
+      <section class="archive-v3">
+        <header class="archive-v3-header">
+          <div class="archive-v3-kicker">
+            ARCHIVE // ACCESS GRANTED
+          </div>
+
+          <h1>THE ARCHIVE.</h1>
+
+          <p>
+            A collection of thoughts, writing, dreams, ideas,
+            projects and unfinished things.
+          </p>
+        </header>
+
+        <div class="archive-v3-controls">
+          <label class="archive-v3-search-wrap">
+            <span>SEARCH</span>
+            <input
+              id="archiveV3Search"
+              type="search"
+              placeholder="Search archive..."
+              autocomplete="off"
+            />
+          </label>
+
+          <div class="archive-v3-filter" id="archiveV3Filter">
+            <button
+              class="archive-v3-filter-btn active"
+              data-filter="all"
+              type="button"
+            >
+              ALL
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="archive-v3-grid"
+          id="archiveV3Grid"
+        ></div>
+
+        <div
+          class="archive-v3-placeholder"
+          id="archiveV3Placeholder"
+        >
+          <span>ARCHIVE NOTE</span>
+          <p>
+            Not everything here needs to be finished.
+            Some things are simply here because they mattered.
+          </p>
+        </div>
+      </section>
+    `;
+
+    buildFilters();
+    renderCards();
+    bindSearch();
+  }
+
+  /*
+   * CATEGORY FILTERS
+   */
+  function buildFilters() {
+    const filter = document.querySelector("#archiveV3Filter");
+
+    if (!filter) return;
+
+    categories.forEach(function (category) {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "archive-v3-filter-btn";
+      button.dataset.filter = category.id;
+      button.textContent = category.name;
+
+      filter.appendChild(button);
+    });
+
+    filter.addEventListener("click", function (event) {
+      const button = event.target.closest(
+        ".archive-v3-filter-btn"
+      );
+
+      if (!button) return;
+
+      document
+        .querySelectorAll(".archive-v3-filter-btn")
+        .forEach(function (item) {
+          item.classList.remove("active");
+        });
+
+      button.classList.add("active");
+
+      renderCards(button.dataset.filter);
+    });
+  }
+
+  /*
+   * ARCHIVE CARDS
+   */
+  function renderCards(filterId, searchTerm) {
+    const grid = document.querySelector("#archiveV3Grid");
+
+    if (!grid) return;
+
+    const filter = filterId || "all";
+    const search = (searchTerm || "").trim().toLowerCase();
+
+    let visible = [];
+
+    categories.forEach(function (category) {
+      if (filter !== "all" && category.id !== filter) {
+        return;
+      }
+
+      getEntries(category.id).forEach(function (entry, index) {
+        const searchable = [
+          category.name,
+          category.description,
+          entry.title,
+          entry.type,
+          entry.content
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        if (search && !searchable.includes(search)) {
+          return;
+        }
+
+        visible.push({
+          category: category,
+          entry: entry,
+          index: index
+        });
+      });
+    });
+
+    if (!visible.length) {
+      grid.innerHTML = `
+        <div class="archive-v3-empty">
+          <span>NO MATCH</span>
+          <p>No archived entry matches your search.</p>
+        </div>
+      `;
+
+      return;
+    }
+
+    grid.innerHTML = visible
+      .map(function (item) {
+        return `
+          <article
+            class="archive-v3-card"
+            data-category="${escapeHTML(item.category.id)}"
+            data-index="${item.index}"
+          >
+            <div class="archive-v3-card-top">
+              <span>
+                ${escapeHTML(item.category.number)}
+                //
+                ${escapeHTML(item.entry.type)}
+              </span>
+
+              <span>
+                ${escapeHTML(item.entry.date)}
+              </span>
+            </div>
+
+            <h2>${escapeHTML(item.entry.title)}</h2>
+
+            <p>
+              ${escapeHTML(item.category.description)}
+            </p>
+
+            <button
+              class="archive-v3-open"
+              type="button"
+            >
+              OPEN ENTRY →
+            </button>
+          </article>
+        `;
+      })
+      .join("");
+
+    grid.querySelectorAll(".archive-v3-card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        openEntry(
+          card.dataset.category,
+          Number(card.dataset.index)
+        );
+      });
+    });
+  }
+
+  /*
+   * ENTRY VIEW
+   */
+  function openEntry(categoryId, index) {
+    const body = document.querySelector("#devV2Body");
+
+    if (!body) return;
+
+    const category = getCategory(categoryId);
+    const categoryEntries = getEntries(categoryId);
+    const entry = categoryEntries[index];
+
+    if (!category || !entry) return;
+
+    body.innerHTML = `
+      <section class="archive-v3 archive-v3-entry">
+        <button
+          class="archive-v3-back"
+          id="archiveV3Back"
+          type="button"
+        >
+          ← BACK TO ARCHIVE
+        </button>
+
+        <header class="archive-v3-entry-header">
+          <div class="archive-v3-kicker">
+            ${escapeHTML(category.number)}
+            //
+            ${escapeHTML(category.name)}
+            //
+            ${escapeHTML(entry.type)}
+          </div>
+
+          <h1>${escapeHTML(entry.title)}</h1>
+
+          <div class="archive-v3-entry-meta">
+            ${escapeHTML(entry.date)}
+          </div>
+        </header>
+
+        <article class="archive-v3-entry-content">
+          ${formatContent(entry.content)}
+        </article>
+
+        <footer class="archive-v3-entry-footer">
+          <span>${escapeHTML(category.description)}</span>
+          <span>XYPHER ARCHIVE</span>
+        </footer>
+      </section>
+    `;
+
+    const back = document.querySelector("#archiveV3Back");
+
+    if (back) {
+      back.addEventListener("click", renderArchive);
+    }
+  }
+
+  /*
+   * SEARCH
+   */
+  function bindSearch() {
+    const search = document.querySelector("#archiveV3Search");
+
+    if (!search) return;
+
+    search.addEventListener("input", function () {
+      const activeFilter =
+        document.querySelector(
+          ".archive-v3-filter-btn.active"
+        );
+
+      renderCards(
+        activeFilter
+          ? activeFilter.dataset.filter
+          : "all",
+        search.value
+      );
+    });
+  }
+
+  /*
+   * Detect the Developer Mode archive view.
+   *
+   * This is important because archive-v3.js is dynamically loaded
+   * by v3.js after Developer Mode has been unlocked.
+   */
+  function checkForArchive() {
+    const archiveView = document.querySelector(
+      ".dev-v2-archive-view"
+    );
+
+    if (archiveView) {
+      renderArchive();
+      return true;
+    }
+
+    return false;
+  }
+
+  /*
+   * Initial load
+   */
+  renderLockedCategories();
+
+  /*
+   * If the archive already exists, render immediately.
+   */
+  checkForArchive();
+
+  /*
+   * Watch Developer Mode for dynamically-created archive elements.
+   */
+  const observer = new MutationObserver(function () {
+    renderLockedCategories();
+    checkForArchive();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
