@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
        Anyone who can inspect the public JavaScript can find the password.
        For genuinely private writing, move authentication to a server.
     */
-    const ARCHIVE_PASSWORD = "PJ-ARCHIVE-2026";
+   const ARCHIVE_PASSWORD = "error404";
 
     function injectArchiveStyles() {
         if (document.getElementById("developer-archive-styles")) return;
