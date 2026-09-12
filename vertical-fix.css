@@ -1,4 +1,4 @@
-/* Hero side-label repositioning: keep the reference text horizontal and out of the main copy. */
+/* Hero side-label repositioning */
 .hero-side-label{
     left:auto;
     right:18px;
@@ -14,7 +14,115 @@
     border-left:1px solid rgba(255,30,45,.45);
     padding-left:10px;
 }
-@media(max-width:700px){
+
+/* PROJECTS — visual + professional + cyber-tech mix */
+.projects-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px;
+}
+.project-card{
+    min-height:405px;
+    border-color:#252b31;
+    background:linear-gradient(145deg,#0a0c0f,#070809);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+.project-card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(255,30,45,.9);
+    box-shadow:0 20px 45px rgba(0,0,0,.48),0 0 28px rgba(255,30,45,.08);
+}
+.project-image{
+    height:205px;
+    background:#07090b;
+}
+.project-image img{
+    transition:transform .45s ease,filter .45s ease;
+}
+.project-card:hover .project-image img{
+    transform:scale(1.045);
+    filter:brightness(.86) saturate(1.25);
+}
+.project-content{
+    padding:19px;
+}
+.project-type{
+    letter-spacing:1px;
+}
+.project-content h3{
+    font-size:1.15rem;
+    letter-spacing:-.3px;
+}
+.project-content>p:not(.project-type){
+    font-size:.73rem;
+    min-height:72px;
+}
+.project-tags span{
+    transition:.2s;
+}
+.project-card:hover .project-tags span{
+    border-color:#454d55;
+}
+.project-arrow{
+    transition:.2s;
+}
+.project-card:hover .project-arrow{
+    box-shadow:0 0 18px rgba(255,30,45,.35);
+}
+
+/* Give the calculator a deliberate interface preview instead of an empty block */
+.project-terminal-preview{
+    position:relative;
+    height:205px;
+    padding:18px;
+    background:
+      linear-gradient(rgba(255,30,45,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,30,45,.045) 1px,transparent 1px),
+      #07090b;
+    background-size:24px 24px;
+}
+.project-terminal-preview:before{
+    content:'SCIENTIFIC CALCULATOR // ONLINE';
+    display:block;
+    border-bottom:1px solid #242a2f;
+    padding-bottom:10px;
+    margin-bottom:13px;
+    color:#7e8992;
+    font:700 .48rem var(--mono);
+    letter-spacing:1px;
+}
+.project-terminal-preview span{
+    margin-bottom:5px;
+    font-size:1.5rem;
+}
+.project-terminal-preview code{
+    display:block;
+    padding:11px;
+    border:1px solid #20262c;
+    background:rgba(0,0,0,.3);
+    font-size:.58rem;
+}
+
+/* Make the future card feel like a real product teaser */
+.project-future{
+    height:205px;
+    background:
+      radial-gradient(circle at 50% 48%,rgba(255,30,45,.18),transparent 32%),
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),#080a0c;
+    background-size:auto,28px 28px,28px 28px,auto;
+}
+.project-future strong{
+    font-size:1.35rem;
+    text-shadow:0 0 20px rgba(255,30,45,.2);
+}
+
+@media(max-width:1000px){
+    .projects-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:650px){
+    .projects-grid{grid-template-columns:1fr;gap:18px;}
+    .project-card{min-height:0;}
+    .project-image,.project-terminal-preview,.project-future{height:190px;}
     .hero-side-label{
         right:14px;
         bottom:14px;
