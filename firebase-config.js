@@ -1,19 +1,17 @@
 /*
  * FIREBASE CONFIGURATION
  *
- * Create a Firebase Web App in the Firebase Console and paste the
- * configuration object below.
- *
- * The values in this file are normal client-side Firebase config values.
+ * Firebase Web App configuration for the Pete Junior portfolio.
+ * These values are normal client-side Firebase config values.
  * Do NOT put private service-account keys here.
  */
 
 window.FIREBASE_CONFIG = {
-    apiKey: "PASTE_API_KEY_HERE",
-    authDomain: "PASTE_PROJECT_ID_HERE.firebaseapp.com",
-    projectId: "PASTE_PROJECT_ID_HERE",
-    storageBucket: "PASTE_STORAGE_BUCKET_HERE",
-    messagingSenderId: "PASTE_MESSAGING_SENDER_ID_HERE",
-    appId: "PASTE_APP_ID_HERE",
-    measurementId: "PASTE_MEASUREMENT_ID_HERE"
+    apiKey: "AIzaSyDwh4-gC85lYUPjLz5B9-rOS2uGQx1CQ_4",
+    authDomain: "personalportfolioj.firebaseapp.com",
+    projectId: "personalportfolioj",
+    storageBucket: "personalportfolioj.firebasestorage.app",
+    messagingSenderId: "457231431344",
+    appId: "1:457231431344:web:520f06694c973c9283276",
+    measurementId: "G-HCS60NXBNB"
 };
