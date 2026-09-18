@@ -115,7 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        DEVELOPER MODE v2
-       KONAMI SEQUENCE → TERMINAL → ARCHIVE
+       DESKTOP: KONAMI SEQUENCE
+       MOBILE: HIDDEN PJ LOGO GESTURE
        ===================================================== */
 
     const secret = [
@@ -629,6 +630,74 @@ document.addEventListener("DOMContentLoaded", () => {
                 closeDeveloperMode();
             }
         });
+
+        /* =================================================
+           MOBILE DEVELOPER MODE ACTIVATION
+           5 TAPS ON THE PJ LOGO OR A LONG PRESS
+           ================================================= */
+
+        const mobileLogo = document.querySelector(".logo-mark");
+        let mobileTapCount = 0;
+        let mobileTapTimer = null;
+        let mobileHoldTimer = null;
+        let mobileHoldActivated = false;
+
+        function activateDeveloperModeFromMobile() {
+            developerModeOpen = true;
+            document.body.classList.add("secret-mode");
+            trigger.textContent = "[ DEVELOPER MODE ONLINE ]";
+            openDeveloperMode();
+
+            setTimeout(() => {
+                trigger.textContent = "[ DEVELOPER MODE ]";
+            }, 1800);
+        }
+
+        if (mobileLogo) {
+            mobileLogo.setAttribute("aria-label", "Pete Junior home — hidden developer access");
+
+            mobileLogo.addEventListener("pointerdown", () => {
+                mobileHoldActivated = false;
+
+                mobileHoldTimer = setTimeout(() => {
+                    mobileHoldActivated = true;
+                    activateDeveloperModeFromMobile();
+                }, 1400);
+            });
+
+            mobileLogo.addEventListener("pointerup", (event) => {
+                clearTimeout(mobileHoldTimer);
+
+                if (mobileHoldActivated) {
+                    event.preventDefault();
+                    mobileHoldActivated = false;
+                    return;
+                }
+
+                mobileTapCount++;
+
+                clearTimeout(mobileTapTimer);
+                mobileTapTimer = setTimeout(() => {
+                    mobileTapCount = 0;
+                }, 1800);
+
+                if (mobileTapCount >= 5) {
+                    event.preventDefault();
+                    mobileTapCount = 0;
+                    clearTimeout(mobileTapTimer);
+                    activateDeveloperModeFromMobile();
+                }
+            });
+
+            mobileLogo.addEventListener("pointercancel", () => {
+                clearTimeout(mobileHoldTimer);
+                mobileHoldActivated = false;
+            });
+        }
+
+        /* =================================================
+           DESKTOP DEVELOPER MODE — KONAMI SEQUENCE
+           ================================================= */
 
         window.addEventListener("keydown", (event) => {
             if (event.repeat) return;
