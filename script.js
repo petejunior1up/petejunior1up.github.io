@@ -128,8 +128,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let developerModeOpen = false;
     let developerUIReady = false;
 
-    /* Front-end Easter egg only — not real security. */
-    const ARCHIVE_PASSWORD = "error404";
+    /* Stored as a SHA-256 digest so the access key is not exposed as plaintext. */
+    const ARCHIVE_PASSWORD_HASH = "f7bf9bba06d80a89e533b185a6284d00060d5899db63573341cf90489651ae67";
+
+    async function verifyArchiveKey(value) {
+        const bytes = new TextEncoder().encode(value);
+        const digest = await crypto.subtle.digest("SHA-256", bytes);
+        const hash = Array.from(new Uint8Array(digest))
+            .map(byte => byte.toString(16).padStart(2, "0"))
+            .join("");
+        return hash === ARCHIVE_PASSWORD_HASH;
+    }
 
     function injectDeveloperStyles() {
         if (document.getElementById("developer-mode-v2-styles")) return;
@@ -485,7 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <form class="dev-v2-input-row" id="devV2Form">
                     <span class="dev-v2-prompt">pete@dev:~$</span>
-                    <input class="dev-v2-input" id="devV2Input" autocomplete="off" spellcheck="false" aria-label="Developer command" autofocus>
+                    <input class="dev-v2-input" id="devV2Input" autocomplete="off" spellcheck="false" aria-label="Developer command">
                 </form>
                 <div class="dev-v2-hint">TIP // Try: help, about, projects, skills, archive, clear, exit</div>
             `;
@@ -585,9 +594,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const input = document.getElementById("devV2Password");
             const error = document.getElementById("devV2Error");
 
-            form.addEventListener("submit", (event) => {
+            form.addEventListener("submit", async (event) => {
                 event.preventDefault();
-                if (input.value === ARCHIVE_PASSWORD) {
+                const valid = await verifyArchiveKey(input.value);
+
+                if (valid) {
                     showArchive();
                 } else {
                     error.textContent = "ACCESS DENIED // INVALID KEY";
