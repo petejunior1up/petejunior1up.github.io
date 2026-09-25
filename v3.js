@@ -108,4 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const archiveScript = document.createElement("script");
     archiveScript.src = "archive-v3.js";
     document.body.appendChild(archiveScript);
+
+    // PJ Command Center — searchable site navigation with Ctrl/Cmd + K.
+    const commandCenterScript = document.createElement("script");
+    commandCenterScript.src = "pj-command-center.js";
+    document.body.appendChild(commandCenterScript);
 });
