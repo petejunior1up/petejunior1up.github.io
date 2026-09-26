@@ -1,0 +1,249 @@
+/* =========================================================
+   MOBILE AUDIT PATCH
+   Narrow-screen fixes only. Desktop layout is untouched.
+   ========================================================= */
+
+@media (max-width: 760px) {
+  html, body { max-width: 100%; overflow-x: hidden; }
+
+  /* Main content */
+  .section,
+  .mission,
+  .terminal-section { width: min(90%, 680px); }
+
+  .hero { padding-left: 6%; padding-right: 6%; }
+  .hero-content,
+  .about-text,
+  .project-card,
+  .contact-box { min-width: 0; }
+
+  .hero h1,
+  .section-heading h2,
+  .terminal-heading h2,
+  .mission h2,
+  .contact h2 {
+    overflow-wrap: anywhere;
+  }
+
+  /* Touch-friendly controls */
+  .primary-button,
+  .secondary-button,
+  .project-button,
+  .contact-links a {
+    min-height: 44px;
+  }
+
+  .project-button {
+    padding: 10px 12px;
+    font-size: .52rem;
+  }
+
+  .contact-links a {
+    padding: 11px 12px;
+  }
+
+  /* Main terminal: prevent iOS zoom + narrow overflow */
+  .terminal-window { width: 100%; min-width: 0; }
+  .terminal-output { overflow-wrap: anywhere; word-break: break-word; }
+  .terminal-input-area {
+    min-width: 0;
+    padding: 11px 12px;
+  }
+  .terminal-prompt { font-size: .62rem; }
+  .terminal-input-area input {
+    width: 100%;
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  /* Command Center */
+  .pjcc-btn {
+    right: 12px !important;
+    bottom: 12px !important;
+    min-height: 44px !important;
+    padding: 11px 13px !important;
+  }
+
+  .pjcc-root {
+    padding: 8vh 10px 12px !important;
+    align-items: start !important;
+  }
+
+  .pjcc-box {
+    width: 100% !important;
+    max-width: 620px !important;
+    max-height: 78vh !important;
+  }
+
+  .pjcc-search {
+    min-height: 50px !important;
+    padding: 14px !important;
+    font-size: 16px !important;
+  }
+
+  .pjcc-list {
+    max-height: 58vh !important;
+    overscroll-behavior: contain;
+  }
+
+  .pjcc-item {
+    min-height: 46px !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 13px !important;
+  }
+
+  /* Developer mode / protected archive shell */
+  .dev-v2-overlay {
+    padding: 8px !important;
+    align-items: center !important;
+  }
+
+  .dev-v2-window {
+    width: 100% !important;
+    max-height: calc(100vh - 16px) !important;
+  }
+
+  .dev-v2-body {
+    min-height: 0 !important;
+    height: calc(100vh - 72px) !important;
+    padding: 18px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dev-v2-close {
+    width: 44px !important;
+    height: 44px !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .dev-v2-input,
+  .dev-v2-auth input {
+    font-size: 16px !important;
+  }
+
+  .dev-v2-auth {
+    padding: 20px !important;
+  }
+
+  .dev-v2-trigger {
+    right: 12px !important;
+    bottom: 116px !important;
+    min-height: 44px !important;
+  }
+
+  /* Archive content itself */
+  .archive-v3 {
+    min-width: 0 !important;
+  }
+
+  .archive-v3-search-wrap {
+    min-height: 44px !important;
+    height: 44px !important;
+  }
+
+  .archive-v3-search-wrap input {
+    font-size: 16px !important;
+  }
+
+  .archive-v3-filter-btn,
+  .archive-v3-open,
+  .archive-v3-back {
+    min-height: 44px !important;
+  }
+
+  .archive-v3-filter-btn {
+    font-size: 9px !important;
+    padding: 9px 8px !important;
+  }
+
+  .archive-v3-card {
+    padding: 17px !important;
+  }
+
+  .archive-v3-card h2 {
+    font-size: 20px !important;
+  }
+
+  .archive-v3-card p {
+    font-size: 12px !important;
+  }
+
+  .archive-v3-entry-header h1 {
+    font-size: clamp(28px, 10vw, 40px) !important;
+    overflow-wrap: anywhere;
+  }
+
+  .archive-v3-entry-content {
+    max-width: 100% !important;
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+    overflow-wrap: anywhere;
+  }
+
+  /* Floating UI: keep every control in its own lane */
+  .v3-top {
+    right: 12px !important;
+    bottom: 64px !important;
+  }
+
+  .pjhud {
+    left: 12px !important;
+    bottom: 64px !important;
+    max-width: calc(100vw - 80px);
+  }
+
+  .pjhud-panel {
+    min-width: 0 !important;
+    width: min(178px, calc(100vw - 135px)) !important;
+  }
+
+  .pjhud-top { gap: 6px; }
+  .pjhud-section { max-width: 82px !important; }
+}
+
+@media (max-width: 430px) {
+  .navbar { padding-left: 4%; padding-right: 4%; }
+
+  .hero { padding-left: 5%; padding-right: 5%; }
+  .hero h1 { font-size: clamp(3.35rem, 18vw, 4rem); }
+
+  .hero-buttons .primary-button,
+  .hero-buttons .secondary-button {
+    width: 100%;
+  }
+
+  .about-visual,
+  .about-image { min-height: 290px !important; }
+
+  .project-actions { display: grid; grid-template-columns: 1fr; }
+  .project-button { width: 100%; }
+
+  .contact-note {
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
+
+  .archive-v3-filter {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .archive-v3-filter-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 340px) {
+  /* Ultra-narrow screens: keep the HUD core, hide the info plate. */
+  .pjhud-panel { display: none !important; }
+  .pjhud { max-width: 50px; }
+
+  .hero h1 { font-size: 3.15rem; }
+  .terminal-prompt { display: none; }
+
+  .archive-v3-filter {
+    grid-template-columns: 1fr !important;
+  }
+}
