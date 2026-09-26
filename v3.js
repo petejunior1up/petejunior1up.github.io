@@ -109,8 +109,4 @@ document.addEventListener("DOMContentLoaded", () => {
     archiveScript.src = "archive-v3.js";
     document.body.appendChild(archiveScript);
 
-    // Command Center is isolated from the terminal and protected archive.
-    const commandCenterScript = document.createElement("script");
-    commandCenterScript.src = "pj-command-center.js";
-    document.body.appendChild(commandCenterScript);
 });
