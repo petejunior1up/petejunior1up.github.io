@@ -62,11 +62,26 @@
   const entries = {
     poems: [
       {
-        title: "Empty Page",
-        date: "—",
+        title: "The Bitter Truth",
+        date: "2026",
         type: "POEM",
-        content:
-          "No poems have been archived here yet.\n\nSome things need to be written before they can be preserved."
+        content: `Like a spark of light, you entered my life,
+And chased the darkest shadows of my pain;
+Then fled so swiftly, leaving me in strife,
+And left my lonely heart beneath the rain.
+
+A new heart is the one I now must seek,
+For you had stolen mine with love's disguise;
+You shattered it to countless pieces bleak,
+And left my wounded soul beneath cold skies.
+
+Slowly, the bitter truth began to rise,
+I should have listened to my faithful friends;
+The veil was torn before my blinded eyes,
+Revealing all the lies where false love ends.
+
+This bitterness doth haunt my heart each night,
+For true and genuine love remains a rare sight.`
       }
     ],
 
