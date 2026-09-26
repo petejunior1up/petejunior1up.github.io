@@ -1,0 +1,192 @@
+/* PJ PULSE HUD — isolated visual layer */
+#pjhud-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .52;
+}
+
+.pjhud {
+  --pjh-cyan: #63f5ff;
+  --pjh-violet: #9f7cff;
+  --pjh-panel: rgba(5, 8, 14, .78);
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 8500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #eefcff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  user-select: none;
+}
+
+.pjhud-core {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border: 1px solid rgba(99, 245, 255, .38);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 50%, rgba(99,245,255,.14), rgba(8,11,18,.92) 62%);
+  box-shadow: 0 0 28px rgba(99,245,255,.13), inset 0 0 18px rgba(99,245,255,.08);
+}
+
+.pjhud-core::before,
+.pjhud-core::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.pjhud-core::before {
+  inset: -6px;
+  border: 1px dashed rgba(159,124,255,.4);
+  animation: pjhud-spin 14s linear infinite;
+}
+
+.pjhud-core::after {
+  inset: 8px;
+  border: 1px solid rgba(99,245,255,.23);
+  border-left-color: transparent;
+  animation: pjhud-spin-rev 5s linear infinite;
+}
+
+.pjhud-logo {
+  font: 800 12px/1 system-ui, sans-serif;
+  letter-spacing: .16em;
+  color: #fff;
+  transform: translateX(1px);
+  text-shadow: 0 0 12px rgba(99,245,255,.55);
+}
+
+.pjhud-panel {
+  min-width: 235px;
+  padding: 10px 12px 9px;
+  border: 1px solid rgba(140,160,220,.18);
+  border-radius: 10px;
+  background: var(--pjh-panel);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.28);
+  overflow: hidden;
+}
+
+.pjhud-top,
+.pjhud-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pjhud-top {
+  margin-bottom: 8px;
+  color: #7f8ca3;
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.pjhud-online {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--pjh-cyan);
+}
+
+.pjhud-online::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  animation: pjhud-pulse 1.8s ease-in-out infinite;
+}
+
+.pjhud-section {
+  max-width: 150px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.pjhud-clock {
+  color: #aab5c8;
+  font-size: 10px;
+}
+
+.pjhud-track {
+  position: relative;
+  height: 2px;
+  margin-top: 9px;
+  background: rgba(255,255,255,.08);
+  overflow: hidden;
+}
+
+.pjhud-track > i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--pjh-cyan), var(--pjh-violet));
+  box-shadow: 0 0 10px rgba(99,245,255,.45);
+  transition: width .12s linear;
+}
+
+.pjhud-percent {
+  margin-top: 6px;
+  color: #6f7d93;
+  font-size: 8px;
+  letter-spacing: .12em;
+  text-align: right;
+}
+
+.pjhud-scan {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -80px;
+  z-index: 1;
+  height: 80px;
+  pointer-events: none;
+  opacity: .11;
+  background: linear-gradient(to bottom, transparent, rgba(99,245,255,.32), transparent);
+  animation: pjhud-scan 10s linear infinite;
+}
+
+@keyframes pjhud-spin { to { transform: rotate(360deg); } }
+@keyframes pjhud-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes pjhud-pulse { 50% { opacity: .4; transform: scale(.75); } }
+@keyframes pjhud-scan {
+  from { transform: translateY(-100px); }
+  to { transform: translateY(calc(100vh + 180px)); }
+}
+
+@media (max-width: 700px) {
+  .pjhud { left: 12px; bottom: 12px; gap: 9px; }
+  .pjhud-core { width: 46px; height: 46px; flex-basis: 46px; }
+  .pjhud-panel { min-width: 178px; padding: 8px 10px; }
+  .pjhud-section { max-width: 98px; font-size: 10px; }
+  .pjhud-clock { font-size: 9px; }
+  #pjhud-canvas { opacity: .33; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pjhud-core::before,
+  .pjhud-core::after,
+  .pjhud-online::before,
+  .pjhud-scan { animation: none !important; }
+  .pjhud-track > i { transition: none; }
+}
