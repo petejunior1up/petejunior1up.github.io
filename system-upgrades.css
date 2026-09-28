@@ -109,6 +109,9 @@
   to { width: 100%; }
 }
 
+.reveal-system{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal-system.v3-visible{opacity:1;transform:none}
+
 /* Shared section frame */
 .system-section {
   width: min(1180px,83%);
@@ -212,7 +215,8 @@
   line-height: 1.65;
 }
 
-.lab-card a {
+.lab-card a,
+.lab-card button {
   position: relative;
   z-index: 2;
   display: inline-flex;
@@ -223,6 +227,13 @@
   color: var(--red, #ff1e2d);
   font: 700 .58rem var(--mono, monospace);
   letter-spacing: .8px;
+}
+
+.lab-card button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 /* Now Building + Activity */
