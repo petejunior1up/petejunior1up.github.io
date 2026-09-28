@@ -46,6 +46,13 @@
       window.setTimeout(finish, reduced ? 80 : 1450);
     }
 
+    /* Project Lab action — reuse the existing Command Center button. */
+    const labCommand = document.querySelector('[data-lab-command="open-command"]');
+    labCommand?.addEventListener('click', () => {
+      const commandButton = document.querySelector('.pjcc-btn');
+      if (commandButton) commandButton.click();
+    });
+
     /* Reveal new sections using the same visual language, independently. */
     const extras = document.querySelectorAll('.system-section.reveal-system');
     if (reduced || !('IntersectionObserver' in window)) {
