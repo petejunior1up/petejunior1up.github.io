@@ -1,0 +1,402 @@
+/* =========================================================
+   PJ SYSTEM UPGRADES
+   Boot sequence + Project Lab + Now Building + Activity Log
+   Isolated from terminal, developer archive, command center and HUD.
+   ========================================================= */
+
+.pj-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,30,45,.12), transparent 36%),
+    #030303;
+  color: #eef1f4;
+  font-family: var(--mono, 'Space Mono', monospace);
+  transition: opacity .28s ease, visibility .28s ease;
+}
+
+.pj-boot.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pj-boot-shell {
+  width: min(620px, 100%);
+  border: 1px solid #25292e;
+  background: rgba(6,7,8,.94);
+  box-shadow: 0 30px 100px rgba(0,0,0,.72), 0 0 45px rgba(255,30,45,.07);
+}
+
+.pj-boot-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 13px;
+  border-bottom: 1px solid #202429;
+  color: #626b73;
+  font-size: 9px;
+  letter-spacing: 1.4px;
+}
+
+.pj-boot-screen {
+  padding: 28px;
+}
+
+.pj-boot-mark {
+  margin-bottom: 18px;
+  color: var(--red, #ff1e2d);
+  font: 800 clamp(2.2rem, 8vw, 4.8rem)/.85 var(--sans, Inter, sans-serif);
+  letter-spacing: -4px;
+}
+
+.pj-boot-lines {
+  min-height: 116px;
+  display: grid;
+  gap: 8px;
+  color: #737e87;
+  font-size: 11px;
+}
+
+.pj-boot-line {
+  opacity: 0;
+  transform: translateY(4px);
+  animation: pjBootLine .18s ease forwards;
+}
+
+.pj-boot-line b {
+  color: #6fd38b;
+  font-weight: 700;
+}
+
+.pj-boot-progress {
+  height: 3px;
+  margin-top: 23px;
+  overflow: hidden;
+  background: #181d21;
+}
+
+.pj-boot-progress i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--red, #ff1e2d);
+  box-shadow: 0 0 16px rgba(255,30,45,.5);
+  animation: pjBootProgress 1.15s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+.pj-boot-skip {
+  display: block;
+  margin: 14px 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: #59636b;
+  cursor: pointer;
+  font: 700 9px var(--mono, monospace);
+  letter-spacing: 1px;
+}
+
+.pj-boot-skip:hover { color: #fff; }
+
+@keyframes pjBootLine {
+  to { opacity: 1; transform: none; }
+}
+@keyframes pjBootProgress {
+  to { width: 100%; }
+}
+
+/* Shared section frame */
+.system-section {
+  width: min(1180px,83%);
+  margin: auto;
+  padding: 92px 0;
+  border-top: 1px solid var(--line, #20252b);
+}
+
+.system-section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 34px;
+}
+
+.system-section-head h2 {
+  margin-top: 8px;
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  line-height: .95;
+  letter-spacing: -3px;
+}
+
+.system-section-head h2 span { color: var(--red, #ff1e2d); }
+
+.system-section-intro {
+  max-width: 430px;
+  color: #7f8992;
+  font-size: .82rem;
+  line-height: 1.7;
+}
+
+/* Project Lab */
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px;
+}
+
+.lab-card {
+  position: relative;
+  min-height: 250px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid #242a2f;
+  background:
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(145deg,#0b0d10,#070809);
+  background-size: 26px 26px,26px 26px,auto;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.lab-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,30,45,.58);
+  box-shadow: 0 18px 44px rgba(0,0,0,.38), 0 0 24px rgba(255,30,45,.05);
+}
+
+.lab-card::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  right: -80px;
+  bottom: -90px;
+  border: 1px solid rgba(255,30,45,.16);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(255,30,45,.025), 0 0 0 45px rgba(255,30,45,.014);
+}
+
+.lab-card-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #59636c;
+  font: 700 .55rem var(--mono, monospace);
+  letter-spacing: 1.2px;
+}
+
+.lab-status {
+  color: #6fd38b;
+}
+
+.lab-card h3 {
+  position: relative;
+  z-index: 1;
+  margin: 44px 0 10px;
+  font-size: 1.25rem;
+}
+
+.lab-card p {
+  position: relative;
+  z-index: 1;
+  max-width: 92%;
+  min-height: 66px;
+  color: #89939c;
+  font-size: .76rem;
+  line-height: 1.65;
+}
+
+.lab-card a {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  margin-top: 20px;
+  color: var(--red, #ff1e2d);
+  font: 700 .58rem var(--mono, monospace);
+  letter-spacing: .8px;
+}
+
+/* Now Building + Activity */
+.system-grid {
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  gap: 16px;
+}
+
+.now-building,
+.activity-log {
+  border: 1px solid #242a2f;
+  background: linear-gradient(145deg,#0a0c0f,#070809);
+}
+
+.now-building {
+  padding: 24px;
+}
+
+.now-label,
+.activity-label {
+  color: var(--red, #ff1e2d);
+  font: 700 .55rem var(--mono, monospace);
+  letter-spacing: 1.4px;
+}
+
+.now-building h3 {
+  margin: 22px 0 12px;
+  font-size: clamp(1.6rem,3vw,2.4rem);
+  line-height: 1;
+}
+
+.now-building > p {
+  color: #87919a;
+  font-size: .8rem;
+  line-height: 1.7;
+}
+
+.now-stack {
+  display: grid;
+  margin-top: 26px;
+  border-top: 1px solid #21262b;
+}
+
+.now-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #21262b;
+}
+
+.now-row span {
+  color: #58636c;
+  font: 700 .52rem var(--mono, monospace);
+  letter-spacing: .9px;
+}
+
+.now-row strong {
+  color: #dfe3e6;
+  font-size: .77rem;
+  font-weight: 600;
+}
+
+.activity-log {
+  overflow: hidden;
+}
+
+.activity-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 19px;
+  border-bottom: 1px solid #22282d;
+}
+
+.activity-head small {
+  color: #59636b;
+  font: 700 .5rem var(--mono, monospace);
+  letter-spacing: 1px;
+}
+
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.activity-list li {
+  display: grid;
+  grid-template-columns: 88px 14px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 17px 19px;
+  border-bottom: 1px solid #1d2226;
+}
+
+.activity-list li:last-child { border-bottom: 0; }
+
+.activity-date {
+  color: #555f67;
+  font: 700 .52rem/1.5 var(--mono, monospace);
+}
+
+.activity-dot {
+  width: 6px;
+  height: 6px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--red, #ff1e2d);
+  box-shadow: 0 0 11px rgba(255,30,45,.55);
+}
+
+.activity-copy strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #dce1e4;
+  font-size: .78rem;
+}
+
+.activity-copy span {
+  color: #747e86;
+  font-size: .69rem;
+  line-height: 1.5;
+}
+
+/* Tiny live indicator */
+.system-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #6fd38b;
+  font: 700 .55rem var(--mono, monospace);
+  letter-spacing: 1px;
+}
+
+.system-live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  animation: pjSystemPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pjSystemPulse { 50% { opacity: .42; } }
+
+@media(max-width:900px){
+  .lab-grid{grid-template-columns:1fr 1fr}
+  .lab-card:last-child{grid-column:1/-1}
+  .system-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:700px){
+  .system-section{width:min(90%,680px);padding:68px 0}
+  .system-section-head{display:block}
+  .system-section-intro{margin-top:16px}
+  .lab-grid{grid-template-columns:1fr}
+  .lab-card:last-child{grid-column:auto}
+  .lab-card{min-height:220px}
+  .system-grid{grid-template-columns:1fr}
+  .activity-list li{grid-template-columns:70px 12px 1fr;padding:15px}
+  .now-row{grid-template-columns:1fr;gap:6px}
+  .pj-boot-screen{padding:22px 18px}
+}
+
+@media(max-width:430px){
+  .activity-list li{grid-template-columns:1fr;gap:6px}
+  .activity-dot{display:none}
+  .pj-boot-top{font-size:8px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .pj-boot-line,.pj-boot-progress i,.system-live::before{animation:none!important}
+}
