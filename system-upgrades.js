@@ -1,5 +1,19 @@
 /* PJ SYSTEM UPGRADES — isolated enhancement layer */
 (() => {
+  /* Load the optional experience engine without touching the core portfolio. */
+  if (!document.querySelector('link[href="experience-engine.css"]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'experience-engine.css';
+    document.head.appendChild(link);
+  }
+  if (!document.querySelector('script[src="experience-engine.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'experience-engine.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
   const ready = (fn) => {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, { once: true });
     else fn();
