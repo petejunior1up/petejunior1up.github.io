@@ -8,6 +8,18 @@ const share=async(title,url)=>{try{if(navigator.share){await navigator.share({ti
 document.querySelectorAll('.project-card:not(.coming-soon)').forEach(card=>{const title=card.querySelector('h3')?.textContent?.trim()||'Project';const live=card.querySelector('.project-button.primary')?.href||location.href;const actions=card.querySelector('.project-actions');if(!actions)return;const wrap=document.createElement('div');wrap.className='pjx-actions';const b=document.createElement('button');b.type='button';b.className='pjx-share';b.textContent='SHARE PROJECT ↗';b.addEventListener('click',()=>share(title,live));wrap.appendChild(b);actions.insertAdjacentElement('afterend',wrap)});
 const modal=document.createElement('div');modal.className='pjx-modal';modal.innerHTML=`<div class="pjx-modal-card" role="dialog" aria-modal="true" aria-label="Support my work"><div class="pjx-modal-top"><span>SUPPORT // PJ CORE</span><button class="pjx-close" type="button" aria-label="Close">×</button></div><h3>SUPPORT MY WORK.</h3><p>If something I build helps or inspires you, you can support future experiments and projects here.</p><div class="pjx-support-note">PAYMENT DETAILS // COMING NEXT<br>No payment information has been published yet.</div></div>`;document.body.appendChild(modal);const close=()=>modal.classList.remove('open');modal.querySelector('.pjx-close').onclick=close;modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 const contact=document.querySelector('#contact .contact-links');if(contact){const b=document.createElement('button');b.type='button';b.className='pjx-support-btn';b.innerHTML='💚 SUPPORT MY WORK <span>↗</span>';b.onclick=()=>modal.classList.add('open');contact.appendChild(b)};
-/* Ambient motion now lives behind the whole portfolio instead of in a separate picture panel. */
-if(!document.querySelector('.pjx-bg-motion')){const bg=document.createElement('div');bg.className='pjx-bg-motion';bg.setAttribute('aria-hidden','true');bg.innerHTML='<div class="pjx-bg-grid"></div><div class="pjx-bg-scan"></div><div class="pjx-bg-vignette"></div>';document.body.prepend(bg)}
+
+/* Real cinematic hacker video background. */
+if(!document.querySelector('.pjx-bg-motion')){
+  const bg=document.createElement('div');
+  bg.className='pjx-bg-motion';
+  bg.setAttribute('aria-hidden','true');
+  bg.innerHTML='<video class="pjx-bg-video" autoplay muted loop playsinline preload="metadata"><source src="Hacker_PJ_Red.mp4" type="video/mp4"></video><div class="pjx-bg-tint"></div><div class="pjx-bg-vignette"></div>';
+  document.body.prepend(bg);
+  const video=bg.querySelector('.pjx-bg-video');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){video.pause();video.removeAttribute('autoplay')}
+  else{const p=video.play();if(p&&typeof p.catch==='function')p.catch(()=>{})}
+  video.addEventListener('error',()=>bg.classList.add('video-unavailable'));
+}
 });})();
