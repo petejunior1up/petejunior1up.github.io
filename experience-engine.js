@@ -35,6 +35,17 @@ if(skills&&!document.getElementById('soundtrack')){
     </div>`;
   skills.insertAdjacentElement('beforebegin',section);
 
+  /* Always-visible soundtrack shortcut. */
+  if(!document.querySelector('.pjx-music-fab')){
+    const musicFab=document.createElement('button');
+    musicFab.type='button';
+    musicFab.className='pjx-music-fab';
+    musicFab.innerHTML='<span>♫</span> PJ MUSIC';
+    musicFab.setAttribute('aria-label','Open PJ soundtrack');
+    musicFab.addEventListener('click',()=>section.scrollIntoView({behavior:'smooth',block:'center'}));
+    document.body.appendChild(musicFab);
+  }
+
   const embed=section.querySelector('#pjx-spotify-embed');
   const previousReady=window.onSpotifyIframeApiReady;
   window.onSpotifyIframeApiReady=IFrameAPI=>{
