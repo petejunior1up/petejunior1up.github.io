@@ -13,6 +13,10 @@ const contact=document.querySelector('#contact .contact-links');if(contact){cons
 if(!document.querySelector('link[data-pj-audio]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-audio.css?v=20261007-1';link.dataset.pjAudio='1';document.head.appendChild(link)}
 if(!document.querySelector('script[data-pj-audio]')){const script=document.createElement('script');script.src='pj-audio.js?v=20261007-2';script.defer=true;script.dataset.pjAudio='1';document.head.appendChild(script)}
 
+/* Hidden XYPHER // 404 alternate experience. */
+if(!document.querySelector('link[data-xy404]')){const link=document.createElement('link');link.rel='stylesheet';link.href='xypher-mode.css?v=20261007-1';link.dataset.xy404='1';document.head.appendChild(link)}
+if(!document.querySelector('script[data-xy404]')){const script=document.createElement('script');script.src='xypher-mode.js?v=20261007-1';script.defer=true;script.dataset.xy404='1';document.head.appendChild(script)}
+
 /* Real cinematic hacker video background. */
 if(!document.querySelector('.pjx-bg-motion')){
   const bg=document.createElement('div');bg.className='pjx-bg-motion';bg.setAttribute('aria-hidden','true');
