@@ -9,7 +9,7 @@
   ];
 
   let ctx=null,master=null,bus=null,delay=null,feedback=null,compressor=null,noiseBuffer=null;
-  let timer=null,nextNoteTime=0,step=0,trackIndex=0,isPlaying=false,armed=true,hiddenSuspended=false;
+  let timer=null,nextNoteTime=0,step=0,trackIndex=0,isPlaying=false,armed=true,hiddenSuspended=false,userPaused=false;
   let volume=.42;
   try{const saved=Number(localStorage.getItem('pjAudioVolume'));if(Number.isFinite(saved)&&saved>=0&&saved<=1)volume=saved}catch(_){}
 
@@ -35,7 +35,6 @@
 
   const $=s=>player.querySelector(s);
   const statusEl=$('.pja-status'),titleEl=$('.pja-title'),tagEl=$('.pja-tag'),playBtn=$('.pja-play'),vol=$('.pja-volume input');
-
   const setStatus=t=>{statusEl.textContent=t;player.dataset.state=t.toLowerCase().replace(/\s+/g,'-')};
   const updateTrack=()=>{const t=tracks[trackIndex];titleEl.textContent=t.name;tagEl.textContent=t.tag;step=0;player.classList.add('pja-switch');setTimeout(()=>player.classList.remove('pja-switch'),220)};
   const setPlayUI=on=>{playBtn.textContent=on?'Ⅱ':'▶';playBtn.setAttribute('aria-label',on?'Pause soundtrack':'Play soundtrack');player.classList.toggle('is-playing',on)};
@@ -72,14 +71,11 @@
 
   function schedule(currentStep,when){
     const t=tracks[trackIndex],bar=Math.floor(currentStep/16),s=currentStep%16,beat=Math.floor(s/4),root=t.root+t.progression[bar%t.progression.length];
-    if(s%4===0){kick(when,trackIndex===2?.09:.105);tone(midi(root-12),when,.42,t.wave,.045,320)}
-    if(s%2===1)hat(when,trackIndex===2?.024:.014);
-    if(s%2===0){const degree=t.arp[(s/2)%t.arp.length]%t.scale.length;const note=root+12+t.scale[degree];tone(midi(note),when,.18,trackIndex===2?'square':'triangle',trackIndex===2?.018:.024,trackIndex===2?1900:2500,trackIndex===2?((s%4)?-7:7):0)}
-    if(s===0){
-      const chord=[root,root+t.scale[2]+12,root+t.scale[4]+12];
-      chord.forEach((n,i)=>{tone(midi(n),when,3.5,t.pad,.012,720,[-7,0,7][i])});
-    }
-    if(trackIndex===2&&s%4===2){tone(midi(root+24+t.scale[(beat+1)%t.scale.length]),when,.08,'square',.012,2600,12)}
+    if(s%4===0){kick(when,trackIndex===2 ? .09 : .105);tone(midi(root-12),when,.42,t.wave,.045,320)}
+    if(s%2===1)hat(when,trackIndex===2 ? .024 : .014);
+    if(s%2===0){const degree=t.arp[(s/2)%t.arp.length]%t.scale.length;const note=root+12+t.scale[degree];tone(midi(note),when,.18,trackIndex===2?'square':'triangle',trackIndex===2 ? .018 : .024,trackIndex===2?1900:2500,trackIndex===2?((s%4)?-7:7):0)}
+    if(s===0){const chord=[root,root+t.scale[2]+12,root+t.scale[4]+12];chord.forEach((n,i)=>tone(midi(n),when,3.5,t.pad,.012,720,[-7,0,7][i]))}
+    if(trackIndex===2&&s%4===2)tone(midi(root+24+t.scale[(beat+1)%t.scale.length]),when,.08,'square',.012,2600,12);
   }
 
   function scheduler(){
@@ -90,21 +86,18 @@
 
   async function start(fromAuto=false){
     setupAudio();if(!ctx)return;
-    isPlaying=true;setPlayUI(true);
     try{await ctx.resume()}catch(_){}
     if(ctx.state!=='running'){
-      armed=true;setStatus('AUTO ARMED');
-      if(fromAuto)setPlayUI(false);
-      return;
+      isPlaying=false;armed=true;setPlayUI(false);setStatus('AUTO ARMED');return;
     }
-    armed=false;setStatus('PLAYING');nextNoteTime=ctx.currentTime+.04;clearInterval(timer);timer=setInterval(scheduler,25);scheduler();
+    userPaused=false;isPlaying=true;armed=false;setPlayUI(true);setStatus('PLAYING');nextNoteTime=ctx.currentTime+.04;clearInterval(timer);timer=setInterval(scheduler,25);scheduler();
   }
 
-  function pause(){
-    isPlaying=false;clearInterval(timer);timer=null;setPlayUI(false);setStatus('PAUSED');if(ctx&&ctx.state==='running')ctx.suspend().catch(()=>{});
+  function pause(manual=true){
+    if(manual)userPaused=true;isPlaying=false;clearInterval(timer);timer=null;setPlayUI(false);setStatus('PAUSED');if(ctx&&ctx.state==='running')ctx.suspend().catch(()=>{});
   }
 
-  function toggle(){isPlaying&&ctx?.state==='running'?pause():start(false)}
+  function toggle(){isPlaying&&ctx?.state==='running'?pause(true):start(false)}
   function next(dir=1){trackIndex=(trackIndex+dir+tracks.length)%tracks.length;updateTrack();if(isPlaying&&ctx?.state==='running'){nextNoteTime=ctx.currentTime+.05;step=0}}
   function open(){player.classList.add('pja-focus');setTimeout(()=>player.classList.remove('pja-focus'),1400)}
 
@@ -113,10 +106,9 @@
   $('.pja-next').addEventListener('click',e=>{e.stopPropagation();next(1)});
   vol.addEventListener('input',()=>{volume=Number(vol.value);if(master&&ctx)master.gain.setTargetAtTime(volume*.17,ctx.currentTime,.05);try{localStorage.setItem('pjAudioVolume',String(volume))}catch(_){}});
 
-  const unlock=()=>{if(armed||!ctx||ctx.state!=='running')start(true)};
-  document.addEventListener('pointerdown',unlock,{once:true,capture:true});
+  const unlock=()=>{if(!userPaused&&(armed||!ctx||ctx.state!=='running'))start(true)};
+  document.addEventListener('click',unlock,{once:true});
   document.addEventListener('keydown',unlock,{once:true,capture:true});
-  window.addEventListener('load',()=>start(true),{once:true});
 
   document.addEventListener('visibilitychange',()=>{
     if(!ctx)return;
@@ -124,5 +116,8 @@
     else if(!document.hidden&&hiddenSuspended&&isPlaying){hiddenSuspended=false;ctx.resume().then(()=>{nextNoteTime=ctx.currentTime+.04}).catch(()=>{})}
   });
 
-  window.PJAudio={play:()=>start(false),pause,toggle,next:()=>next(1),previous:()=>next(-1),open,get state(){return{playing:isPlaying,track:tracks[trackIndex].name,armed}}};
+  window.PJAudio={play:()=>start(false),pause:()=>pause(true),toggle,next:()=>next(1),previous:()=>next(-1),open,get state(){return{playing:isPlaying,track:tracks[trackIndex].name,armed}}};
+
+  /* Try immediately. Browsers that block audible autoplay will start it on the visitor's first interaction instead. */
+  start(true);
 })();
