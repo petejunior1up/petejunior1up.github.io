@@ -5,7 +5,12 @@
   const tracks=[
     {name:'RED PROTOCOL',tag:'DARK CYBER // ORIGINAL',bpm:82,root:36,scale:[0,3,5,7,10],arp:[0,2,4,1,3,2,4,0],progression:[0,-2,3,-4],wave:'sawtooth',pad:'triangle'},
     {name:'NIGHT SHELL',tag:'STEALTH MODE // ORIGINAL',bpm:74,root:33,scale:[0,2,3,7,9],arp:[0,3,1,4,2,1,3,0],progression:[0,3,-2,5],wave:'triangle',pad:'sine'},
-    {name:'ZERO TRACE',tag:'GLITCH SECTOR // ORIGINAL',bpm:96,root:38,scale:[0,1,5,7,8],arp:[0,4,2,3,1,4,3,0],progression:[0,-5,1,-3],wave:'square',pad:'triangle'}
+    {name:'ZERO TRACE',tag:'GLITCH SECTOR // ORIGINAL',bpm:96,root:38,scale:[0,1,5,7,8],arp:[0,4,2,3,1,4,3,0],progression:[0,-5,1,-3],wave:'square',pad:'triangle'},
+    {name:'NEON GHOST',tag:'NIGHT DRIVE // ORIGINAL',bpm:88,root:35,scale:[0,3,5,8,10],arp:[0,1,3,4,2,3,1,4],progression:[0,5,3,-2],wave:'triangle',pad:'sine'},
+    {name:'BLACK ICE',tag:'COLD NETWORK // ORIGINAL',bpm:78,root:31,scale:[0,2,5,7,10],arp:[0,4,1,3,2,4,1,0],progression:[0,-3,2,-5],wave:'sawtooth',pad:'triangle'},
+    {name:'GHOST PACKET',tag:'DATA RUN // ORIGINAL',bpm:102,root:40,scale:[0,2,3,7,10],arp:[0,2,1,4,3,2,4,1],progression:[0,-2,5,3],wave:'square',pad:'sine'},
+    {name:'VOID ACCESS',tag:'DEEP SYSTEM // ORIGINAL',bpm:68,root:29,scale:[0,3,5,7,11],arp:[0,3,2,4,1,2,3,0],progression:[0,3,-4,-2],wave:'triangle',pad:'sine'},
+    {name:'ROOTKIT DREAMS',tag:'AFTER HOURS // ORIGINAL',bpm:84,root:34,scale:[0,2,5,7,9],arp:[0,2,4,3,1,4,2,0],progression:[0,4,-3,2],wave:'sawtooth',pad:'triangle'}
   ];
 
   let ctx=null,master=null,bus=null,delay=null,feedback=null,compressor=null,noiseBuffer=null;
@@ -71,11 +76,17 @@
 
   function schedule(currentStep,when){
     const t=tracks[trackIndex],bar=Math.floor(currentStep/16),s=currentStep%16,beat=Math.floor(s/4),root=t.root+t.progression[bar%t.progression.length];
-    if(s%4===0){kick(when,trackIndex===2 ? .09 : .105);tone(midi(root-12),when,.42,t.wave,.045,320)}
-    if(s%2===1)hat(when,trackIndex===2 ? .024 : .014);
-    if(s%2===0){const degree=t.arp[(s/2)%t.arp.length]%t.scale.length;const note=root+12+t.scale[degree];tone(midi(note),when,.18,trackIndex===2?'square':'triangle',trackIndex===2 ? .018 : .024,trackIndex===2?1900:2500,trackIndex===2?((s%4)?-7:7):0)}
-    if(s===0){const chord=[root,root+t.scale[2]+12,root+t.scale[4]+12];chord.forEach((n,i)=>tone(midi(n),when,3.5,t.pad,.012,720,[-7,0,7][i]))}
-    if(trackIndex===2&&s%4===2)tone(midi(root+24+t.scale[(beat+1)%t.scale.length]),when,.08,'square',.012,2600,12);
+    const fast=t.bpm>=96,slow=t.bpm<=72,glitch=t.wave==='square';
+    if(s%4===0){kick(when,fast?.09:slow?.085:.105);tone(midi(root-12),when,slow?.62:.42,t.wave,.045,slow?260:320)}
+    if(s%2===1)hat(when,glitch?.022:slow?.009:.014);
+    if(s%2===0){const degree=t.arp[(s/2)%t.arp.length]%t.scale.length;const note=root+12+t.scale[degree];tone(midi(note),when,slow?.3:.18,glitch?'square':'triangle',glitch?.018:.024,glitch?1900:(slow?1500:2500),glitch?((s%4)?-7:7):0)}
+    if(s===0){const chord=[root,root+t.scale[2]+12,root+t.scale[4]+12];chord.forEach((n,i)=>tone(midi(n),when,slow?4.5:3.5,t.pad,slow?.016:.012,slow?620:720,[-7,0,7][i]))}
+    if(glitch&&s%4===2)tone(midi(root+24+t.scale[(beat+1)%t.scale.length]),when,.08,'square',.012,2600,12);
+    if(trackIndex===3&&s===12)tone(midi(root+19),when,.7,'sine',.018,1800,5);
+    if(trackIndex===4&&s===8)tone(midi(root+7),when,1.1,'triangle',.02,900,-8);
+    if(trackIndex===5&&s%4===3)tone(midi(root+24+t.scale[beat%t.scale.length]),when,.07,'square',.01,3000,6);
+    if(trackIndex===6&&s===8)tone(midi(root+12),when,2.5,'sine',.02,560,-5);
+    if(trackIndex===7&&s===12)tone(midi(root+17),when,.9,'triangle',.018,1400,7);
   }
 
   function scheduler(){
@@ -116,7 +127,7 @@
     else if(!document.hidden&&hiddenSuspended&&isPlaying){hiddenSuspended=false;ctx.resume().then(()=>{nextNoteTime=ctx.currentTime+.04}).catch(()=>{})}
   });
 
-  window.PJAudio={play:()=>start(false),pause:()=>pause(true),toggle,next:()=>next(1),previous:()=>next(-1),open,get state(){return{playing:isPlaying,track:tracks[trackIndex].name,armed}}};
+  window.PJAudio={play:()=>start(false),pause:()=>pause(true),toggle,next:()=>next(1),previous:()=>next(-1),open,get state(){return{playing:isPlaying,track:tracks[trackIndex].name,armed,totalTracks:tracks.length}}};
 
   /* Try immediately. Browsers that block audible autoplay will start it on the visitor's first interaction instead. */
   start(true);
