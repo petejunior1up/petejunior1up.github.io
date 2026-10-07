@@ -17,6 +17,10 @@ if(!document.querySelector('script[data-pj-audio]')){const script=document.creat
 if(!document.querySelector('link[data-xy404]')){const link=document.createElement('link');link.rel='stylesheet';link.href='xypher-mode.css?v=20261007-1';link.dataset.xy404='1';document.head.appendChild(link)}
 if(!document.querySelector('script[data-xy404]')){const script=document.createElement('script');script.src='xypher-mode.js?v=20261007-1';script.defer=true;script.dataset.xy404='1';document.head.appendChild(script)}
 
+/* Anonymous visitor identity + project hologram inspector. */
+if(!document.querySelector('link[data-pj-identity-holo]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-identity-hologram.css?v=20261007-1';link.dataset.pjIdentityHolo='1';document.head.appendChild(link)}
+if(!document.querySelector('script[data-pj-identity-holo]')){const script=document.createElement('script');script.src='pj-identity-hologram.js?v=20261007-1';script.defer=true;script.dataset.pjIdentityHolo='1';document.head.appendChild(script)}
+
 /* Real cinematic hacker video background. */
 if(!document.querySelector('.pjx-bg-motion')){
   const bg=document.createElement('div');bg.className='pjx-bg-motion';bg.setAttribute('aria-hidden','true');
