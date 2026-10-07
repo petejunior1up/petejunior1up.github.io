@@ -11,7 +11,7 @@ const contact=document.querySelector('#contact .contact-links');if(contact){cons
 
 /* Native PJ soundtrack: original cyber loops generated in-browser. */
 if(!document.querySelector('link[data-pj-audio]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-audio.css?v=20261007-1';link.dataset.pjAudio='1';document.head.appendChild(link)}
-if(!document.querySelector('script[data-pj-audio]')){const script=document.createElement('script');script.src='pj-audio.js?v=20261007-1';script.defer=true;script.dataset.pjAudio='1';document.head.appendChild(script)}
+if(!document.querySelector('script[data-pj-audio]')){const script=document.createElement('script');script.src='pj-audio.js?v=20261007-2';script.defer=true;script.dataset.pjAudio='1';document.head.appendChild(script)}
 
 /* Real cinematic hacker video background. */
 if(!document.querySelector('.pjx-bg-motion')){
