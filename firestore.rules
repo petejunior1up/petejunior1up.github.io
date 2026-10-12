@@ -25,7 +25,8 @@ service cloud.firestore {
     }
 
     match /privateProfiles/{uid} {
-      allow read, create, update, delete: if isSelf(uid)
+      allow read, delete: if isSelf(uid);
+      allow create, update: if isSelf(uid)
         && (!('email' in request.resource.data) || (request.resource.data.email is string && request.resource.data.email.size() <= 120));
     }
 
