@@ -25,9 +25,10 @@ if(!document.querySelector('script[data-pj-identity-holo]')){const script=docume
 if(!document.querySelector('link[data-pj-core-ai]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-core-ai.css?v=20261009-1';link.dataset.pjCoreAi='1';document.head.appendChild(link)}
 if(!document.querySelector('script[data-pj-core-ai]')){const script=document.createElement('script');script.src='pj-core-ai.js?v=20261009-1';script.defer=true;script.dataset.pjCoreAi='1';document.head.appendChild(script)}
 
-/* PJ // LOUNGE — Supabase saved chat + browser-encrypted private rooms. */
+/* PJ // LOUNGE — Supabase saved chat + encrypted private rooms + social layer. */
 if(!document.querySelector('link[data-pj-lounge]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-lounge.css?v=20261012-1';link.dataset.pjLounge='1';document.head.appendChild(link)}
-const loadLounge=()=>{if(!document.querySelector('script[data-pj-lounge]')){const script=document.createElement('script');script.src='pj-lounge.js?v=20261012-2';script.defer=true;script.dataset.pjLounge='1';document.head.appendChild(script)}};
+if(!document.querySelector('link[data-pj-lounge-social]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-lounge-social.css?v=20261012-1';link.dataset.pjLoungeSocial='1';document.head.appendChild(link)}
+const loadLounge=()=>{if(!document.querySelector('script[data-pj-lounge]')){const script=document.createElement('script');script.src='pj-lounge.js?v=20261012-3';script.defer=true;script.dataset.pjLounge='1';document.head.appendChild(script)}};
 if(window.PJ_SUPABASE_CONFIG){loadLounge()}else if(!document.querySelector('script[data-pj-supabase-config]')){const cfg=document.createElement('script');cfg.src='supabase-config.js?v=20261012-1';cfg.defer=true;cfg.dataset.pjSupabaseConfig='1';cfg.addEventListener('load',loadLounge,{once:true});cfg.addEventListener('error',loadLounge,{once:true});document.head.appendChild(cfg)}else{loadLounge()}
 
 /* Real cinematic hacker video background. */
