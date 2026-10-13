@@ -4,5 +4,5 @@
 window.PJ_SUPABASE_CONFIG = {
   url: 'https://tfltrlzhhgktmsgxcjta.supabase.co',
   publishableKey: 'sb_publishable_W--DpWIF2E7mC-oXc9k3-A_Su-Yf0TD',
-  ownerUid: 'e9a85f39-5a27-4a75-9f4c-6f657a726c23'
+  ownerUid: '9917df2e-2c74-4157-9b27-f3f09d660757'
 };
