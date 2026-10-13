@@ -1,18 +1,18 @@
 -- PJ // ADMIN — switch from anonymous owner to permanent Auth account
--- IMPORTANT: Replace PASTE_NEW_ADMIN_UUID_HERE before running.
+-- Permanent admin UUID selected by Pete.
 -- Never put your password, OTP, authenticator secret, service-role key, or database password here.
 --
--- This transaction adds the new account FIRST, then removes every other admin row.
+-- This transaction adds the permanent account FIRST, then removes every other admin row.
 -- If the UUID is invalid, the transaction fails before changing the admin list.
 
 begin;
 
 insert into public.site_admins(user_id)
-values ('PASTE_NEW_ADMIN_UUID_HERE'::uuid)
+values ('9917df2e-2c74-4157-9b27-f3f09d660757'::uuid)
 on conflict(user_id) do nothing;
 
 delete from public.site_admins
-where user_id <> 'PASTE_NEW_ADMIN_UUID_HERE'::uuid;
+where user_id <> '9917df2e-2c74-4157-9b27-f3f09d660757'::uuid;
 
 commit;
 
