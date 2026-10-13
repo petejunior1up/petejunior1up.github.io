@@ -1,14 +1,14 @@
 -- PJ // NETWORK owner activation
--- This registers the Lounge/Network UUID chosen by Pete as site owner/admin.
+-- Permanent Supabase Auth UUID selected by Pete for Lounge/Network ownership.
 -- The UUID is an account identifier, not a password or secret.
--- Run this file once in Supabase SQL Editor as the project owner.
+-- Run this only if the permanent account needs to be re-added to site_admins.
 
 insert into public.site_admins(user_id)
-values ('e9a85f39-5a27-4a75-9f4c-6f657a726c23'::uuid)
+values ('9917df2e-2c74-4157-9b27-f3f09d660757'::uuid)
 on conflict(user_id) do nothing;
 
 select user_id, created_at
 from public.site_admins
-where user_id = 'e9a85f39-5a27-4a75-9f4c-6f657a726c23'::uuid;
+where user_id = '9917df2e-2c74-4157-9b27-f3f09d660757'::uuid;
 
-select 'PJ OWNER ADMIN READY' as status;
+select 'PJ PERMANENT OWNER READY' as status;
