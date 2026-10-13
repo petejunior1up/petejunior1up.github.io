@@ -16,7 +16,7 @@ BEGIN
   END IF;
 
   INSERT INTO private.pj_admin_secrets(id, secret_hash, updated_at)
-  VALUES (1, crypt(raw_key, gen_salt('bf', 12)), now())
+  VALUES (1, extensions.crypt(raw_key, extensions.gen_salt('bf', 12)), now())
   ON CONFLICT (id) DO UPDATE
     SET secret_hash = excluded.secret_hash,
         updated_at = now();
