@@ -30,6 +30,7 @@
         if(isAdminAccount){const st=await sb.rpc('pj_admin_session_status');if(!st.error&&st.data){configured=!!st.data.configured;secure=!!st.data.secure;verifiedUntil=st.data.verified_until||null;lockedUntil=st.data.locked_until||null}}
       }
       updateLauncher();
+      setTimeout(mountNetworkSignOut,0);
     }
     function updateLauncher(){launch.classList.toggle('secure',secure);launch.innerHTML=secure?'PJ // ADMIN <b>SECURE</b>':'PJ // ADMIN <b>LOCKED</b>';document.documentElement.dataset.pjAdminSecure=secure?'1':'0'}
 
@@ -44,14 +45,27 @@
     }
     async function verifyKey(e){e.preventDefault();const key=body.querySelector('#pja2Key').value;status('VERIFYING PRIVATE KEY…','warn');try{const r=await sb.rpc('pj_admin_stepup',{p_key:key});if(r.error)throw r.error;if(r.data!==true){await refreshState();renderKey();status(lockedUntil?'TOO MANY ATTEMPTS // SESSION TEMPORARILY LOCKED':'PRIVATE ADMIN KEY NOT ACCEPTED','error');return}await refreshState();if(!secure)throw new Error('Session step-up was not activated.');renderSecure()}catch(err){await refreshState();renderKey();status(err.message||'Verification failed','error')}}
 
-    function renderSecure(){updateLauncher();const until=verifiedUntil?new Date(verifiedUntil).toLocaleTimeString():'';body.innerHTML=`<div class="pja2-kicker">OWNER CONTROL // SESSION VERIFIED</div><h2>ADMIN SECURE.</h2><p><span class="pja2-shield"><i></i>PASSWORD + PRIVATE ADMIN KEY VERIFIED</span></p><p>This signed-in browser session can now use protected moderation and publishing controls.${until?` Step-up expires around <strong>${esc(until)}</strong>.`:''}</p><div class="pja2-actions"><button class="pja2-btn" id="pja2OpenAdmin" type="button">OPEN NETWORK ADMIN</button><button class="pja2-btn secondary" id="pja2Lock" type="button">LOCK ADMIN NOW</button><button class="pja2-btn secondary" id="pja2Logout" type="button">SIGN OUT ADMIN</button></div><div class="pja2-status" data-type="ok">PHONE-FREE OWNER SESSION VERIFIED</div>`;body.querySelector('#pja2OpenAdmin').onclick=()=>{close();window.PJNetwork?.open?.();setTimeout(()=>window.PJNetwork?.switchTab?.('admin'),120)};body.querySelector('#pja2Lock').onclick=lockAdmin;body.querySelector('#pja2Logout').onclick=logout}
+    function renderSecure(){updateLauncher();const until=verifiedUntil?new Date(verifiedUntil).toLocaleTimeString():'';body.innerHTML=`<div class="pja2-kicker">OWNER CONTROL // SESSION VERIFIED</div><h2>ADMIN SECURE.</h2><p><span class="pja2-shield"><i></i>PASSWORD + PRIVATE ADMIN KEY VERIFIED</span></p><p>This signed-in browser session can now use protected moderation and publishing controls.${until?` Step-up expires around <strong>${esc(until)}</strong>.`:''}</p><div class="pja2-actions"><button class="pja2-btn" id="pja2OpenAdmin" type="button">OPEN NETWORK ADMIN</button><button class="pja2-btn secondary" id="pja2Lock" type="button">LOCK ADMIN NOW</button><button class="pja2-btn secondary" id="pja2Logout" type="button">SIGN OUT ADMIN</button></div><div class="pja2-status" data-type="ok">PHONE-FREE OWNER SESSION VERIFIED</div>`;body.querySelector('#pja2OpenAdmin').onclick=()=>{close();window.PJNetwork?.open?.();setTimeout(()=>window.PJNetwork?.switchTab?.('admin'),120)};body.querySelector('#pja2Lock').onclick=lockAdmin;body.querySelector('#pja2Logout').onclick=logout;setTimeout(mountNetworkSignOut,0)}
     async function lockAdmin(){try{await sb.rpc('pj_admin_lock')}catch(_){}await refreshState();renderKey()}
     async function logout(){try{await client();try{await sb.rpc('pj_admin_lock')}catch(_){}await sb.auth.signOut();await sb.auth.signInAnonymously()}catch(_){}location.reload()}
 
-    document.addEventListener('click',e=>{const tab=e.target.closest('.pjn-tabs [data-tab="admin"]');if(!tab)return;if(!secure){e.preventDefault();e.stopImmediatePropagation();open()}},true);
+    function mountNetworkSignOut(){
+      if(!secure)return;
+      const panel=document.querySelector('#pjnAdmin');
+      if(!panel||panel.querySelector('#pjnAdminSignOut'))return;
+      const head=panel.querySelector('.pjn-section-head');
+      if(!head)return;
+      const button=document.createElement('button');
+      button.type='button';button.id='pjnAdminSignOut';button.className='pjn-btn secondary';button.textContent='SIGN OUT ADMIN';button.title='Sign out of the permanent owner account';button.onclick=logout;
+      head.appendChild(button);
+    }
+    const networkObserver=new MutationObserver(()=>mountNetworkSignOut());
+    networkObserver.observe(document.body,{childList:true,subtree:true});
+
+    document.addEventListener('click',e=>{const tab=e.target.closest('.pjn-tabs [data-tab="admin"]');if(!tab)return;if(!secure){e.preventDefault();e.stopImmediatePropagation();open();return}setTimeout(mountNetworkSignOut,120)},true);
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))close();if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='a'){e.preventDefault();open()}},true);
 
-    window.PJAdminAuth={open,close,refresh:refreshState,get state(){return{signedIn:!!user&&!user.is_anonymous,adminAccount:isAdminAccount,configured,secure,verifiedUntil,lockedUntil,uid:user?.id||null}}};
+    window.PJAdminAuth={open,close,refresh:refreshState,signOut:logout,lock:lockAdmin,get state(){return{signedIn:!!user&&!user.is_anonymous,adminAccount:isAdminAccount,configured,secure,verifiedUntil,lockedUntil,uid:user?.id||null}}};
     try{await refreshState()}catch(err){console.warn('PJ Admin Auth:',err.message)}
   });
 })();
