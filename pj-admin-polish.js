@@ -128,6 +128,7 @@
     try{
       polishEmptyStates(document);
       const panel=$('#pjnAdmin');if(!panel)return;
+      $('#pjnAdminSignOut',panel)?.remove();
       const auth=state();
       if(!auth?.secure){lockedPanel(panel);return}
       secureHeader(panel,auth);
