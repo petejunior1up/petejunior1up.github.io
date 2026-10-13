@@ -1,14 +1,14 @@
 -- PJ // NETWORK owner activation
--- Replace YOUR_USER_UUID with the UUID shown by PJ Network → PJ ID → COPY MY USER ID.
--- This UUID is not a password, but only register the account/session you want to be site owner.
--- Run this in Supabase SQL Editor as the project owner.
+-- This registers the Lounge/Network UUID chosen by Pete as site owner/admin.
+-- The UUID is an account identifier, not a password or secret.
+-- Run this file once in Supabase SQL Editor as the project owner.
 
--- Example:
--- insert into public.site_admins(user_id)
--- values ('YOUR_USER_UUID'::uuid)
--- on conflict(user_id) do nothing;
+insert into public.site_admins(user_id)
+values ('e9a85f39-5a27-4a75-9f4c-6f657a726c23'::uuid)
+on conflict(user_id) do nothing;
 
--- To verify after replacing the UUID:
--- select user_id, created_at from public.site_admins;
+select user_id, created_at
+from public.site_admins
+where user_id = 'e9a85f39-5a27-4a75-9f4c-6f657a726c23'::uuid;
 
-select 'REPLACE YOUR_USER_UUID, THEN UNCOMMENT THE INSERT' as status;
+select 'PJ OWNER ADMIN READY' as status;
