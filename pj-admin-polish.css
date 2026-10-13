@@ -1,0 +1,93 @@
+/* PJ // ADMIN POLISH — control-room appearance layer */
+:root{--pj-ok:#61ff96;--pj-warn:#ffd166;--pj-danger:#ff7583;--pj-muted:#6d7880}
+
+/* Glass / depth */
+.pjn-overlay{background:rgba(0,0,0,.70)!important;backdrop-filter:blur(16px) saturate(112%)!important}
+.pjn-shell{position:relative;background:linear-gradient(180deg,rgba(8,10,12,.91),rgba(4,5,7,.94))!important;backdrop-filter:blur(24px) saturate(115%);box-shadow:0 46px 150px rgba(0,0,0,.92),0 0 65px rgba(var(--pj-accent-rgb,255,38,56),.07)!important}
+.pjn-shell:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(115deg,rgba(255,255,255,.025),transparent 18%,transparent 78%,rgba(var(--pj-accent-rgb,255,38,56),.025));border:1px solid rgba(255,255,255,.018)}
+.pjn-shell>*{position:relative;z-index:1}
+.pjn-head{background:rgba(8,10,12,.78)!important;backdrop-filter:blur(18px)}
+.pjn-tabs,.pjn-status{background:rgba(7,9,11,.78)!important}
+
+/* Unified status language */
+.pjn-status[data-type="ok"],.pjn-chip.good,.pjap-footer-state{color:var(--pj-ok)!important}
+.pjn-status[data-type="warn"],.pjn-chip.warn{color:var(--pj-warn)!important}
+.pjn-status[data-type="error"],.pjn-chip.bad{color:var(--pj-danger)!important}
+.pjn-chip.good{border-color:rgba(97,255,150,.34)!important;background:rgba(97,255,150,.045)!important}
+.pjn-chip.warn{border-color:rgba(255,209,102,.34)!important;background:rgba(255,209,102,.04)!important}
+.pjn-chip.bad{border-color:rgba(255,117,131,.34)!important;background:rgba(255,117,131,.04)!important}
+
+/* Micro motion */
+.pjn-panel.active{animation:pjapPanelIn .18s ease both}
+.pjn-card,.pjn-row,.pjn-btn,.pjn-mini,.pjn-tabs button{transition:border-color .16s ease,background .16s ease,color .16s ease,transform .16s ease,box-shadow .16s ease}
+.pjn-card:hover{border-color:#303a41;box-shadow:0 13px 34px rgba(0,0,0,.18)}
+.pjn-btn:hover,.pjn-mini:hover{transform:translateY(-1px)}
+@keyframes pjapPanelIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* Admin command bar */
+#pjnAdmin{position:relative}
+#pjnAdmin[data-pj-admin-secure="0"]>:not(.pjap-lock-panel){display:none!important}
+.pjap-command{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;margin-bottom:14px;padding:15px 16px;border:1px solid rgba(97,255,150,.24);background:linear-gradient(105deg,rgba(97,255,150,.055),rgba(9,12,14,.88) 46%,rgba(var(--pj-accent-rgb,255,38,56),.045));box-shadow:inset 0 1px rgba(255,255,255,.025),0 18px 50px rgba(0,0,0,.18)}
+.pjap-command-main{display:flex;align-items:center;gap:12px;min-width:0}
+.pjap-live-dot{width:9px;height:9px;flex:0 0 auto;border-radius:50%;background:var(--pj-ok);box-shadow:0 0 0 5px rgba(97,255,150,.06),0 0 16px rgba(97,255,150,.7);animation:pjapPulse 2.2s ease-in-out infinite}
+.pjap-command small,.pjap-session small{display:block;color:#68747c;font:900 .34rem var(--mono,monospace);letter-spacing:.95px}
+.pjap-command strong{display:block;margin-top:4px;color:#f3f6f8;font:900 .82rem var(--mono,monospace);letter-spacing:1px}
+.pjap-command p{margin:5px 0 0;color:#738089;font:500 .64rem/1.4 system-ui,sans-serif}
+.pjap-command-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.pjap-session{min-width:92px;padding:7px 9px;border:1px solid #293239;background:#080b0d;text-align:right}
+.pjap-session strong{margin-top:3px;color:var(--pj-ok);font:900 .68rem var(--mono,monospace);letter-spacing:1px}
+.pjap-session.ending{border-color:rgba(255,209,102,.4)}
+.pjap-session.ending strong{color:var(--pj-warn)}
+.pjap-secure-chip{white-space:nowrap}
+@keyframes pjapPulse{50%{opacity:.58;box-shadow:0 0 0 8px rgba(97,255,150,.025),0 0 20px rgba(97,255,150,.42)}}
+
+/* Admin card hierarchy */
+.pjn-admin-grid{gap:12px!important}
+#pjnAdmin .pjn-admin-grid>.pjn-card{position:relative;overflow:hidden;padding-top:42px!important;background:linear-gradient(145deg,rgba(12,15,18,.96),rgba(7,9,11,.94))!important}
+#pjnAdmin .pjn-admin-grid>.pjn-card:before{content:attr(data-pj-admin-card);position:absolute;top:13px;left:42px;color:#69757d;font:900 .31rem var(--mono,monospace);letter-spacing:1.1px;text-transform:uppercase}
+#pjnAdmin .pjn-admin-grid>.pjn-card:after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:#303a41}
+.pjap-card-icon{position:absolute;top:9px;left:12px;width:20px;height:20px;display:grid;place-items:center;border:1px solid #303940;background:#0b0e10;color:#a6b0b7;font:800 .65rem system-ui,sans-serif}
+#pjnAdmin [data-pj-admin-card="inbox"]:after{background:#6fcaff}
+#pjnAdmin [data-pj-admin-card="reports"]:after,#pjnAdmin [data-pj-admin-card="moderation"]:after{background:var(--pj-danger)}
+#pjnAdmin [data-pj-admin-card="polls"]:after{background:#b58cff}
+#pjnAdmin [data-pj-admin-card="publish"]:after{background:var(--pj-ok)}
+#pjnAdmin [data-pj-admin-card="builds"]:after{background:var(--pj-warn)}
+#pjnAdmin .pjap-original-head{margin:2px 0 14px;padding:0 2px}
+#pjnAdmin .pjap-original-head .pjn-chip{box-shadow:0 0 22px rgba(97,255,150,.05)}
+
+/* Danger actions are unmistakable */
+.pjn-btn.pjap-danger,.pjn-mini.pjap-danger,#pjnAdmin [data-mute],#pjnAdmin [data-report-clear]{border-color:rgba(255,117,131,.44)!important;background:rgba(255,117,131,.055)!important;color:var(--pj-danger)!important}
+.pjn-btn.pjap-danger:hover,.pjn-mini.pjap-danger:hover,#pjnAdmin [data-mute]:hover,#pjnAdmin [data-report-clear]:hover{border-color:var(--pj-danger)!important;background:rgba(255,117,131,.11)!important;box-shadow:0 0 20px rgba(255,117,131,.06)}
+
+/* Better empty / all-clear states */
+.pjn-empty.pjap-empty-state{position:relative;padding:22px 18px;border-style:solid;border-color:#222b31;background:linear-gradient(135deg,rgba(97,255,150,.025),rgba(8,10,12,.55));color:#78858d}
+.pjn-empty.pjap-empty-state:before{content:"SYSTEM STATUS";display:block;margin-bottom:7px;color:#4f5c64;font:900 .3rem var(--mono,monospace);letter-spacing:1px}
+
+/* Secure lock screen */
+.pjap-lock-panel{max-width:620px;margin:36px auto;padding:34px 26px;border:1px solid rgba(255,117,131,.28);background:radial-gradient(circle at 50% 0,rgba(255,117,131,.07),transparent 36%),#090c0e;text-align:center;box-shadow:0 22px 70px rgba(0,0,0,.28)}
+.pjap-lock-mark{width:54px;height:54px;margin:0 auto 15px;display:grid;place-items:center;border:1px solid rgba(255,117,131,.35);background:rgba(255,117,131,.045);color:var(--pj-danger);font-size:1.15rem}
+.pjap-lock-panel small{color:var(--pj-danger);font:900 .35rem var(--mono,monospace);letter-spacing:1px}
+.pjap-lock-panel h2{margin:8px 0;color:#eef2f5;font:900 1.35rem system-ui,sans-serif}
+.pjap-lock-panel p{max-width:500px;margin:0 auto 18px;color:#7b878f;font:500 .7rem/1.6 system-ui,sans-serif}
+
+/* Signature */
+.pjap-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:11px 2px 2px;border-top:1px solid #20282e;color:#525f67;font:900 .31rem var(--mono,monospace);letter-spacing:.8px}
+.pjap-footer-state{font-size:.3rem}
+
+/* Mobile admin cleanup */
+@media(max-width:760px){
+  .pjap-command{grid-template-columns:1fr;padding:13px;gap:12px}
+  .pjap-command-actions{justify-content:flex-start}
+  .pjap-session{margin-right:auto;text-align:left}
+  .pjap-command-actions .pjn-btn{flex:1 1 145px}
+  #pjnAdmin .pjn-admin-grid>.pjn-card{padding:40px 11px 11px!important}
+  .pjap-footer{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:520px){
+  .pjap-command-main{align-items:flex-start}
+  .pjap-command-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .pjap-session,.pjap-secure-chip{grid-column:1/-1;width:auto}
+  .pjap-command-actions .pjn-btn{width:100%}
+  .pjap-lock-panel{margin:18px 0;padding:27px 16px}
+}
+@media(prefers-reduced-motion:reduce){.pjn-panel.active{animation:none!important}.pjap-live-dot{animation:none!important}.pjn-card,.pjn-row,.pjn-btn,.pjn-mini,.pjn-tabs button{transition:none!important}}
