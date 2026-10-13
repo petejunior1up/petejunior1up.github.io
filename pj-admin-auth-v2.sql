@@ -8,7 +8,8 @@
 --
 -- No QR code, phone, TOTP, OTP, service-role key, or database password is used here.
 
-create extension if not exists pgcrypto;
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
 create schema if not exists private;
 
 create table if not exists private.pj_admin_secrets (
@@ -126,7 +127,7 @@ begin
     return false;
   end if;
 
-  if crypt(p_key, stored_hash) = stored_hash then
+  if extensions.crypt(p_key, stored_hash) = stored_hash then
     delete from private.pj_admin_attempts
     where user_id = uid and session_id = sid;
 
