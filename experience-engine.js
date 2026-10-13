@@ -25,15 +25,17 @@ if(!document.querySelector('script[data-pj-identity-holo]')){const script=docume
 if(!document.querySelector('link[data-pj-core-ai]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-core-ai.css?v=20261009-1';link.dataset.pjCoreAi='1';document.head.appendChild(link)}
 if(!document.querySelector('script[data-pj-core-ai]')){const script=document.createElement('script');script.src='pj-core-ai.js?v=20261009-1';script.defer=true;script.dataset.pjCoreAi='1';document.head.appendChild(script)}
 
-/* PJ // LOUNGE + SOCIAL + NETWORK v4 — shared Supabase community backend. */
+/* PJ // LOUNGE + SOCIAL + NETWORK v4 + secure permanent ADMIN auth. */
 if(!document.querySelector('link[data-pj-lounge]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-lounge.css?v=20261012-1';link.dataset.pjLounge='1';document.head.appendChild(link)}
 if(!document.querySelector('link[data-pj-lounge-social]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-lounge-social.css?v=20261012-1';link.dataset.pjLoungeSocial='1';document.head.appendChild(link)}
 if(!document.querySelector('link[data-pj-social-hub]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-social-hub.css?v=20261012-1';link.dataset.pjSocialHub='1';document.head.appendChild(link)}
 if(!document.querySelector('link[data-pj-network-v4]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-network-v4.css?v=20261013-1';link.dataset.pjNetworkV4='1';document.head.appendChild(link)}
+if(!document.querySelector('link[data-pj-admin-auth-v2]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-admin-auth-v2.css?v=20261013-1';link.dataset.pjAdminAuthV2='1';document.head.appendChild(link)}
 const loadLounge=()=>{if(!document.querySelector('script[data-pj-lounge]')){const script=document.createElement('script');script.src='pj-lounge.js?v=20261012-3';script.defer=true;script.dataset.pjLounge='1';document.head.appendChild(script)}};
 const loadSocial=()=>{if(!document.querySelector('script[data-pj-social-hub]')){const script=document.createElement('script');script.src='pj-social-hub.js?v=20261012-1';script.defer=true;script.dataset.pjSocialHub='1';document.head.appendChild(script)}};
 const loadNetwork=()=>{if(!document.querySelector('script[data-pj-network-v4]')){const script=document.createElement('script');script.src='pj-network-v4.js?v=20261013-1';script.defer=true;script.dataset.pjNetworkV4='1';document.head.appendChild(script)}};
-const loadCommunity=()=>{loadLounge();loadSocial();loadNetwork()};
+const loadAdminAuth=()=>{if(!document.querySelector('script[data-pj-admin-auth-v2]')){const script=document.createElement('script');script.src='pj-admin-auth-v2.js?v=20261013-1';script.defer=true;script.dataset.pjAdminAuthV2='1';document.head.appendChild(script)}};
+const loadCommunity=()=>{loadLounge();loadSocial();loadNetwork();loadAdminAuth()};
 if(window.PJ_SUPABASE_CONFIG){loadCommunity()}else if(!document.querySelector('script[data-pj-supabase-config]')){const cfg=document.createElement('script');cfg.src='supabase-config.js?v=20261013-2';cfg.defer=true;cfg.dataset.pjSupabaseConfig='1';cfg.addEventListener('load',loadCommunity,{once:true});cfg.addEventListener('error',loadCommunity,{once:true});document.head.appendChild(cfg)}else{const cfg=document.querySelector('script[data-pj-supabase-config]');cfg.addEventListener('load',loadCommunity,{once:true});setTimeout(()=>{if(window.PJ_SUPABASE_CONFIG)loadCommunity()},0)}
 
 /* Real cinematic hacker video background. */
