@@ -166,9 +166,9 @@
     function mountAdminTimeline(){
       const panel=$('#pjnAdmin'), auth=window.PJAdminAuth?.state;if(!panel||!auth?.secure)return;
       let box=$('.pjcore-admin-timeline',panel);if(!box){box=document.createElement('section');box.className='pjcore-admin-timeline';const foot=$('.pjap-footer',panel);foot?panel.insertBefore(box,foot):panel.appendChild(box)}
-      const rows=readActivity();box.innerHTML=`<div class="pjcore-timeline-head"><div><small>SESSION ACTIVITY // VISUAL LOG</small><strong>ADMIN SIGNAL TIMELINE</strong></div><span>THIS BROWSER SESSION</span></div><div class="pjcore-timeline-list">${(rows.length?rows:[{label:'Secure owner session active',kind:'ok',time:Date.now()}]).map(r=>`<div class="pjcore-timeline-row" data-kind="${r.kind}"><i></i><div><strong>${escapeHtml(r.label)}</strong><small>${new Date(r.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})}</small></div></div>`).join('')}</div>`;
+      const rows=readActivity();const sig=JSON.stringify(rows.map(r=>[r.label,r.kind,r.time]));if(box.dataset.sig===sig)return;box.dataset.sig=sig;box.innerHTML=`<div class="pjcore-timeline-head"><div><small>SESSION ACTIVITY // VISUAL LOG</small><strong>ADMIN SIGNAL TIMELINE</strong></div><span>THIS BROWSER SESSION</span></div><div class="pjcore-timeline-list">${(rows.length?rows:[{label:'Secure owner session active',kind:'ok',time:Date.now()}]).map(r=>`<div class="pjcore-timeline-row" data-kind="${r.kind}"><i></i><div><strong>${escapeHtml(r.label)}</strong><small>${new Date(r.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})}</small></div></div>`).join('')}</div>`;
     }
-    function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+    function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]))}
 
     /* ---------- Idle ambience ---------- */
     function wake(){
