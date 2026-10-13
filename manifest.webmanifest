@@ -1,0 +1,18 @@
+{
+  "name": "Pete Junior // PJ Network",
+  "short_name": "PJ Network",
+  "description": "Pete Junior's portfolio, community Lounge and PJ Network.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#050608",
+  "theme_color": "#ff2638",
+  "icons": [
+    {
+      "src": "pj-network-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
