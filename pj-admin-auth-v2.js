@@ -50,9 +50,13 @@
     async function logout(){try{await client();try{await sb.rpc('pj_admin_lock')}catch(_){}await sb.auth.signOut();await sb.auth.signInAnonymously()}catch(_){}location.reload()}
 
     function mountNetworkSignOut(){
-      if(!secure)return;
       const panel=document.querySelector('#pjnAdmin');
-      if(!panel||panel.querySelector('#pjnAdminSignOut'))return;
+      if(!panel)return;
+      if(window.PJAdminPolish||panel.querySelector('.pjap-command')){
+        panel.querySelector('#pjnAdminSignOut')?.remove();
+        return;
+      }
+      if(!secure||panel.querySelector('#pjnAdminSignOut'))return;
       const head=panel.querySelector('.pjn-section-head');
       if(!head)return;
       const button=document.createElement('button');
