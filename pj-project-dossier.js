@@ -122,9 +122,9 @@
       const type=$('.project-type',card)?.textContent.trim()||base.kind||'PROJECT';
       const number=$('.project-number',card)?.textContent.trim()||String(index+1).padStart(2,'0');
       const img=$('.project-image img',card)?.getAttribute('src')||'';
-      const code=$('.project-terminal-preview code',card)?.textContent||'';
+      const snippet=$('.project-terminal-preview code',card)?.textContent||'';
       const love=$('.love-preview',card)?.innerHTML||'';
-      return {title,desc,tags,live,source,type,number,img,code,love,...base};
+      return {title,desc,tags,live,source,type,number,img,snippet,love,...base};
     }
 
     const projects=cards.map(cardData);
@@ -132,7 +132,7 @@
     function previewHTML(p){
       if(p.img)return `<div class="pjd-preview image"><img src="${esc(p.img)}" alt="${esc(p.title)} preview"><div class="pjd-preview-grid"></div><span>${esc(p.code||`PROJECT ${p.number}`)}</span></div>`;
       if(p.love)return `<div class="pjd-preview editorial"><div class="pjd-love">${p.love}</div><div class="pjd-preview-grid"></div><span>${esc(p.code||`PROJECT ${p.number}`)}</span></div>`;
-      if(p.code)return `<div class="pjd-preview code"><div class="pjd-code-top"><i></i><i></i><i></i></div><pre>${esc(p.code)}</pre><div class="pjd-preview-grid"></div><span>${esc(p.code||`PROJECT ${p.number}`)}</span></div>`;
+      if(p.snippet)return `<div class="pjd-preview code"><div class="pjd-code-top"><i></i><i></i><i></i></div><pre>${esc(p.snippet)}</pre><div class="pjd-preview-grid"></div><span>${esc(p.code||`PROJECT ${p.number}`)}</span></div>`;
       return `<div class="pjd-preview abstract"><b>${esc(p.number)}</b><strong>${esc(p.title)}</strong><div class="pjd-preview-grid"></div></div>`;
     }
 
