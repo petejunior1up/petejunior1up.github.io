@@ -25,6 +25,10 @@ if(!document.querySelector('script[data-pj-identity-holo]')){const script=docume
 if(!document.querySelector('link[data-pj-core-ai]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-core-ai.css?v=20261009-1';link.dataset.pjCoreAi='1';document.head.appendChild(link)}
 if(!document.querySelector('script[data-pj-core-ai]')){const script=document.createElement('script');script.src='pj-core-ai.js?v=20261009-1';script.defer=true;script.dataset.pjCoreAi='1';document.head.appendChild(script)}
 
+/* PJ // PROJECT DOSSIER — deep project case studies without homepage clutter. */
+if(!document.querySelector('link[data-pj-project-dossier]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-project-dossier.css?v=20261016-1';link.dataset.pjProjectDossier='1';document.head.appendChild(link)}
+if(!document.querySelector('script[data-pj-project-dossier]')){const script=document.createElement('script');script.src='pj-project-dossier.js?v=20261016-1';script.defer=true;script.dataset.pjProjectDossier='1';document.head.appendChild(script)}
+
 /* PJ // LOUNGE + SOCIAL + NETWORK v4 + phone-free secure ADMIN auth. */
 if(!document.querySelector('link[data-pj-lounge]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-lounge.css?v=20261012-1';link.dataset.pjLounge='1';document.head.appendChild(link)}
 if(!document.querySelector('link[data-pj-lounge-social]')){const link=document.createElement('link');link.rel='stylesheet';link.href='pj-lounge-social.css?v=20261012-1';link.dataset.pjLoungeSocial='1';document.head.appendChild(link)}
