@@ -7,6 +7,7 @@
   let timer=null;
   let expiryRefresh=false;
   let busy=false;
+  let queued=false;
 
   const CARD_META={
     'DEVELOPER INBOX':['INBOX','✦'],
@@ -48,7 +49,7 @@
     });
   }
 
-  function polishEmptyStates(root=document){
+  function polishEmptyStates(root){
     $$('.pjn-empty',root).forEach(el=>{
       const next=emptyCopy(el.textContent);
       if(next!==el.textContent){el.textContent=next;el.classList.add('pjap-empty-state')}
@@ -126,11 +127,9 @@
   function enhance(){
     if(busy)return;busy=true;
     try{
-      polishEmptyStates(document);
       const panel=$('#pjnAdmin');if(!panel)return;
-      $('#pjnAdminSignOut',panel)?.remove();
       const auth=state();
-      if(!auth?.secure){lockedPanel(panel);return}
+      if(!auth?.secure){lockedPanel(panel);polishEmptyStates(panel);return}
       secureHeader(panel,auth);
       classifyCards(panel);
       markDanger(panel);
@@ -141,11 +140,16 @@
     }finally{busy=false}
   }
 
-  const observer=new MutationObserver(()=>queueMicrotask(enhance));
+  const scheduleEnhance=()=>{
+    if(queued)return;
+    queued=true;
+    requestAnimationFrame(()=>{queued=false;enhance()});
+  };
+  const observer=new MutationObserver(scheduleEnhance);
   const start=()=>{
     observer.observe(document.body,{childList:true,subtree:true});
     enhance();
-    timer=setInterval(()=>{updateCountdown();if($('#pjnAdmin'))enhance()},1000);
+    timer=setInterval(()=>updateCountdown(),1000);
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
   window.addEventListener('beforeunload',()=>{observer.disconnect();if(timer)clearInterval(timer)});
