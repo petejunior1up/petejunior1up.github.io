@@ -120,15 +120,17 @@
     function normalizeStatuses(root=document){
       $$('.project-status,.lab-status,.system-live,.terminal-status,.pjn-chip,.pjl-notice',root).forEach(el=>{
         const t=el.textContent.trim().toUpperCase();
-        el.classList.add('pjcore-status-chip');
-        el.dataset.pjcoreStatus=/LOCK|ERROR|DANGER|REJECT|MUTE/.test(t)?'danger':/BUILD|WAIT|WARN|PLAN|BUSY|CODING/.test(t)?'warn':/LIVE|ONLINE|SECURE|VERIFIED|READY|ACTIVE|SHIPPED|OK/.test(t)?'ok':/PRIVATE/.test(t)?'private':'neutral';
+        const next=/LOCK|ERROR|DANGER|REJECT|MUTE/.test(t)?'danger':/BUILD|WAIT|WARN|PLAN|BUSY|CODING/.test(t)?'warn':/LIVE|ONLINE|SECURE|VERIFIED|READY|ACTIVE|SHIPPED|OK/.test(t)?'ok':/PRIVATE/.test(t)?'private':'neutral';
+        if(!el.classList.contains('pjcore-status-chip'))el.classList.add('pjcore-status-chip');
+        if(el.dataset.pjcoreStatus!==next)el.dataset.pjcoreStatus=next;
       });
     }
 
     /* ---------- Toast enhancement ---------- */
     function polishToast(el){
       if(!el)return;const t=el.textContent.trim().toUpperCase();
-      el.dataset.pjcoreToast=/ERROR|FAILED|DENIED|BLOCK|LOCKED/.test(t)?'error':/WARN|WAIT|BUILDING/.test(t)?'warn':/SAVED|READY|ONLINE|CREATED|PUBLISHED|UPDATED|COPIED|COMPLETE|VERIFIED|SECURE/.test(t)?'ok':'info';
+      const next=/ERROR|FAILED|DENIED|BLOCK|LOCKED/.test(t)?'error':/WARN|WAIT|BUILDING/.test(t)?'warn':/SAVED|READY|ONLINE|CREATED|PUBLISHED|UPDATED|COPIED|COMPLETE|VERIFIED|SECURE/.test(t)?'ok':'info';
+      if(el.dataset.pjcoreToast!==next)el.dataset.pjcoreToast=next;
     }
 
     /* ---------- Loading skeletons ---------- */
@@ -149,8 +151,8 @@
     /* ---------- Presence rings ---------- */
     function syncPresence(){
       const v=$('#pjnAvailability')?.value||document.documentElement.dataset.pjPresence||'online';
-      document.documentElement.dataset.pjPresence=v;
-      $$('.pjn-id-avatar,.pjl-avatar,.pjl-msg-avatar').forEach(el=>el.dataset.pjPresence=v);
+      if(document.documentElement.dataset.pjPresence!==v)document.documentElement.dataset.pjPresence=v;
+      $$('.pjn-id-avatar,.pjl-avatar,.pjl-msg-avatar').forEach(el=>{if(el.dataset.pjPresence!==v)el.dataset.pjPresence=v});
     }
 
     /* ---------- Visual Admin session timeline ---------- */
@@ -168,14 +170,14 @@
       let box=$('.pjcore-admin-timeline',panel);if(!box){box=document.createElement('section');box.className='pjcore-admin-timeline';const foot=$('.pjap-footer',panel);foot?panel.insertBefore(box,foot):panel.appendChild(box)}
       const rows=readActivity();const sig=JSON.stringify(rows.map(r=>[r.label,r.kind,r.time]));if(box.dataset.sig===sig)return;box.dataset.sig=sig;box.innerHTML=`<div class="pjcore-timeline-head"><div><small>SESSION ACTIVITY // VISUAL LOG</small><strong>ADMIN SIGNAL TIMELINE</strong></div><span>THIS BROWSER SESSION</span></div><div class="pjcore-timeline-list">${(rows.length?rows:[{label:'Secure owner session active',kind:'ok',time:Date.now()}]).map(r=>`<div class="pjcore-timeline-row" data-kind="${r.kind}"><i></i><div><strong>${escapeHtml(r.label)}</strong><small>${new Date(r.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})}</small></div></div>`).join('')}</div>`;
     }
-    function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]))}
+    function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
     /* ---------- Idle ambience ---------- */
     function wake(){
       if(idle){idle=false;document.documentElement.dataset.pjCoreIdle='0';logActivity('PJ CORE resumed from idle','info')}
       clearTimeout(idleTimer);idleTimer=setTimeout(()=>{idle=true;document.documentElement.dataset.pjCoreIdle='1'},45000);
     }
-    ['pointerdown','pointermove','keydown','touchstart','scroll'].forEach(ev=>window.addEventListener(ev,wake,{passive:true}));wake();
+    ['pointerdown','keydown','touchstart','scroll'].forEach(ev=>window.addEventListener(ev,wake,{passive:true}));wake();
 
     /* ---------- Global event wiring ---------- */
     document.addEventListener('keydown',e=>{
@@ -202,11 +204,15 @@
     /* ---------- Mutation pass ---------- */
     let mutationQueued=false;
     const observer=new MutationObserver(()=>{
-      if(mutationQueued)return;mutationQueued=true;queueMicrotask(()=>{
-        mutationQueued=false;normalizeStatuses();ensureMobileNav();syncMobileNav();syncPresence();mountAdminTimeline();
+      if(mutationQueued)return;
+      mutationQueued=true;
+      requestAnimationFrame(()=>{
+        mutationQueued=false;
+        normalizeStatuses();ensureMobileNav();syncMobileNav();syncPresence();mountAdminTimeline();
         $$('.pjn-toast,.pjx-toast,.pja2-status').forEach(polishToast);
       });
-    });observer.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class','data-type']});
+    });
+    observer.observe(document.body,{childList:true,subtree:true});
 
     /* ---------- Periodic system state ---------- */
     let lastAdminSecure=false;
