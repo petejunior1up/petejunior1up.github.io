@@ -19,13 +19,13 @@
       boot.setAttribute('aria-live', 'polite');
       boot.innerHTML = `
         <div class="pj-boot-shell">
-          <div class="pj-boot-top"><span>PJ CORE // BOOT</span><span>V4.0</span></div>
+          <div class="pj-boot-top"><span>PJ CORE // BOOT</span><span>V5.0</span></div>
           <div class="pj-boot-screen">
             <div class="pj-boot-mark">PJ.</div>
             <div class="pj-boot-lines">
               <div class="pj-boot-line" style="animation-delay:.08s"><b>[ OK ]</b> Interface modules detected.</div>
               <div class="pj-boot-line" style="animation-delay:.25s"><b>[ OK ]</b> Project systems linked.</div>
-              <div class="pj-boot-line" style="animation-delay:.42s"><b>[ OK ]</b> Archive + command layers online.</div>
+              <div class="pj-boot-line" style="animation-delay:.42s"><b>[ OK ]</b> PJ CORE routes synchronized.</div>
               <div class="pj-boot-line" style="animation-delay:.59s"><b>[ OK ]</b> Entering digital space...</div>
             </div>
             <div class="pj-boot-progress" aria-hidden="true"><i></i></div>
@@ -46,11 +46,11 @@
       window.setTimeout(finish, reduced ? 80 : 1450);
     }
 
-    /* Project Lab action — reuse the existing Command Center button. */
+    /* Project Lab now uses the canonical PJ CORE palette. */
     const labCommand = document.querySelector('[data-lab-command="open-command"]');
     labCommand?.addEventListener('click', () => {
-      const commandButton = document.querySelector('.pjcc-btn');
-      if (commandButton) commandButton.click();
+      if (window.PJCoreOS?.openPalette) window.PJCoreOS.openPalette();
+      else document.querySelector('.pjhub-launch')?.click();
     });
 
     /* Reveal new sections using the same visual language, independently. */
