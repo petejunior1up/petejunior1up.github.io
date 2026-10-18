@@ -20,7 +20,7 @@
       const script=document.createElement('script');script.src='pj-core-v5.js?v=20261018-1';script.defer=true;script.dataset.pjCoreV5='1';document.head.appendChild(script);
     }
     if(!document.querySelector('link[data-pj-core-v51]')){
-      const link=document.createElement('link');link.rel='stylesheet';link.href='pj-core-v51.css?v=20261018-1';link.dataset.pjCoreV51='1';document.head.appendChild(link);
+      const link=document.createElement('link');link.rel='stylesheet';link.href='pj-core-v51.css?v=20261018-2';link.dataset.pjCoreV51='1';document.head.appendChild(link);
     }
     if(!document.querySelector('script[data-pj-core-v51]')){
       const script=document.createElement('script');script.src='pj-core-v51.js?v=20261018-1';script.defer=true;script.dataset.pjCoreV51='1';document.head.appendChild(script);
@@ -33,7 +33,6 @@
     };
     const isLegacyCommandRow=el=>el?.closest?.('.pjcore-command')?.querySelector('span')?.textContent?.trim()==='Open Command Center';
 
-    /* The OS palette owns Ctrl/Cmd+K. Capture phase keeps the detached legacy handler inert. */
     document.addEventListener('keydown',e=>{
       if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){
         if(!window.PJCoreOS?.openPalette)return;
@@ -49,7 +48,6 @@
       e.preventDefault();e.stopImmediatePropagation();openHub();
     },true);
 
-    /* Force the current worker URL so stale v4/v5 caches are replaced promptly. */
     if('serviceWorker'in navigator){navigator.serviceWorker.register('service-worker.js?v=20261018-4',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{})}
 
     window.PJCoreCleanup={ready:true,version:'5.1'};
