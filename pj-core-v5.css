@@ -1,0 +1,45 @@
+/* PJ CORE // v5 — cleanup, performance and mobile refinement */
+html[data-pj-core-version="5"] .pjcc-btn,html[data-pj-core-version="5"] .pjcc-root{display:none!important}
+
+/* Visitor experience: keep the portfolio first and the system chrome quieter. */
+html[data-pj-owner-mode="0"] .pjcore-topbar{opacity:.88}
+html[data-pj-owner-mode="0"] .pjhud-panel{opacity:.82}
+html[data-pj-owner-mode="1"] .pjcore-topbar{opacity:1}
+
+/* Network Admin state mirrors the secure owner session, not merely the existence of an account row. */
+#pjnAdmin[data-pj-v5-secure="0"] .pjn-admin-grid{display:none!important}
+.pjv5-admin-lock{display:grid;gap:8px;justify-items:start;padding:22px;border:1px solid rgba(255,117,131,.28);background:linear-gradient(145deg,rgba(255,117,131,.05),#080a0c)}
+.pjv5-admin-lock small{color:#ff7583;font:900 .34rem var(--mono,monospace);letter-spacing:1px}.pjv5-admin-lock h2{margin:2px 0 0}.pjv5-admin-lock p{margin:0;max-width:640px;color:#7b878f;line-height:1.6}.pjv5-admin-lock button{min-height:38px;margin-top:5px;padding:0 12px;border:1px solid var(--pj-accent,#ff2638);background:var(--pj-accent,#ff2638);color:#050607;font:900 .36rem var(--mono,monospace);letter-spacing:.65px;cursor:pointer}
+.pjcore-mobile-nav [data-tab="admin"][data-locked="1"]{opacity:.66}.pjcore-mobile-nav [data-tab="admin"][data-locked="1"] i:after{content:'·';color:#ff7583;margin-left:2px}
+
+/* Dossier v2: sticky navigation, cleaner mobile spacing and no self-recursive live preview. */
+.pjd-tabs{position:sticky;top:-16px;z-index:8;backdrop-filter:blur(14px)}
+.pjv5-current-preview{display:grid;grid-template-columns:minmax(0,.72fr) minmax(240px,1.28fr);gap:12px;align-items:center;margin-top:10px;padding:12px;border:1px solid #242d33;background:#080b0d}.pjv5-current-preview small{display:block;color:var(--pj-accent,#ff2638);font:900 .31rem var(--mono,monospace);letter-spacing:.75px}.pjv5-current-preview strong{display:block;margin-top:7px;font:900 .58rem/1.35 var(--mono,monospace);letter-spacing:.6px}.pjv5-current-preview p{margin:7px 0 0;color:#6f7b83;font:500 .62rem/1.55 system-ui,sans-serif}.pjv5-current-preview img{width:100%;max-height:250px;object-fit:cover;border:1px solid #222a30;background:#050607}
+
+/* Hidden tabs and background systems do not need expensive motion. */
+html[data-pj-page-hidden="1"] *,html[data-pj-performance="lite"] *{animation-play-state:paused!important}
+html[data-pj-performance="lite"] .pjhud-panel{backdrop-filter:none!important}
+html[data-pj-performance="lite"] .pjcore-topbar{backdrop-filter:none!important;box-shadow:none!important}
+html[data-pj-performance="lite"] .pjcore-reveal{transition:none!important}
+html[data-pj-performance="lite"] .pjcore-tilt{transform:none!important}
+
+/* More coherent focus states across all system overlays. */
+.pjn-shell :where(button,a,input,textarea,select):focus-visible,.pjd-shell :where(button,a,input,textarea,select):focus-visible,.pjhub-shell :where(button,a,input,textarea,select):focus-visible,.pjai-root :where(button,input):focus-visible{outline:2px solid var(--pj-accent,#ff2638)!important;outline-offset:2px!important}
+
+/* Mobile stress pass. */
+@media(max-width:760px){
+  .pjcore-topbar{min-height:34px;padding-inline:8px}.pjcore-top-right>span{display:none}.pjcore-top-left>span:not(.pjcore-core){display:none}.pjcore-top-right button{min-width:34px}
+  .pjhud-panel{display:none}
+  .pjn-content{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))!important}
+  .pjcore-mobile-nav{padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(5,7,9,.97);backdrop-filter:blur(16px)}
+  .pjn-shell{height:calc(100dvh - 8px)!important;max-height:calc(100dvh - 8px)!important}
+  .pjd-shell{height:calc(100dvh - 8px)!important;max-height:calc(100dvh - 8px)!important}
+  .pjd-main{overscroll-behavior:contain}.pjd-tabs{top:-11px}.pjd-tabs button{min-width:108px}
+  .pjv5-current-preview{grid-template-columns:1fr}.pjv5-current-preview img{max-height:210px}
+  .pjhub-shell{overscroll-behavior:contain}
+}
+@media(max-width:480px){
+  .pjcore-topbar{justify-content:space-between}.pjcore-top-left{min-width:0}.pjcore-core{white-space:nowrap}.pjcore-top-right button:first-of-type{font-size:0}.pjcore-top-right button:first-of-type:after{content:'⌘K';font-size:.46rem}
+  .pjd-hero-copy{padding:15px}.pjd-hero-copy h1{font-size:clamp(2rem,13vw,3rem);letter-spacing:-2px}.pjd-main{padding:8px}.pjd-tabs{margin-top:10px}
+}
+@media(prefers-reduced-motion:reduce){.pjv5-current-preview,.pjv5-admin-lock{scroll-behavior:auto}.pjcore-reveal{transition:none!important}}
