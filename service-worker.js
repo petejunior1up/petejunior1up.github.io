@@ -1,5 +1,5 @@
-const CACHE='pj-core-v5-20261018-3';
-const CORE=['/','/index.html','/404.html','/style.css','/script.js','/system-upgrades.js','/experience-engine.js','/pj-core-os.js','/pj-core-hub.css','/pj-core-hub.js','/pj-core-cleanup.js','/pj-core-v5.css','/pj-core-v5.js','/pj-project-dossier.css','/pj-project-dossier.js','/pj-dossier-live-preview.js','/pj-network-icon.svg','/manifest.webmanifest'];
+const CACHE='pj-core-v51-20261018-1';
+const CORE=['/','/index.html','/404.html','/style.css','/script.js','/system-upgrades.js','/experience-engine.js','/pj-core-os.js','/pj-core-hub.css','/pj-core-hub.js','/pj-core-cleanup.js','/pj-core-v5.css','/pj-core-v5.js','/pj-core-v51.css','/pj-core-v51.js','/pj-project-dossier.css','/pj-project-dossier.js','/pj-dossier-live-preview.js','/pj-network-icon.svg','/manifest.webmanifest'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE).catch(()=>{})));self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>(k.startsWith('pj-network-')||k.startsWith('pj-core-'))&&k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});
 self.addEventListener('fetch',event=>{
