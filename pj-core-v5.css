@@ -8,7 +8,7 @@ html[data-pj-owner-mode="1"] .pjcore-topbar{opacity:1}
 
 /* Network Admin state mirrors the secure owner session, not merely the existence of an account row. */
 #pjnAdmin[data-pj-v5-secure="0"] .pjn-admin-grid{display:none!important}
-#pjnAdmin[data-pj-v5-secure="1"]>.pjv5-admin-lock{display:none!important}
+#pjnAdmin[data-pj-v5-secure="1"]>.pjv5-admin-lock,#pjnAdmin:has(>.pjap-lock-panel)>.pjv5-admin-lock{display:none!important}
 .pjv5-admin-lock{display:grid;gap:8px;justify-items:start;padding:22px;border:1px solid rgba(255,117,131,.28);background:linear-gradient(145deg,rgba(255,117,131,.05),#080a0c)}
 .pjv5-admin-lock small{color:#ff7583;font:900 .34rem var(--mono,monospace);letter-spacing:1px}.pjv5-admin-lock h2{margin:2px 0 0}.pjv5-admin-lock p{margin:0;max-width:640px;color:#7b878f;line-height:1.6}.pjv5-admin-lock button{min-height:38px;margin-top:5px;padding:0 12px;border:1px solid var(--pj-accent,#ff2638);background:var(--pj-accent,#ff2638);color:#050607;font:900 .36rem var(--mono,monospace);letter-spacing:.65px;cursor:pointer}
 .pjcore-mobile-nav [data-tab="admin"][data-locked="1"]{opacity:.66}.pjcore-mobile-nav [data-tab="admin"][data-locked="1"] i:after{content:'·';color:#ff7583;margin-left:2px}
