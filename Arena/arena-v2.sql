@@ -140,6 +140,29 @@ begin
 end;
 $$;
 
+create or replace function public.arena_room_score(p_code text,p_score integer,p_correct integer,p_total integer)
+returns void
+language plpgsql security definer set search_path = public
+as $$
+declare v_uid uuid := auth.uid(); v_room public.arena_rooms%rowtype; v_name text;
+begin
+  if v_uid is null then raise exception 'Authentication required'; end if;
+  if p_total < 1 or p_total > 20 or p_correct < 0 or p_correct > p_total or p_score < 0 or p_score > p_total*100 then raise exception 'Invalid room result'; end if;
+  select * into v_room from public.arena_rooms where code=upper(trim(p_code)) and expires_at>now();
+  if not found then raise exception 'Room not found or expired'; end if;
+  insert into public.arena_players(user_id,display_name) values(v_uid,'Guest') on conflict(user_id) do nothing;
+  select display_name into v_name from public.arena_players where user_id=v_uid;
+  insert into public.arena_room_scores(room_code,user_id,display_name,score,correct_count,total_questions)
+  values(v_room.code,v_uid,v_name,p_score,p_correct,p_total)
+  on conflict(room_code,user_id) do update set
+    display_name=excluded.display_name,
+    score=greatest(public.arena_room_scores.score,excluded.score),
+    correct_count=case when excluded.score>=public.arena_room_scores.score then excluded.correct_count else public.arena_room_scores.correct_count end,
+    total_questions=case when excluded.score>=public.arena_room_scores.score then excluded.total_questions else public.arena_room_scores.total_questions end,
+    updated_at=now();
+end;
+$$;
+
 create or replace function public.arena_submit_result(p_mode text,p_score integer,p_correct integer,p_total integer,p_played_on date default current_date,p_room_code text default null)
 returns table(earned_xp integer,total_xp integer,current_streak integer)
 language plpgsql security definer set search_path = public
@@ -239,6 +262,7 @@ $$;
 revoke all on function public.arena_bootstrap(text) from public;
 revoke all on function public.arena_sync_progress(integer,integer,date) from public;
 revoke all on function public.arena_set_name(text) from public;
+revoke all on function public.arena_room_score(text,integer,integer,integer) from public;
 revoke all on function public.arena_submit_result(text,integer,integer,integer,date,text) from public;
 revoke all on function public.arena_leaderboard(integer) from public;
 revoke all on function public.arena_vote(text,text) from public;
@@ -248,6 +272,7 @@ revoke all on function public.arena_create_room(text,integer) from public;
 grant execute on function public.arena_bootstrap(text) to authenticated;
 grant execute on function public.arena_sync_progress(integer,integer,date) to authenticated;
 grant execute on function public.arena_set_name(text) to authenticated;
+grant execute on function public.arena_room_score(text,integer,integer,integer) to authenticated;
 grant execute on function public.arena_submit_result(text,integer,integer,integer,date,text) to authenticated;
 grant execute on function public.arena_leaderboard(integer) to authenticated;
 grant execute on function public.arena_vote(text,text) to authenticated;
