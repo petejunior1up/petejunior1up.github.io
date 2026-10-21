@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PJ Arena — daily quizzes, challenges, hot takes, streaks and friend battles. Play, compete and climb.">
+  <meta name="description" content="PJ Arena — daily quizzes, live rankings, hot takes, streaks and friend battle rooms. Play, compete and climb.">
   <meta name="theme-color" content="#080914">
   <title>PJ Arena — Play. Compete. Climb.</title>
   <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="backend.css?v=2">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -66,19 +67,19 @@
             <button type="button" data-vote="skill"><span>PURE SKILL</span><b id="voteSkill">0%</b></button>
             <button type="button" data-vote="strategy"><span>SMART STRATEGY</span><b id="voteStrategy">0%</b></button>
           </div>
-          <p id="pollNote">Vote once on this device. Results update instantly.</p>
+          <p id="pollNote">Connecting to global vote totals…</p>
         </article>
       </div>
       <div class="share-card">
-        <small>FRIEND BATTLE // BETA</small>
+        <small>FRIEND BATTLE // LIVE ROOMS</small>
         <h2>THINK YOU'RE BETTER?</h2>
-        <p>Create a challenge link from your latest score and send it to your group chat. Their target is your score.</p>
-        <button id="challengeFriend" type="button">CREATE CHALLENGE LINK <span>↗</span></button>
+        <p>Turn your latest score into a shared room, send the link to your group chat and watch the room ranking update.</p>
+        <button id="challengeFriend" type="button">CREATE LIVE ROOM <span>↗</span></button>
       </div>
     </section>
 
     <section class="section" id="ranks">
-      <header class="section-head"><div><small>03 // RANKS</small><h2>YOUR RECORDS.</h2></div><p>v1 stores records on this device. Global Arena rankings arrive with accounts in the multiplayer backend pass.</p></header>
+      <header class="section-head"><div><small>03 // RANKS</small><h2>CLIMB THE BOARD.</h2></div><p>Your personal bests stay on this device while Arena v2 syncs XP, streaks and the global leaderboard through your anonymous Arena session.</p></header>
       <div class="rank-layout">
         <div class="rank-card">
           <div class="rank-head"><span>PERSONAL BESTS</span><small>THIS DEVICE</small></div>
@@ -112,7 +113,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <footer><a href="../">PJ.</a><span>PJ ARENA // v1.0</span><p>PLAY. COMPETE. CLIMB.</p></footer>
-  <script src="app.js?v=1"></script>
+  <footer><a href="../">PJ.</a><span>PJ ARENA // v2.0</span><p>PLAY. COMPETE. CLIMB.</p></footer>
+  <script src="app-v2.js?v=2"></script>
+  <script src="backend.js?v=2"></script>
 </body>
 </html>
