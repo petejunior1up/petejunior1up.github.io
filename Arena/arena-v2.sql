@@ -95,34 +95,40 @@ create policy arena_room_scores_read on public.arena_room_scores for select to a
 
 create or replace function public.arena_bootstrap(p_display_name text default null)
 returns table(player_name text, player_xp integer, player_streak integer, player_last_daily date)
-language plpgsql
-security definer
-set search_path = public
+language plpgsql security definer set search_path = public
 as $$
-declare
-  v_uid uuid := auth.uid();
-  v_name text;
+declare v_uid uuid := auth.uid(); v_name text;
 begin
   if v_uid is null then raise exception 'Authentication required'; end if;
   v_name := nullif(trim(coalesce(p_display_name,'')), '');
-  if v_name is not null and (char_length(v_name) < 2 or char_length(v_name) > 16) then
-    raise exception 'Player name must be 2-16 characters';
-  end if;
-  insert into public.arena_players(user_id, display_name)
-  values(v_uid, coalesce(v_name,'Guest'))
-  on conflict (user_id) do nothing;
-  if v_name is not null then
-    update public.arena_players set display_name=v_name, updated_at=now() where user_id=v_uid;
-  end if;
+  if v_name is not null and (char_length(v_name) < 2 or char_length(v_name) > 16) then raise exception 'Player name must be 2-16 characters'; end if;
+  insert into public.arena_players(user_id,display_name) values(v_uid,coalesce(v_name,'Guest')) on conflict(user_id) do nothing;
+  if v_name is not null then update public.arena_players set display_name=v_name,updated_at=now() where user_id=v_uid; end if;
   return query select p.display_name,p.xp,p.streak,p.last_daily from public.arena_players p where p.user_id=v_uid;
+end;
+$$;
+
+create or replace function public.arena_sync_progress(p_xp integer,p_streak integer,p_last_daily date default null)
+returns table(player_xp integer,player_streak integer,player_last_daily date)
+language plpgsql security definer set search_path = public
+as $$
+declare v_uid uuid := auth.uid();
+begin
+  if v_uid is null then raise exception 'Authentication required'; end if;
+  insert into public.arena_players(user_id,display_name) values(v_uid,'Guest') on conflict(user_id) do nothing;
+  update public.arena_players
+  set xp=greatest(xp,least(greatest(coalesce(p_xp,0),0),100000)),
+      streak=greatest(streak,least(greatest(coalesce(p_streak,0),0),3650)),
+      last_daily=case when p_last_daily is null then last_daily when last_daily is null then p_last_daily else greatest(last_daily,p_last_daily) end,
+      updated_at=now()
+  where user_id=v_uid;
+  return query select p.xp,p.streak,p.last_daily from public.arena_players p where p.user_id=v_uid;
 end;
 $$;
 
 create or replace function public.arena_set_name(p_name text)
 returns void
-language plpgsql
-security definer
-set search_path = public
+language plpgsql security definer set search_path = public
 as $$
 declare v_uid uuid := auth.uid(); v_name text := trim(coalesce(p_name,''));
 begin
@@ -130,59 +136,36 @@ begin
   if char_length(v_name) < 2 or char_length(v_name) > 16 then raise exception 'Player name must be 2-16 characters'; end if;
   if v_name !~ '^[A-Za-z0-9 _-]+$' then raise exception 'Player name contains unsupported characters'; end if;
   insert into public.arena_players(user_id,display_name) values(v_uid,v_name)
-  on conflict(user_id) do update set display_name=excluded.display_name, updated_at=now();
+  on conflict(user_id) do update set display_name=excluded.display_name,updated_at=now();
 end;
 $$;
 
-create or replace function public.arena_submit_result(
-  p_mode text,
-  p_score integer,
-  p_correct integer,
-  p_total integer,
-  p_played_on date default current_date,
-  p_room_code text default null
-)
-returns table(earned_xp integer, total_xp integer, current_streak integer)
-language plpgsql
-security definer
-set search_path = public
+create or replace function public.arena_submit_result(p_mode text,p_score integer,p_correct integer,p_total integer,p_played_on date default current_date,p_room_code text default null)
+returns table(earned_xp integer,total_xp integer,current_streak integer)
+language plpgsql security definer set search_path = public
 as $$
 declare
-  v_uid uuid := auth.uid();
-  v_earned integer;
-  v_daily_exists boolean := false;
-  v_room public.arena_rooms%rowtype;
-  v_name text;
+  v_uid uuid := auth.uid(); v_earned integer; v_daily_exists boolean := false;
+  v_room public.arena_rooms%rowtype; v_name text;
 begin
   if v_uid is null then raise exception 'Authentication required'; end if;
   if p_mode not in ('daily','football','tech','gaming','general','riddles') then raise exception 'Invalid mode'; end if;
   if p_total < 1 or p_total > 20 or p_correct < 0 or p_correct > p_total or p_score < 0 or p_score > p_total*100 then raise exception 'Invalid result'; end if;
   insert into public.arena_players(user_id,display_name) values(v_uid,'Guest') on conflict(user_id) do nothing;
   select display_name into v_name from public.arena_players where user_id=v_uid;
-
-  if p_mode='daily' then
-    select exists(select 1 from public.arena_scores where user_id=v_uid and mode='daily' and played_on=p_played_on) into v_daily_exists;
-  end if;
-
+  if p_mode='daily' then select exists(select 1 from public.arena_scores where user_id=v_uid and mode='daily' and played_on=p_played_on) into v_daily_exists; end if;
   v_earned := p_correct*20 + 20 + case when p_correct=p_total then 40 else 0 end;
   if p_mode='daily' and v_daily_exists then
     v_earned := 0;
   else
-    insert into public.arena_scores(user_id,mode,score,correct_count,total_questions,played_on)
-    values(v_uid,p_mode,p_score,p_correct,p_total,p_played_on);
+    insert into public.arena_scores(user_id,mode,score,correct_count,total_questions,played_on) values(v_uid,p_mode,p_score,p_correct,p_total,p_played_on);
   end if;
-
   update public.arena_players
-  set xp = xp + v_earned,
-      streak = case
-        when p_mode<>'daily' or v_daily_exists then streak
-        when last_daily = p_played_on - 1 then streak + 1
-        else 1
-      end,
-      last_daily = case when p_mode='daily' and not v_daily_exists then p_played_on else last_daily end,
-      updated_at = now()
+  set xp=xp+v_earned,
+      streak=case when p_mode<>'daily' or v_daily_exists then streak when last_daily=p_played_on-1 then streak+1 else 1 end,
+      last_daily=case when p_mode='daily' and not v_daily_exists then p_played_on else last_daily end,
+      updated_at=now()
   where user_id=v_uid;
-
   if p_room_code is not null and trim(p_room_code)<>'' then
     select * into v_room from public.arena_rooms where code=upper(trim(p_room_code)) and expires_at>now();
     if found and v_room.mode=p_mode then
@@ -196,19 +179,15 @@ begin
         updated_at=now();
     end if;
   end if;
-
   return query select v_earned,p.xp,p.streak from public.arena_players p where p.user_id=v_uid;
 end;
 $$;
 
 create or replace function public.arena_leaderboard(p_limit integer default 20)
-returns table(rank_no bigint, display_name text, xp integer, streak integer)
-language sql
-security definer
-set search_path = public
+returns table(rank_no bigint,display_name text,xp integer,streak integer)
+language sql security definer set search_path = public
 as $$
-  select row_number() over(order by p.xp desc,p.streak desc,p.updated_at asc) as rank_no,
-         p.display_name,p.xp,p.streak
+  select row_number() over(order by p.xp desc,p.streak desc,p.updated_at asc),p.display_name,p.xp,p.streak
   from public.arena_players p
   order by p.xp desc,p.streak desc,p.updated_at asc
   limit greatest(1,least(coalesce(p_limit,20),50));
@@ -216,39 +195,29 @@ $$;
 
 create or replace function public.arena_vote(p_poll_key text,p_choice text)
 returns boolean
-language plpgsql
-security definer
-set search_path = public
+language plpgsql security definer set search_path = public
 as $$
-declare v_uid uuid := auth.uid(); v_inserted boolean := false;
+declare v_uid uuid := auth.uid(); v_rows integer := 0;
 begin
   if v_uid is null then raise exception 'Authentication required'; end if;
   if char_length(trim(coalesce(p_poll_key,''))) < 3 or char_length(p_poll_key)>64 then raise exception 'Invalid poll'; end if;
   if p_choice not in ('skill','strategy') then raise exception 'Invalid choice'; end if;
-  insert into public.arena_poll_votes(poll_key,user_id,choice)
-  values(trim(p_poll_key),v_uid,p_choice)
-  on conflict(poll_key,user_id) do nothing;
-  get diagnostics v_inserted = row_count;
-  return v_inserted;
+  insert into public.arena_poll_votes(poll_key,user_id,choice) values(trim(p_poll_key),v_uid,p_choice) on conflict(poll_key,user_id) do nothing;
+  get diagnostics v_rows = row_count;
+  return v_rows > 0;
 end;
 $$;
 
 create or replace function public.arena_poll_totals(p_poll_key text)
 returns table(choice text,votes bigint)
-language sql
-security definer
-set search_path = public
+language sql security definer set search_path = public
 as $$
-  select v.choice,count(*)::bigint from public.arena_poll_votes v
-  where v.poll_key=trim(p_poll_key)
-  group by v.choice;
+  select v.choice,count(*)::bigint from public.arena_poll_votes v where v.poll_key=trim(p_poll_key) group by v.choice;
 $$;
 
 create or replace function public.arena_create_room(p_mode text,p_target_score integer)
 returns text
-language plpgsql
-security definer
-set search_path = public
+language plpgsql security definer set search_path = public
 as $$
 declare v_uid uuid := auth.uid(); v_code text; i integer;
 begin
@@ -268,6 +237,7 @@ end;
 $$;
 
 revoke all on function public.arena_bootstrap(text) from public;
+revoke all on function public.arena_sync_progress(integer,integer,date) from public;
 revoke all on function public.arena_set_name(text) from public;
 revoke all on function public.arena_submit_result(text,integer,integer,integer,date,text) from public;
 revoke all on function public.arena_leaderboard(integer) from public;
@@ -276,6 +246,7 @@ revoke all on function public.arena_poll_totals(text) from public;
 revoke all on function public.arena_create_room(text,integer) from public;
 
 grant execute on function public.arena_bootstrap(text) to authenticated;
+grant execute on function public.arena_sync_progress(integer,integer,date) to authenticated;
 grant execute on function public.arena_set_name(text) to authenticated;
 grant execute on function public.arena_submit_result(text,integer,integer,integer,date,text) to authenticated;
 grant execute on function public.arena_leaderboard(integer) to authenticated;
@@ -286,12 +257,8 @@ grant execute on function public.arena_create_room(text,integer) to authenticate
 do $$
 begin
   if exists(select 1 from pg_publication where pubname='supabase_realtime') then
-    if not exists(select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='arena_room_scores') then
-      alter publication supabase_realtime add table public.arena_room_scores;
-    end if;
-    if not exists(select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='arena_poll_votes') then
-      alter publication supabase_realtime add table public.arena_poll_votes;
-    end if;
+    if not exists(select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='arena_room_scores') then alter publication supabase_realtime add table public.arena_room_scores; end if;
+    if not exists(select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='arena_poll_votes') then alter publication supabase_realtime add table public.arena_poll_votes; end if;
   end if;
 end $$;
 
