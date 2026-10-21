@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PJ Arena — daily quizzes, challenges, hot takes, streaks and friend battles. Play, compete and climb.">
+  <meta name="theme-color" content="#080914">
+  <title>PJ Arena — Play. Compete. Climb.</title>
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="PJ Arena home"><span class="brand-mark">PJA</span><span>PJ // ARENA</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#play">PLAY</a><a href="#vote">VOTE</a><a href="#ranks">RANKS</a><a href="#profile">PROFILE</a>
+    </nav>
+    <button class="profile-chip" id="profileChip" type="button">GUEST // LVL 1</button>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><i></i> DAILY ARENA // LIVE</div>
+        <h1>PLAY.<br><span>COMPETE.</span><br>CLIMB.</h1>
+        <p>Quick challenges made for sharing. Test your brain, football IQ, gaming knowledge, tech skills and pure instinct.</p>
+        <div class="hero-actions">
+          <button class="primary" id="dailyStart" type="button">PLAY TODAY'S CHALLENGE <span>→</span></button>
+          <button class="secondary" id="challengeFriendHero" type="button">CHALLENGE A FRIEND <span>↗</span></button>
+        </div>
+        <div class="hero-stats">
+          <div><small>YOUR STREAK</small><strong id="heroStreak">0 DAYS</strong></div>
+          <div><small>YOUR XP</small><strong id="heroXp">0 XP</strong></div>
+          <div><small>DAILY RESET</small><strong id="resetClock">--:--:--</strong></div>
+        </div>
+      </div>
+      <aside class="daily-card">
+        <div class="daily-top"><span>TODAY'S ARENA</span><b id="dailyDate">---</b></div>
+        <div class="daily-orb"><span id="dailyNumber">05</span><small>QUESTIONS</small></div>
+        <h2>MIXED SIGNAL</h2>
+        <p>Five fast questions. One score. One shot at extending your streak.</p>
+        <div class="daily-tags"><span>GENERAL</span><span>FOOTBALL</span><span>TECH</span><span>RIDDLE</span></div>
+        <button id="dailyStartCard" type="button">ENTER DAILY ARENA</button>
+      </aside>
+    </section>
+
+    <section class="section" id="play">
+      <header class="section-head"><div><small>01 // PLAY</small><h2>CHOOSE YOUR ARENA.</h2></div><p>Short enough to play now. Competitive enough to send to somebody immediately after.</p></header>
+      <div class="mode-grid">
+        <button class="mode-card featured" data-mode="daily" type="button"><span class="mode-icon">◎</span><small>DAILY</small><h3>Daily Arena</h3><p>The same mixed challenge for everyone today.</p><b>5 QUESTIONS →</b></button>
+        <button class="mode-card" data-mode="football" type="button"><span class="mode-icon">⚽</span><small>CATEGORY</small><h3>Football IQ</h3><p>Rules, history, tactics and football knowledge.</p><b>7 QUESTIONS →</b></button>
+        <button class="mode-card" data-mode="tech" type="button"><span class="mode-icon">⌘</span><small>CATEGORY</small><h3>Tech Brain</h3><p>Web, computers, cybersecurity and digital basics.</p><b>7 QUESTIONS →</b></button>
+        <button class="mode-card" data-mode="gaming" type="button"><span class="mode-icon">◇</span><small>CATEGORY</small><h3>Gaming</h3><p>Games, mechanics, platforms and gaming culture.</p><b>7 QUESTIONS →</b></button>
+        <button class="mode-card" data-mode="general" type="button"><span class="mode-icon">?</span><small>CATEGORY</small><h3>General IQ</h3><p>Science, geography, logic and everyday knowledge.</p><b>7 QUESTIONS →</b></button>
+        <button class="mode-card" data-mode="riddles" type="button"><span class="mode-icon">∆</span><small>CATEGORY</small><h3>Riddle Run</h3><p>Quick logic traps and brain teasers.</p><b>7 QUESTIONS →</b></button>
+      </div>
+    </section>
+
+    <section class="section split-section" id="vote">
+      <div>
+        <header class="section-head compact"><div><small>02 // VOTE</small><h2>HOT TAKE OF THE DAY.</h2></div></header>
+        <article class="poll-card">
+          <div class="poll-status"><i></i> LIVE POLL</div>
+          <h3 id="pollQuestion">Which matters more in a competitive game?</h3>
+          <div class="poll-options" id="pollOptions">
+            <button type="button" data-vote="skill"><span>PURE SKILL</span><b id="voteSkill">0%</b></button>
+            <button type="button" data-vote="strategy"><span>SMART STRATEGY</span><b id="voteStrategy">0%</b></button>
+          </div>
+          <p id="pollNote">Vote once on this device. Results update instantly.</p>
+        </article>
+      </div>
+      <div class="share-card">
+        <small>FRIEND BATTLE // BETA</small>
+        <h2>THINK YOU'RE BETTER?</h2>
+        <p>Create a challenge link from your latest score and send it to your group chat. Their target is your score.</p>
+        <button id="challengeFriend" type="button">CREATE CHALLENGE LINK <span>↗</span></button>
+      </div>
+    </section>
+
+    <section class="section" id="ranks">
+      <header class="section-head"><div><small>03 // RANKS</small><h2>YOUR RECORDS.</h2></div><p>v1 stores records on this device. Global Arena rankings arrive with accounts in the multiplayer backend pass.</p></header>
+      <div class="rank-layout">
+        <div class="rank-card">
+          <div class="rank-head"><span>PERSONAL BESTS</span><small>THIS DEVICE</small></div>
+          <div class="rank-list" id="rankList"></div>
+        </div>
+        <aside class="level-card">
+          <small>CURRENT RANK</small><strong id="rankName">ROOKIE</strong><div class="level-number" id="levelNumber">01</div>
+          <div class="xp-track"><i id="xpBar"></i></div><p id="xpProgress">0 / 100 XP TO NEXT LEVEL</p>
+          <div class="badge-row" id="badgeRow"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section profile-section" id="profile">
+      <header class="section-head compact"><div><small>04 // PROFILE</small><h2>YOUR ARENA ID.</h2></div></header>
+      <div class="profile-card">
+        <div class="avatar" id="avatar">G</div>
+        <div class="profile-main"><small>PLAYER</small><h3 id="playerName">GUEST</h3><p id="playerMeta">LEVEL 1 // 0 XP // 0 DAY STREAK</p></div>
+        <div class="profile-actions"><button id="renamePlayer" type="button">SET PLAYER NAME</button><button id="shareProfile" type="button">SHARE ARENA</button></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="game-overlay" id="gameOverlay" aria-hidden="true">
+    <div class="game-shell" role="dialog" aria-modal="true" aria-label="PJ Arena challenge">
+      <header><div><small id="gameKicker">PJ ARENA</small><strong id="gameTitle">DAILY ARENA</strong></div><div class="game-head-right"><span id="gameScore">000 PTS</span><button id="gameClose" type="button" aria-label="Close challenge">×</button></div></header>
+      <div class="progress"><i id="gameProgress"></i></div>
+      <div class="game-body" id="gameBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer><a href="../">PJ.</a><span>PJ ARENA // v1.0</span><p>PLAY. COMPETE. CLIMB.</p></footer>
+  <script src="app.js?v=1"></script>
+</body>
+</html>
